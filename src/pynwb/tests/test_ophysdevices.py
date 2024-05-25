@@ -1,5 +1,3 @@
-import numpy as np
-
 from pynwb import NWBHDF5IO, NWBFile
 from pynwb.testing import TestCase, remove_test_file
 from pynwb.testing.mock.file import mock_NWBFile
