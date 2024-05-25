@@ -1,0 +1,12 @@
+namespaces:
+- author:
+  - Alessandra Trapani
+  contact:
+  - alessandra.trapani@catalystneuro.com
+  doc: This is an NWB extension for storing metadata of devices used in optical experimental
+    setup (microscopy, fiber photometry, optogenetic stimulation etc.)
+  name: ndx-ophys-devices
+  schema:
+  - namespace: core
+  - source: ndx-ophys-devices.extensions.yaml
+  version: 0.1.0
