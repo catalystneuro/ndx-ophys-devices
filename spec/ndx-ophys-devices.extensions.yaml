@@ -198,9 +198,9 @@ groups:
     doc: Indicator injection location in stereotactic coordinates (AP, ML, DV) mm
       relative to Bregma.
     required: false
-- neurodata_type_def: Miscroscope
+- neurodata_type_def: Microscope
   neurodata_type_inc: Device
-  doc: Extends Device to hold a Miscroscope.
+  doc: Extends Device to hold a Microscope.
   attributes:
   - name: microscopy_type
     dtype: text
@@ -212,5 +212,5 @@ groups:
     required: false
   - name: model
     dtype: text
-    doc: Model of the miscroscope.
+    doc: Model of the Microscope.
     required: false

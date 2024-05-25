@@ -12,7 +12,7 @@ from ndx_ophys_devices import (
     EdgeOpticalFilter,
     ObjectiveLens,
     Effector,
-    Miscroscope,
+    Microscope,
 )
 
 
@@ -35,7 +35,7 @@ class TestIntegrationRoundtrip(TestCase):
         EdgeOpticalFilter,
         ObjectiveLens,
         Effector,
-        Miscroscope,
+        Microscope,
     """
 
     def setUp(self):
@@ -120,9 +120,9 @@ class TestIntegrationRoundtrip(TestCase):
             numerical_aperture=0.2,
             magnification=10.0,
         )  
-        miscroscope = Miscroscope(
-            name="miscroscope",
-            model="Miscroscope model",
+        microscope = Microscope(
+            name="microscope",
+            model="Microscope model",
             microscopy_type="Two photon",
         )       
         self.nwbfile.add_device(indicator)
@@ -134,7 +134,7 @@ class TestIntegrationRoundtrip(TestCase):
         self.nwbfile.add_device(edge_optical_filter)
         self.nwbfile.add_device(opsin)
         self.nwbfile.add_device(objective_lens)
-        self.nwbfile.add_device(miscroscope)
+        self.nwbfile.add_device(microscope)
 
         with NWBHDF5IO(self.path, mode="w") as io:
             io.write(self.nwbfile)
@@ -169,5 +169,5 @@ class TestIntegrationRoundtrip(TestCase):
                 self.nwbfile.devices["objective_lens"], read_nwbfile.devices["objective_lens"]
             )
             self.assertContainerEqual(
-                self.nwbfile.devices["miscroscope"], read_nwbfile.devices["miscroscope"]
+                self.nwbfile.devices["microscope"], read_nwbfile.devices["microscope"]
             )
