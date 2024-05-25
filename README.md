@@ -13,3 +13,7 @@ This is an NWB extension for storing metadata of devices used in optical experim
 
 ---
 This extension was created using [ndx-template](https://github.com/nwb-extensions/ndx-template).
+
+## Contributing
+
+Add a comment on how to contribute to this extension
