@@ -1,6 +1,5 @@
 from typing import Optional
 
-import numpy as np
 from pynwb.testing.mock.utils import name_generator
 
 import ndx_ophys_devices
