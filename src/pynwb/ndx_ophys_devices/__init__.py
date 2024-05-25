@@ -18,17 +18,16 @@ if not os.path.exists(__spec_path):
 # Load the namespace
 load_namespaces(str(__spec_path))
 
-# TODO: Define your classes here to make them accessible at the package level.
-# Either have PyNWB generate a class from the spec using `get_class` as shown
-# below or write a custom class and register it using the class decorator
-# `@register_class("TetrodeSeries", "ndx-ophys-devices")`
-TetrodeSeries = get_class("TetrodeSeries", "ndx-ophys-devices")
 
-# NOTE: `widgets/tetrode_series_widget.py` adds a "widget"
-# attribute to the TetrodeSeries class. This attribute is used by NWBWidgets.
-# Delete the `widgets` subpackage or the `tetrode_series_widget.py` module
-# if you do not want to define a custom widget for your extension neurodata
-# type.
+Indicator = get_class("Indicator", "ndx-ophys-devices")
+OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
+ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
+Photodetector = get_class("Photodetector", "ndx-ophys-devices")
+DichroicMirror = get_class("DichroicMirror", "ndx-ophys-devices")
+BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
+EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
+ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
+Effector = get_class("Effector", "ndx-ophys-devices")
+Miscroscope = get_class("Miscroscope", "ndx-ophys-devices")
 
-# Remove these functions from the package
 del load_namespaces, get_class
