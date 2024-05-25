@@ -1,5 +1,5 @@
-from pynwb import NWBFile
-from pynwb.testing.mock.file import mock_NWBFile
+"""Test in-memory Python API constructors for ndx-ophys-devices extension."""
+
 import pytest
 
 from ndx_ophys_devices.testing import (
@@ -47,7 +47,6 @@ def test_constructor_edge_optical_filter():
 def test_constructor_objective_lens():
     mock_ObjectiveLens()
 
-
 def test_constructor_microscope():
     mock_Microscope()
 
@@ -55,26 +54,5 @@ def test_constructor_microscope():
 def test_constructor_excitation_source():
     mock_ExcitationSource()
 
-
-@pytest.fixture(scope="module")
-def nwbfile_with_microscopy():
-    nwbfile = mock_NWBFile()
-    
-    mock_Indicator()
-    mock_OpticalFiber()
-    mock_ExcitationSource()
-    mock_Photodetector()
-    mock_DichroicMirror()
-    mock_BandOpticalFilter()
-    mock_EdgeOpticalFilter()
-    mock_Effector()
-    mock_ObjectiveLens()
-    mock_Microscope()
-
-    return nwbfile
-
-
-def set_up_nwbfile(nwbfile: NWBFile = None):
-    """Create an NWBFile with a Device"""
-    nwbfile = nwbfile or mock_NWBFile()
-    return nwbfile
+if __name__ == "__main__":
+    pytest.main()  # Required since not a typical package structure
