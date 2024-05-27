@@ -48,25 +48,33 @@ groups:
   - name: excitation_wavelength_in_nm
     dtype: float
     doc: Excitation wavelength of the stimulation light (nanometers).
-  - name: peak_power_in_W
+  - name: power_in_W
     dtype: float
     doc: Incident power of stimulation device (in Watts).
-    required: false
-  - name: peak_pulse_energy_in_J
-    dtype: float
-    doc: If device is pulsed light source, pulse energy (in Joules).
     required: false
   - name: intensity_in_W_per_m2
     dtype: float
     doc: Intensity of the excitation in W/m^2, if known.
     required: false
-  - name: pulse_rate_in_Hz
-    dtype: float
-    doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
-    required: false
   - name: exposure_time_in_s
     dtype: float
     doc: Exposure time of the sample (in sec).
+    required: false
+- neurodata_type_def: PulsedExcitationSource
+  neurodata_type_inc: ExcitationSource
+  doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source.
+  attributes:
+  - name: peak_power_in_W
+    dtype: float
+    doc: Incident peak power of stimulation device (in Watts).
+    required: false
+  - name: peak_pulse_energy_in_J
+    dtype: float
+    doc: If device is pulsed light source, pulse energy (in Joules).
+    required: false
+  - name: pulse_rate_in_Hz
+    dtype: float
+    doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
     required: false
 - neurodata_type_def: Photodetector
   neurodata_type_inc: DeviceModel
