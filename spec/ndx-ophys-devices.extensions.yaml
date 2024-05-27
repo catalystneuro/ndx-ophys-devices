@@ -117,8 +117,8 @@ groups:
     dtype: text
     doc: Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass').
 - neurodata_type_def: BandOpticalFilter
-  neurodata_type_inc: DeviceModel
-  doc: Extends DeviceModel to hold a Band Optical Filter (Bandpass or Bandstop).
+  neurodata_type_inc: OpticalFilter
+  doc: Extends OpticalFilter to hold a Band Optical Filter (Bandpass or Bandstop).
   attributes:
   - name: center_wavelength_in_nm
     dtype: float
@@ -128,8 +128,8 @@ groups:
     doc: The width of the wavelength range that the filter transmits or blocks (full
       width at half maximum).
 - neurodata_type_def: EdgeOpticalFilter
-  neurodata_type_inc: DeviceModel
-  doc: Extends DeviceModel to hold an Edge Optical Filter (Longpass or Shortpass).
+  neurodata_type_inc: OpticalFilter
+  doc: Extends OpticalFilter to hold an Edge Optical Filter (Longpass or Shortpass).
   attributes:
   - name: cut_wavelength_in_nm
     dtype: float

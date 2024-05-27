@@ -75,6 +75,6 @@ def nwbfile_with_microscopy():
 
 
 def set_up_nwbfile(nwbfile: NWBFile = None):
-    """Create an NWBFile with a Device"""
+    """Create an NWBFile"""
     nwbfile = nwbfile or mock_NWBFile()
     return nwbfile
