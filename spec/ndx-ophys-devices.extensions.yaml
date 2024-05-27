@@ -43,7 +43,7 @@ groups:
   attributes:
   - name: illumination_type
     dtype: text
-    doc: 'Type of illumination. Suggested values: LED, LAser or more specifically
+    doc: 'Type of illumination. Suggested values: LED, Laser or more specifically
       Gas, Metal vapor, Solid state, Dye, Semiconductor, Free electron, etc.'
   - name: excitation_wavelength_in_nm
     dtype: float
@@ -75,7 +75,7 @@ groups:
   - name: detector_type
     dtype: text
     doc: 'Technology used to detect the light. Suggested values: CCD, Intensified
-      CCD, Analog video, PMT, Photodiode, CMOS, EBCCD, FTIR.'
+      CCD, PMT, Photodiode, CMOS, EBCCD, FTIR.'
   - name: detected_wavelength_in_nm
     dtype: float
     doc: Wavelength detected by photodetector.
@@ -109,6 +109,13 @@ groups:
     dtype: float
     doc: Intended angle at which light strikes the mirror.
     required: false
+- neurodata_type_def: OpticalFilter
+  neurodata_type_inc: DeviceModel
+  doc: Extends DeviceModel to hold a Optical Filter.
+  attributes:
+  - name: filter_type
+    dtype: text
+    doc: Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass').
 - neurodata_type_def: BandOpticalFilter
   neurodata_type_inc: DeviceModel
   doc: Extends DeviceModel to hold a Band Optical Filter (Bandpass or Bandstop).
@@ -120,9 +127,6 @@ groups:
     dtype: float
     doc: The width of the wavelength range that the filter transmits or blocks (full
       width at half maximum).
-  - name: filter_type
-    dtype: text
-    doc: Type of filter (e.g., 'Bandpass', 'Bandstop').
 - neurodata_type_def: EdgeOpticalFilter
   neurodata_type_inc: DeviceModel
   doc: Extends DeviceModel to hold an Edge Optical Filter (Longpass or Shortpass).
@@ -130,9 +134,6 @@ groups:
   - name: cut_wavelength_in_nm
     dtype: float
     doc: ' The wavelength at which the filter transmits half as much as its peak transmission.'
-  - name: filter_type
-    dtype: text
-    doc: Type of filter (e.g., 'Longpass', 'Shortpass').
   - name: slope_in_percent_cut_wavelength
     dtype: float
     doc: The steepness of the transition from high blocking to high transmission (or
