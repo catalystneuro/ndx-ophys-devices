@@ -5,6 +5,22 @@ from pynwb.testing.mock.utils import name_generator
 import ndx_ophys_devices
 
 
+def mock_DeviceModel(
+    *,
+    name: Optional[str] = None,
+    description: str = "This is a mock instance of a DeviceModel type to be used for rapid testing.",
+    manufacturer: str = "A fake manufacturer of the mock DeviceModel.",
+    model: str = "A fake model of the mock DeviceModel.",
+) -> ndx_ophys_devices.DeviceModel:
+    device_model = ndx_ophys_devices.DeviceModel(
+        name=name or name_generator("DeviceModel"),
+        description=description,
+        manufacturer=manufacturer,
+        model=model,
+    )
+    return device_model
+
+
 def mock_Indicator(
     *,
     name: Optional[str] = None,
@@ -113,6 +129,24 @@ def mock_DichroicMirror(
     return dichroic_mirror
 
 
+def mock_OpticalFilter(
+    *,
+    name: Optional[str] = None,
+    description: str = "This is a mock instance of a OpticalFilter type to be used for rapid testing.",
+    manufacturer: str = "A fake manufacturer of the mock an optical filter.",
+    model: str = "A fake model of the mock an optical filter.",
+    filter_type: str = "Longpass",
+) -> ndx_ophys_devices.EdgeOpticalFilter:
+    optical_filter = ndx_ophys_devices.OpticalFilter(
+        name=name or name_generator("OpticalFilter"),
+        description=description,
+        manufacturer=manufacturer,
+        model=model,
+        filter_type=filter_type,
+    )
+    return optical_filter
+
+
 def mock_BandOpticalFilter(
     *,
     name: Optional[str] = None,
@@ -207,14 +241,40 @@ def mock_ExcitationSource(
     model: str = "A fake model of the mock excitation source.",
     illumination_type: str = "Laser.",
     excitation_wavelength_in_nm: float = 500.0,
+    power_in_W: float = 0.7,
+    intensity_in_W_per_m2: float = 0.005,
+    exposure_time_in_s: float = 2.51e-13,
+) -> ndx_ophys_devices.ExcitationSource:
+    excitation_source = ndx_ophys_devices.ExcitationSource(
+        name=name or name_generator("ExcitationSource"),
+        description=description,
+        manufacturer=manufacturer,
+        model=model,
+        illumination_type=illumination_type,
+        excitation_wavelength_in_nm=excitation_wavelength_in_nm,
+        power_in_W=power_in_W,
+        intensity_in_W_per_m2=intensity_in_W_per_m2,
+        exposure_time_in_s=exposure_time_in_s,
+    )
+    return excitation_source
+
+
+def mock_PulsedExcitationSource(
+    *,
+    name: Optional[str] = None,
+    description: str = "This is a mock instance of a PulsedExcitationSource type to be used for rapid testing.",
+    manufacturer: str = "A fake manufacturer of the mock excitation source.",
+    model: str = "A fake model of the mock excitation source.",
+    illumination_type: str = "Laser.",
+    excitation_wavelength_in_nm: float = 500.0,
     peak_power_in_W: float = 0.7,
     peak_pulse_energy_in_J: float = 0.7,
     intensity_in_W_per_m2: float = 0.005,
     exposure_time_in_s: float = 2.51e-13,
     pulse_rate_in_Hz: float = 2.0e6,
-) -> ndx_ophys_devices.ExcitationSource:
-    excitation_source = ndx_ophys_devices.ExcitationSource(
-        name=name or name_generator("ExcitationSource"),
+) -> ndx_ophys_devices.PulsedExcitationSource:
+    pulsed_excitation_source = ndx_ophys_devices.PulsedExcitationSource(
+        name=name or name_generator("PulsedExcitationSource"),
         description=description,
         manufacturer=manufacturer,
         model=model,
@@ -226,4 +286,4 @@ def mock_ExcitationSource(
         exposure_time_in_s=exposure_time_in_s,
         pulse_rate_in_Hz=pulse_rate_in_Hz,
     )
-    return excitation_source
+    return pulsed_excitation_source

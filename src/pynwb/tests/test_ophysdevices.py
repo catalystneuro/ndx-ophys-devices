@@ -3,17 +3,24 @@ from pynwb.testing.mock.file import mock_NWBFile
 import pytest
 
 from ndx_ophys_devices.testing import (
+    mock_DeviceModel,
     mock_Indicator,
     mock_Effector,
     mock_OpticalFiber,
     mock_Photodetector,
     mock_DichroicMirror,
+    mock_OpticalFilter,
     mock_BandOpticalFilter,
     mock_EdgeOpticalFilter,
     mock_ObjectiveLens,
     mock_ExcitationSource,
+    mock_PulsedExcitationSource,
     mock_Microscope,
 )
+
+
+def test_constructor_device_model():
+    mock_DeviceModel()
 
 
 def test_constructor_indicator():
@@ -36,6 +43,10 @@ def test_constructor_dichroic_mirror():
     mock_DichroicMirror()
 
 
+def test_constructor_optical_filter():
+    mock_OpticalFilter()
+
+
 def test_constructor_band_optical_filter():
     mock_BandOpticalFilter()
 
@@ -56,15 +67,22 @@ def test_constructor_excitation_source():
     mock_ExcitationSource()
 
 
+def test_constructor_pulsed_excitation_source():
+    mock_PulsedExcitationSource()
+
+
 @pytest.fixture(scope="module")
 def nwbfile_with_microscopy():
     nwbfile = mock_NWBFile()
-    
+
+    mock_DeviceModel()
     mock_Indicator()
     mock_OpticalFiber()
     mock_ExcitationSource()
+    mock_PulsedExcitationSource()
     mock_Photodetector()
     mock_DichroicMirror()
+    mock_OpticalFilter()
     mock_BandOpticalFilter()
     mock_EdgeOpticalFilter()
     mock_Effector()
