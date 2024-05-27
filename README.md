@@ -60,10 +60,17 @@ classDiagram
         --------------------------------------
         illumination_type : text, optional
         excitation_wavelength_in_nm : numeric, optional
-        peak_power_in_W : numeric, optional
-        peak_pulse_energy_in_J : numeric, optional
+        power_in_W : numeric, optional
         intensity_in_W_per_m2 : numeric, optional
         exposure_time_in_s : numeric, optional
+    }
+    class PulsedExcitationSource{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        peak_power_in_W : numeric, optional
+        peak_pulse_energy_in_J : numeric, optional
         pulse_rate_in_Hz : numeric, optional
     }
     class Photodetector{
@@ -129,6 +136,7 @@ classDiagram
     }
     OpticalFiber *-- DeviceModel : extends
     ExcitationSource *-- DeviceModel : extends
+    PulsedExcitationSource *-- ExcitationSource : extends
     Photodetector *-- DeviceModel : extends
     DichroicMirror *-- DeviceModel : extends
     Microscope *-- DeviceModel : extends
