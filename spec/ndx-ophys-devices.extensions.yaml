@@ -159,7 +159,7 @@ groups:
     required: false
   - name: magnification
     dtype: float
-    doc: Lens magnification.
+    doc: The magnification of the lens as specified by the manufacturer, i.e. '60.0' is a 60X lens.
     required: false
 - neurodata_type_def: Effector
   neurodata_type_inc: Device
