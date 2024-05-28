@@ -23,20 +23,24 @@ This extension was created using [ndx-template](https://github.com/nwb-extension
 classDiagram
     direction BT
     class Indicator{
-        <<Device>>
+        <<NWBContainer>>
         --------------------------------------
         attributes
         --------------------------------------
         label : text
+        description : text, optional
+        manufacturer : text, optional
         injection_location : text, optional
         injection_coordinates_in_mm : numeric, length 3, optional
     }
     class Effector{
-        <<Device>>
+        <<NWBContainer>>
         --------------------------------------
         attributes
         --------------------------------------
         label : text
+        description : text, optional
+        manufacturer : text, optional
         injection_location : text, optional
         injection_coordinates_in_mm : numeric, length 3, optional
     }

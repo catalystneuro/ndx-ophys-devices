@@ -11,15 +11,17 @@ groups:
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Indicator.
     attributes:
-      - name: description
-        dtype: text
-        doc: Indicator description.
-      - name: manufacturer
-        dtype: text
-        doc: Indicator manufacturer.
       - name: label
         dtype: text
         doc: Indicator standard notation.
+      - name: description
+        dtype: text
+        doc: Effector description.
+        required: false
+      - name: manufacturer
+        dtype: text
+        doc: Effector manufacturer.
+        required: false
       - name: injection_location
         dtype: text
         doc: Injection brain region name.
@@ -189,15 +191,17 @@ groups:
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Effector or Opsin.
     attributes:
-      - name: description
-        dtype: text
-        doc: Effector description.
-      - name: manufacturer
-        dtype: text
-        doc: Effector manufacturer.
       - name: label
         dtype: text
         doc: Effector standard notation.
+      - name: description
+        dtype: text
+        doc: Effector description.
+        required: false
+      - name: manufacturer
+        dtype: text
+        doc: Effector manufacturer.
+        required: false
       - name: injection_location
         dtype: text
         doc: Injection brain region name.
