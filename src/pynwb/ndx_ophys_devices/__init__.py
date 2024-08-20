@@ -31,6 +31,5 @@ BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
 EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
 ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
 Effector = get_class("Effector", "ndx-ophys-devices")
-Microscope = get_class("Microscope", "ndx-ophys-devices")
 
 del load_namespaces, get_class
