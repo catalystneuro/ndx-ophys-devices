@@ -30,7 +30,7 @@ classDiagram
         label : text
         description : text, optional
         manufacturer : text, optional
-        injection_location : text, optional
+        injection_brain_region : text, optional
         injection_coordinates_in_mm : numeric, length 3, optional
     }
     class Effector{
@@ -41,7 +41,7 @@ classDiagram
         label : text
         description : text, optional
         manufacturer : text, optional
-        injection_location : text, optional
+        injection_brain_region : text, optional
         injection_coordinates_in_mm : numeric, length 3, optional
     }
 ```
@@ -139,6 +139,7 @@ classDiagram
         detector_type : text, optional
         detected_wavelength_in_nm : numeric, optional
         gain : numeric, optional
+        gain_unit : text, false
     }
     class ObjectiveLens{
         <<DeviceModel>>
@@ -148,18 +149,10 @@ classDiagram
         numerical_aperture : numeric, optional
         magnification : numeric, optional
     }
-    class Microscope{
-        <<DeviceModel>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        microscopy_type : text, optional
-        doi : text, optional
-    }
+    
     ExcitationSource *-- DeviceModel : extends
     PulsedExcitationSource *-- ExcitationSource : extends
     Photodetector *-- DeviceModel : extends
-    Microscope *-- DeviceModel : extends
     ObjectiveLens *-- DeviceModel : extends
     OpticalFilter *-- DeviceModel : extends
     BandOpticalFilter *-- OpticalFilter : extends

@@ -11,7 +11,6 @@ from ._mock import (
     mock_ObjectiveLens,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_Microscope,
 )
 
 __all__ = [
@@ -27,5 +26,4 @@ __all__ = [
     "mock_ObjectiveLens",
     "mock_ExcitationSource",
     "mock_PulsedExcitationSource",
-    "mock_Microscope",
 ]

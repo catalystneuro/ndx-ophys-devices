@@ -15,7 +15,6 @@ from ndx_ophys_devices.testing import (
     mock_ObjectiveLens,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_Microscope,
 )
 
 
@@ -59,10 +58,6 @@ def test_constructor_objective_lens():
     mock_ObjectiveLens()
 
 
-def test_constructor_microscope():
-    mock_Microscope()
-
-
 def test_constructor_excitation_source():
     mock_ExcitationSource()
 
@@ -72,7 +67,7 @@ def test_constructor_pulsed_excitation_source():
 
 
 @pytest.fixture(scope="module")
-def nwbfile_with_microscopy():
+def nwbfile_with_ophys_devices():
     nwbfile = mock_NWBFile()
 
     mock_DeviceModel()
@@ -87,7 +82,6 @@ def nwbfile_with_microscopy():
     mock_EdgeOpticalFilter()
     mock_Effector()
     mock_ObjectiveLens()
-    mock_Microscope()
 
     return nwbfile
 

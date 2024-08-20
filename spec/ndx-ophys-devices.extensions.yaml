@@ -16,13 +16,13 @@ groups:
         doc: Indicator standard notation.
       - name: description
         dtype: text
-        doc: Effector description.
+        doc: Indicator description.
         required: false
       - name: manufacturer
         dtype: text
-        doc: Effector manufacturer.
+        doc: Indicator manufacturer.
         required: false
-      - name: injection_location
+      - name: injection_brain_region
         dtype: text
         doc: Injection brain region name.
         required: false
@@ -101,6 +101,11 @@ groups:
       - name: gain
         dtype: float
         doc: Gain on the photodetector.
+        required: false
+      - name: gain_unit
+        dtype: text
+        doc: Gain on the photodetector.
+        required: false
   - neurodata_type_def: DichroicMirror
     neurodata_type_inc: DeviceModel
     doc: Extends DeviceModel to hold a Dichroic Mirror.
@@ -202,7 +207,7 @@ groups:
         dtype: text
         doc: Effector manufacturer.
         required: false
-      - name: injection_location
+      - name: injection_brain_region
         dtype: text
         doc: Injection brain region name.
         required: false
@@ -211,19 +216,7 @@ groups:
         shape:
           - 3
         doc:
-          Indicator injection location in stereotactic coordinates (AP, ML, DV) mm
+          Effector injection location in stereotactic coordinates (AP, ML, DV) mm
           relative to Bregma.
         required: false
-  - neurodata_type_def: Microscope
-    neurodata_type_inc: DeviceModel
-    doc: Extends DeviceModel to hold a Microscope.
-    attributes:
-      - name: microscopy_type
-        dtype: text
-        doc:
-          Type of microscope used to capture the image (e.g., inverted, upright, light
-          sheet, confocal, two photon).
-      - name: doi
-        dtype: text
-        doc: The publication link for custom-built microscope.
-        required: false
+

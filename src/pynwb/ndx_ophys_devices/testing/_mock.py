@@ -27,7 +27,7 @@ def mock_Indicator(
     description: str = "This is a mock instance of a Indicator type to be used for rapid testing.",
     manufacturer: str = "A fake manufacturer of the mock indicator.",
     label: str = "A fake label of the indicator.",
-    injection_location: str = "A fake injection location of the indicator.",
+    injection_brain_region: str = "A fake injection brain region of the indicator.",
     injection_coordinates_in_mm: list = [3.0, 2.0, 1.0],
 ) -> ndx_ophys_devices.Indicator:
     indicator = ndx_ophys_devices.Indicator(
@@ -35,7 +35,7 @@ def mock_Indicator(
         description=description,
         manufacturer=manufacturer,
         label=label,
-        injection_location=injection_location,
+        injection_brain_region=injection_brain_region,
         injection_coordinates_in_mm=injection_coordinates_in_mm,
     )
     return indicator
@@ -47,7 +47,7 @@ def mock_Effector(
     description: str = "This is a mock instance of a Effector type to be used for rapid testing.",
     manufacturer: str = "A fake manufacturer of the mock effector.",
     label: str = "A fake label of the effector.",
-    injection_location: str = "A fake injection location of the effector.",
+    injection_brain_region: str = "A fake injection brain region of the effector.",
     injection_coordinates_in_mm: list = [3.0, 2.0, 1.0],
 ) -> ndx_ophys_devices.Effector:
     effector = ndx_ophys_devices.Effector(
@@ -55,7 +55,7 @@ def mock_Effector(
         description=description,
         manufacturer=manufacturer,
         label=label,
-        injection_location=injection_location,
+        injection_brain_region=injection_brain_region,
         injection_coordinates_in_mm=injection_coordinates_in_mm,
     )
     return effector
@@ -90,6 +90,7 @@ def mock_Photodetector(
     detector_type: str = "PMT",
     detected_wavelength_in_nm: float = 520.0,
     gain: float = 100.0,
+    gain_unit: str = "A/W",
 ) -> ndx_ophys_devices.Photodetector:
     photodetector = ndx_ophys_devices.Photodetector(
         name=name or name_generator("Photodetector"),
@@ -99,6 +100,7 @@ def mock_Photodetector(
         detector_type=detector_type,
         detected_wavelength_in_nm=detected_wavelength_in_nm,
         gain=gain,
+        gain_unit=gain_unit,
     )
     return photodetector
 
@@ -213,24 +215,6 @@ def mock_ObjectiveLens(
         magnification=magnification,
     )
     return objective_lens
-
-
-def mock_Microscope(
-    *,
-    name: Optional[str] = None,
-    description: str = "This is a mock instance of a Microscope type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock microscope.",
-    model: str = "A fake model of the mock microscope.",
-    microscopy_type: str = "Two photon.",
-) -> ndx_ophys_devices.Microscope:
-    microscope = ndx_ophys_devices.Microscope(
-        name=name or name_generator("Microscope"),
-        description=description,
-        manufacturer=manufacturer,
-        model=model,
-        microscopy_type=microscopy_type,
-    )
-    return microscope
 
 
 def mock_ExcitationSource(

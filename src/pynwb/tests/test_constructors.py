@@ -15,7 +15,6 @@ from ndx_ophys_devices.testing import (
     mock_ObjectiveLens,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_Microscope,
 )
 
 
@@ -57,10 +56,6 @@ def test_constructor_edge_optical_filter():
 
 def test_constructor_objective_lens():
     mock_ObjectiveLens()
-
-
-def test_constructor_microscope():
-    mock_Microscope()
 
 
 def test_constructor_excitation_source():
