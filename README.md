@@ -246,7 +246,7 @@ classDiagram
     BandOpticalFilter *-- OpticalFilter : extends
     EdgeOpticalFilter *-- OpticalFilter : extends
 ```
-#### Devices in the microscopy setup
+#### Other devices in the optical setup
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
@@ -296,6 +296,14 @@ classDiagram
         numerical_aperture : numeric, optional
         magnification : numeric, optional
     }
+    class OpticalFiber{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        numerical_aperture : numeric, optional
+        core_diameter_in_um : numeric, optional
+    }
     
     ExcitationSource *-- DeviceModel : extends
     PulsedExcitationSource *-- ExcitationSource : extends
@@ -305,64 +313,7 @@ classDiagram
     BandOpticalFilter *-- OpticalFilter : extends
     EdgeOpticalFilter *-- OpticalFilter : extends
     DichroicMirror *-- DeviceModel : extends
-```
-#### Devices in the fiber photometry setup
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
-classDiagram
-    direction BT
-    class DeviceModel{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        model : text, optional
-    }
-    class OpticalFiber{
-        <<DeviceModel>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        numerical_aperture : numeric, optional
-        core_diameter_in_um : numeric, optional
-    }
-    class ExcitationSource{
-        <<DeviceModel>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        illumination_type : text, optional
-        excitation_wavelength_in_nm : numeric, optional
-        power_in_W : numeric, optional
-        intensity_in_W_per_m2 : numeric, optional
-        exposure_time_in_s : numeric, optional
-    }
-    class PulsedExcitationSource{
-        <<DeviceModel>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        peak_power_in_W : numeric, optional
-        peak_pulse_energy_in_J : numeric, optional
-        pulse_rate_in_Hz : numeric, optional
-    }
-    class Photodetector{
-        <<DeviceModel>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        detector_type : text, optional
-        detected_wavelength_in_nm : numeric, optional
-        gain : numeric, optional
-    }
-    ExcitationSource *-- DeviceModel : extends
-    PulsedExcitationSource *-- ExcitationSource : extends
-    Photodetector *-- DeviceModel : extends
     OpticalFiber *-- DeviceModel : extends
-    DichroicMirror *-- DeviceModel : extends
-    OpticalFilter *-- DeviceModel : extends
-    BandOpticalFilter *-- OpticalFilter : extends
-    EdgeOpticalFilter *-- OpticalFilter : extends
 ```
 
 ## Contributing
