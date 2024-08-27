@@ -120,14 +120,18 @@ groups:
           Wavelength at which transmission shifts back to reflection,for mirrors with
           complex transmission spectra.
         required: false
-      - name: reflection_bandwidth_in_nm
+      - name: reflection_band_in_nm
         dtype: float
+        shape:
+        - 2
         doc:
           The range of wavelengths that are primarily reflected.The start and end wavelengths
           needs to be specified.
         required: false
-      - name: transmission_bandwidth_in_nm
+      - name: transmission_band_in_nm
         dtype: float
+        shape:
+        - 2
         doc:
           The range of wavelengths that are primarily transmitted.The start and end
           wavelengths needs to be specified.

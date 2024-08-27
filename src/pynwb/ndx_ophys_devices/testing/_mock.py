@@ -113,8 +113,8 @@ def mock_DichroicMirror(
     model: str = "A fake model of the mock an dichroic mirror.",
     cut_on_wavelength_in_nm: float = 470.0,
     cut_off_wavelength_in_nm: float = 500.0,
-    reflection_bandwidth_in_nm: float = 50.0,
-    transmission_bandwidth_in_nm: float = 50.0,
+    reflection_band_in_nm: list = [460.0, 480.0],
+    transmission_band_in_nm: list = [490.0, 520.0],
     angle_of_incidence_in_degrees: float = 45.0,
 ) -> ndx_ophys_devices.DichroicMirror:
     dichroic_mirror = ndx_ophys_devices.DichroicMirror(
@@ -124,8 +124,8 @@ def mock_DichroicMirror(
         model=model,
         cut_on_wavelength_in_nm=cut_on_wavelength_in_nm,
         cut_off_wavelength_in_nm=cut_off_wavelength_in_nm,
-        reflection_bandwidth_in_nm=reflection_bandwidth_in_nm,
-        transmission_bandwidth_in_nm=transmission_bandwidth_in_nm,
+        reflection_band_in_nm=reflection_band_in_nm,
+        transmission_band_in_nm=transmission_band_in_nm,
         angle_of_incidence_in_degrees=angle_of_incidence_in_degrees,
     )
     return dichroic_mirror

@@ -65,8 +65,8 @@ classDiagram
         --------------------------------------
         cut_on_wavelength_in_nm : numeric, optional
         cut_off_wavelength_in_nm : numeric, optional
-        reflection_bandwidth_in_nm : numeric, optional
-        transmission_bandwidth_in_nm : numeric, optional
+        reflection_band_in_nm : numeric, optional
+        transmission_band_in_nm : numeric, optional
         angle_of_incidence_in_degrees : numeric, optional
     }
     class OpticalFilter{
