@@ -247,6 +247,7 @@ classDiagram
     EdgeOpticalFilter *-- OpticalFilter : extends
 ```
 #### Other devices in the optical setup
+
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
