@@ -21,6 +21,10 @@ To install the latest stable release through PyPI,
 ```bash
 pip install ndx-ophys-devices
 ```
+To install the latest stable release through PyPI,
+```bash
+pip install ndx-ophys-devices
+```
 
 ## Usage
 
