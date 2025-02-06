@@ -18,7 +18,19 @@ if not os.path.exists(__spec_path):
 # Load the namespace
 load_namespaces(str(__spec_path))
 
+# Model classes
+DeviceModel = get_class("DeviceModel", "ndx-ophys-devices")
+OpticalFiberModel = get_class("OpticalFiberModel", "ndx-ophys-devices")
+ExcitationSourceModel = get_class("ExcitationSourceModel", "ndx-ophys-devices")
+PhotodetectorModel = get_class("PhotodetectorModel", "ndx-ophys-devices")
+DichroicMirrorModel = get_class("DichroicMirrorModel", "ndx-ophys-devices")
+OpticalFilterModel = get_class("OpticalFilterModel", "ndx-ophys-devices")
+BandOpticalFilterModel = get_class("BandOpticalFilterModel", "ndx-ophys-devices")
+EdgeOpticalFilterModel = get_class("EdgeOpticalFilterModel", "ndx-ophys-devices")
+ObjectiveLensModel = get_class("ObjectiveLensModel", "ndx-ophys-devices")
 
+# Device instance classes
+DeviceInstance = get_class("DeviceInstance", "ndx-ophys-devices")
 Indicator = get_class("Indicator", "ndx-ophys-devices")
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
 ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")

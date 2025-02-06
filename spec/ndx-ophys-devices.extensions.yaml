@@ -1,4 +1,44 @@
 groups:
+  # DeviceInstance and DeviceModel are needed to allow inheritance for the new objects.
+  # TODO remove when these two are merged to core [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608)
+  - neurodata_type_def: DeviceInstance
+    neurodata_type_inc: NWBContainer
+    doc: Metadata about a specific instance of a data acquisition device, e.g., recording system, electrode, microscope.
+      Link to a DeviceModel.model to represent information about the model of the device instance.
+    attributes:
+    - name: description
+      dtype: text
+      doc: Description of the device instance as free-form text. If there is any software/firmware associated
+        with the device instance, the names and versions of those can be added to NWBFile.was_generated_by. 
+      required: false
+    - name: serial_number
+      dtype: text
+      doc: The serial number of the device instance.
+      required: false
+    links:
+    - name: model
+      target_type: DeviceModel
+      doc: The model of the device instance.
+      quantity: '?'
+  - neurodata_type_def: DeviceModel 
+    neurodata_type_inc: NWBContainer
+    doc: Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
+      This should be extended for specific types of device models to include additional attributes specific to each type.
+      The name of the DeviceModel should be the most common representation of the model name, e.g.,
+      Neuropixels 1.0, V-Probe, Bergamo III.
+    attributes:
+    - name: manufacturer
+      dtype: text
+      doc: The name of the manufacturer of the device model, e.g., Imec, Plexon, Thorlabs.
+    - name: model_number
+      dtype: text
+      doc: The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1, 
+        PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
+      required: false
+    - name: description
+      dtype: text
+      doc: Description of the device model as free-form text.
+      required: false
   - neurodata_type_def: Indicator
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Indicator.
@@ -22,31 +62,50 @@ groups:
         dtype: float
         shape:
           - 3
-        doc:
-          Indicator injection location in stereotactic coordinates (AP, ML, DV) mm
-          relative to Bregma.
+        doc: Indicator injection location in stereotactic coordinates (AP, ML, DV) mm relative to Bregma.
         required: false
-  - neurodata_type_def: OpticalFiber
-    neurodata_type_inc: Device
-    doc: Extends Device to hold metadata on the Optical Fiber.
+
+  - neurodata_type_def: OpticalFiberModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Optical Fiber Model.
     attributes:
       - name: numerical_aperture
         dtype: float
         doc: Numerical aperture, e.g., 0.39 NA.
-        required: false
       - name: core_diameter_in_um
         dtype: float
         doc: Core diameter in micrometers.
         required: false
-  - neurodata_type_def: ExcitationSource
-    neurodata_type_inc: Device
-    doc: Extends Device to hold metadata on the Excitation Source.
+
+  - neurodata_type_def: OpticalFiber
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold metadata on the Optical Fiber instance.
+    # groups:
+    # - name: fiber_insertion
+    #   neurodata_type_inc: FiberInsertion
+    #   doc: Information about the insertion of an optical fiber into the brain.
+    #   quantity: '?'  # optional
+
+  - neurodata_type_def: ExcitationSourceModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Excitation Source Model.
     attributes:
       - name: illumination_type
         dtype: text
-        doc: 
-          "Type of illumination. Suggested values: LED, Gas Laser (e.g., Argon, Krypton),
-           Solid-State Laser (e.g., Diode, DPSS)."
+        doc: "Type of illumination. Suggested values: LED, Gas Laser (e.g., Argon, Krypton), Solid-State Laser (e.g., Diode, DPSS)."
+      - name: excitation_mode
+        dtype: text
+        doc: The type of excitation used in the light path (e.g., 'one-photon', 'two-photon', 'three-photon', 'other').
+      - name: wavelength_range_in_nm
+        dtype: float
+        shape:
+          - 2
+        doc: The range of wavelengths that can be produced by the source.
+
+  - neurodata_type_def: ExcitationSource
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold metadata on the Excitation Source instance.
+    attributes:
       - name: excitation_wavelength_in_nm
         dtype: float
         doc: Excitation wavelength of the stimulation light (nanometers).
@@ -62,10 +121,14 @@ groups:
         dtype: float
         doc: Exposure time of the sample (in sec).
         required: false
+
   - neurodata_type_def: PulsedExcitationSource
     neurodata_type_inc: ExcitationSource
-    doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source.
+    doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance.
     attributes:
+      - name: pulse_rate_in_Hz
+        dtype: float
+        doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
       - name: peak_power_in_W
         dtype: float
         doc: Incident peak power of stimulation device (in Watts).
@@ -74,33 +137,39 @@ groups:
         dtype: float
         doc: If device is pulsed light source, pulse energy (in Joules).
         required: false
-      - name: pulse_rate_in_Hz
-        dtype: float
-        doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
-        required: false
-  - neurodata_type_def: Photodetector
-    neurodata_type_inc: Device
-    doc: Extends Device to hold metadata on the Photodetector.
+
+  - neurodata_type_def: PhotodetectorModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Photodetector Model.
     attributes:
       - name: detector_type
         dtype: text
-        doc:
-          "Technology used to detect the light. Suggested values: CCD, Intensified
-          CCD, PMT, Photodiode, CMOS, EBCCD, FTIR."
-      - name: detected_wavelength_in_nm
+        doc: "Technology used to detect the light. Suggested values: CCD, Intensified CCD, PMT, Photodiode, CMOS, EBCCD, FTIR."
+      - name: wavelength_range_in_nm
         dtype: float
-        doc: Wavelength detected by photodetector.
+        shape:
+          - 2
+        doc: The range of wavelengths that can be detected.
       - name: gain
         dtype: float
         doc: Gain on the photodetector.
         required: false
       - name: gain_unit
         dtype: text
-        doc: Gain on the photodetector.
+        doc: Unit of the gain value.
         required: false
-  - neurodata_type_def: DichroicMirror
-    neurodata_type_inc: Device
-    doc: Extends Device to hold a Dichroic Mirror.
+
+  - neurodata_type_def: Photodetector
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold metadata on the Photodetector instance.
+    attributes:
+      - name: detected_wavelength_in_nm
+        dtype: float
+        doc: Wavelength detected by photodetector.
+
+  - neurodata_type_def: DichroicMirrorModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Dichroic Mirror Model.
     attributes:
       - name: cut_on_wavelength_in_nm
         dtype: float
@@ -108,86 +177,101 @@ groups:
         required: false
       - name: cut_off_wavelength_in_nm
         dtype: float
-        doc:
-          Wavelength at which transmission shifts back to reflection,for mirrors with
-          complex transmission spectra.
+        doc: Wavelength at which transmission shifts back to reflection, for mirrors with complex transmission spectra.
         required: false
       - name: reflection_band_in_nm
         dtype: float
         shape:
-        - 2
-        doc:
-          The range of wavelengths that are primarily reflected.The start and end wavelengths
-          needs to be specified.
+          - 2
+        doc: The range of wavelengths that are primarily reflected. The start and end wavelengths needs to be specified.
         required: false
       - name: transmission_band_in_nm
         dtype: float
         shape:
-        - 2
-        doc:
-          The range of wavelengths that are primarily transmitted.The start and end
-          wavelengths needs to be specified.
+          - 2
+        doc: The range of wavelengths that are primarily transmitted. The start and end wavelengths needs to be specified.
         required: false
       - name: angle_of_incidence_in_degrees
         dtype: float
         doc: Intended angle at which light strikes the mirror.
         required: false
-  - neurodata_type_def: OpticalFilter
-    neurodata_type_inc: Device
-    doc: Extends Device to hold a Optical Filter.
+
+  - neurodata_type_def: DichroicMirror
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold a Dichroic Mirror instance.
+
+  - neurodata_type_def: OpticalFilterModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Optical Filter Model.
     attributes:
       - name: filter_type
         dtype: text
         doc: Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass').
-  - neurodata_type_def: BandOpticalFilter
-    neurodata_type_inc: OpticalFilter
-    doc: Extends OpticalFilter to hold a Band Optical Filter (Bandpass or Bandstop).
+
+  - neurodata_type_def: OpticalFilter
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold an Optical Filter instance.
+
+  - neurodata_type_def: BandOpticalFilterModel
+    neurodata_type_inc: OpticalFilterModel
+    doc: Extends OpticalFilterModel to hold metadata on the Band Optical Filter Model (Bandpass or Bandstop).
     attributes:
       - name: center_wavelength_in_nm
         dtype: float
         doc: The midpoint of the band of wavelengths that the filter transmits or blocks.
       - name: bandwidth_in_nm
         dtype: float
-        doc:
-          The width of the wavelength range that the filter transmits or blocks (full
-          width at half maximum).
-  - neurodata_type_def: EdgeOpticalFilter
+        doc: The width of the wavelength range that the filter transmits or blocks (full width at half maximum).
+
+  - neurodata_type_def: BandOpticalFilter
     neurodata_type_inc: OpticalFilter
-    doc: Extends OpticalFilter to hold an Edge Optical Filter (Longpass or Shortpass).
+    doc: Extends OpticalFilter to hold a Band Optical Filter instance (Bandpass or Bandstop).
+
+  - neurodata_type_def: EdgeOpticalFilterModel
+    neurodata_type_inc: OpticalFilterModel
+    doc: Extends OpticalFilterModel to hold metadata on the Edge Optical Filter Model (Longpass or Shortpass).
     attributes:
       - name: cut_wavelength_in_nm
         dtype: float
-        doc: " The wavelength at which the filter transmits half as much as its peak transmission."
+        doc: The wavelength at which the filter transmits half as much as its peak transmission.
       - name: slope_in_percent_cut_wavelength
         dtype: float
-        doc:
-          The steepness of the transition from high blocking to high transmission (or
-          vice versa). Specified as a percentage of the cut wavelength.
+        doc: The steepness of the transition from high blocking to high transmission (or vice versa). Specified as a percentage of the cut wavelength.
         required: false
       - name: slope_starting_transmission_in_percent
         dtype: float
-        doc:
-          The percent transmission that defines the starting point for the slope (e.g.
-          10%).
+        doc: The percent transmission that defines the starting point for the slope (e.g. 10%).
         required: false
       - name: slope_ending_transmission_in_percent
         dtype: float
-        doc:
-          The percent transmission that defines the ending point for the slope (e.g.
-          80%).
+        doc: The percent transmission that defines the ending point for the slope (e.g. 80%).
         required: false
-  - neurodata_type_def: ObjectiveLens
-    neurodata_type_inc: Device
-    doc: Extends Device to hold a Objective lens.
+
+  - neurodata_type_def: EdgeOpticalFilter
+    neurodata_type_inc: OpticalFilter
+    doc: Extends OpticalFilter to hold an Edge Optical Filter instance (Longpass or Shortpass).
+
+  - neurodata_type_def: ObjectiveLensModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Objective Lens Model.
     attributes:
       - name: numerical_aperture
         dtype: float
         doc: Numerical aperture, e.g., 0.39 NA.
-        required: false
       - name: magnification
         dtype: float
         doc: The magnification of the lens as specified by the manufacturer, i.e. '60.0' is a 60X lens.
         required: false
+
+  - neurodata_type_def: ObjectiveLens
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold metadata on the Objective Lens instance.
+    # groups:
+    # - name: lens_insertion
+    #   neurodata_type_inc: LensInsertion
+    #   doc: Information about the insertion of a lens into the brain.
+    #   quantity: '?'  # optional
+
   - neurodata_type_def: Effector
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Effector or Opsin.
@@ -211,8 +295,5 @@ groups:
         dtype: float
         shape:
           - 3
-        doc:
-          Effector injection location in stereotactic coordinates (AP, ML, DV) mm
-          relative to Bregma.
+        doc: Effector injection location in stereotactic coordinates (AP, ML, DV) mm relative to Bregma.
         required: false
-
