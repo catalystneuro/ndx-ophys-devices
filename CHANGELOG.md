@@ -1,7 +1,8 @@
 # v0.2.0 (Upcoming)
 
 ## Deprecations and Changes
-* All ophys device inherit from Device instead of DeviceModelto disambiguate the instance of a device from the physical device ([#3](https://github.com/catalystneuro/ndx-ophys-devices/issues/3))
+* Remove DeviceModel ([PR#5](https://github.com/catalystneuro/ndx-ophys-devices/pull/5))
+* All ophys device inherit from Device instead of DeviceModel to disambiguate the instance of a device from the physical device ([PR#5](https://github.com/catalystneuro/ndx-ophys-devices/pull/5))
 
 ## Bug Fixes
 
