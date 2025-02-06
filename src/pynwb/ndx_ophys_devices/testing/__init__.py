@@ -1,5 +1,4 @@
 from ._mock import (
-    mock_DeviceModel,
     mock_Indicator,
     mock_Effector,
     mock_OpticalFiber,
@@ -14,7 +13,6 @@ from ._mock import (
 )
 
 __all__ = [
-    "mock_DeviceModel",
     "mock_Indicator",
     "mock_Effector",
     "mock_OpticalFiber",

@@ -19,7 +19,6 @@ if not os.path.exists(__spec_path):
 load_namespaces(str(__spec_path))
 
 
-DeviceModel = get_class("DeviceModel", "ndx-ophys-devices")
 Indicator = get_class("Indicator", "ndx-ophys-devices")
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
 ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")

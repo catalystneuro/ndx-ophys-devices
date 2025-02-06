@@ -4,18 +4,17 @@ This is an NWB extension for storing metadata of devices used in optical experim
 
 This extension consists of 11 new neurodata types:
 
-DeviceModel extends Device to hold metadata on the model of the device. 
 Indicator extends NWBContainer to hold metadata on the fluorescent indicator (ex. label=GCaMP6).
 Effector extends NWBContainer to hold metadata on the effector/opsin (ex. label=hChR2).
-OpticalFiber extends DeviceModel to hold metadata on the optical fiber (ex. numerical_aperture=0.39).
-ExcitationSource extends DeviceModel to hold metadata on the excitation source (ex. excitation_wavelength_in_nm=470.0).
+OpticalFiber extends Device to hold metadata on the optical fiber (ex. numerical_aperture=0.39).
+ExcitationSource extends Device to hold metadata on the excitation source (ex. excitation_wavelength_in_nm=470.0).
 PulsedExcitationSource extends ExcitationSource to hold metadata on the pulsed excitation source (ex. pulse_rate_in_Hz=1000.0).
-Photodetector extends DeviceModel to hold metadata on the photodetector (ex. detected_wavelength_in_nm=520.0).
-DichroicMirror extends DeviceModel to hold metadata on the dichroic mirror (ex. cut_on_wavelength_in_nm=470.0).
-OpticalFilter extends DeviceModel to hold metadata on a general optical filter (ex filter_type='Bandpass')
+Photodetector extends Device to hold metadata on the photodetector (ex. detected_wavelength_in_nm=520.0).
+DichroicMirror extends Device to hold metadata on the dichroic mirror (ex. cut_on_wavelength_in_nm=470.0).
+OpticalFilter extends Device to hold metadata on a general optical filter (ex filter_type='Bandpass')
 BandOpticalFilter extends OpticalFilter to hold metadata on any bandpass or bandstop optical filters (ex. center_wavelength_in_nm=505.0).
 EdgeOpticalFilter extends OpticalFilter to hold metadata on any edge optical filters (ex. cut_wavelength_in_nm=585.0).
-ObjectiveLens extends DeviceModel to hold metadata on the objective lens (ex magnification=60.0)
+ObjectiveLens extends Device to hold metadata on the objective lens (ex magnification=60.0)
 
 ## Installation
 To install the latest stable release through PyPI,
@@ -65,16 +64,12 @@ effector = Effector(
 
 optical_fiber = OpticalFiber(
     name="optical_fiber",
-    manufacturer="fiber manufacturer",
-    model="fiber model",
     numerical_aperture=0.2,
     core_diameter_in_um=400.0,
 )
 
 objective_lens = ObjectiveLens(
     name="objective_lens",
-    manufacturer="objective lens manufacturer",
-    model="objective lens model",
     numerical_aperture=0.39,
     magnification=40.0,
 )
@@ -82,8 +77,6 @@ objective_lens = ObjectiveLens(
 excitation_source = ExcitationSource(
     name="excitation_source",
     description="excitation sources for green indicator",
-    manufacturer="laser manufacturer",
-    model="laser model",
     illumination_type="laser",
     excitation_wavelength_in_nm=470.0,
     power_in_W= 0.7,
@@ -92,8 +85,6 @@ excitation_source = ExcitationSource(
 pulsed_excitation_source = PulsedExcitationSource(
     name="pulsed_excitation_source",
     description="pulsed excitation sources for red indicator",
-    manufacturer="laser manufacturer",
-    model="laser model",
     illumination_type="laser",
     excitation_wavelength_in_nm=525.0,
     peak_power_in_W=0.7,
@@ -106,8 +97,6 @@ pulsed_excitation_source = PulsedExcitationSource(
 photodetector = Photodetector(
     name="photodetector",
     description="photodetector for green emission",
-    manufacturer="photodetector manufacturer",
-    model="photodetector model",
     detector_type="PMT",
     detected_wavelength_in_nm=520.0,
     gain=100.0,
@@ -116,8 +105,6 @@ photodetector = Photodetector(
 dichroic_mirror = DichroicMirror(
     name="dichroic_mirror",
     description="Dichroic mirror for green indicator",
-    manufacturer="dichroic mirror manufacturer",
-    model="dichroic mirror model",
     cut_on_wavelength_in_nm=470.0,
     transmission_band_in_nm=(460.0, 480.0),
     cut_off_wavelength_in_nm=500.0,
@@ -128,8 +115,6 @@ dichroic_mirror = DichroicMirror(
 band_optical_filter = BandOpticalFilter(
     name="band_optical_filter",
     description="excitation filter for green indicator",
-    manufacturer="filter manufacturer",
-    model="filter model",
     center_wavelength_in_nm=480.0,
     bandwidth_in_nm=30.0, # 480±15nm
     filter_type="Bandpass",
@@ -138,7 +123,6 @@ band_optical_filter = BandOpticalFilter(
 edge_optical_filter = EdgeOpticalFilter(
     name="edge_optical_filter",
     description="emission filter for green indicator",
-    model="emission filter model",
     cut_wavelength_in_nm=585.0,
     slope_in_percent_cut_wavelength=1.0,
     slope_starting_transmission_in_percent=10.0,
@@ -198,15 +182,8 @@ classDiagram
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
     direction BT
-    class DeviceModel{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        model : text, optional
-    }
     class DichroicMirror{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -217,7 +194,7 @@ classDiagram
         angle_of_incidence_in_degrees : numeric, optional
     }
     class OpticalFilter{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -241,8 +218,8 @@ classDiagram
         slope_starting_transmission_in_percent : numeric, optional
         slope_ending_transmission_in_percent : numeric, optional
     }
-    DichroicMirror *-- DeviceModel : extends
-    OpticalFilter *-- DeviceModel : extends
+    DichroicMirror *-- Device : extends
+    OpticalFilter *-- Device : extends
     BandOpticalFilter *-- OpticalFilter : extends
     EdgeOpticalFilter *-- OpticalFilter : extends
 ```
@@ -252,15 +229,8 @@ classDiagram
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
     direction BT
-    class DeviceModel{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        model : text, optional
-    }
     class ExcitationSource{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -271,7 +241,7 @@ classDiagram
         exposure_time_in_s : numeric, optional
     }
     class PulsedExcitationSource{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -280,7 +250,7 @@ classDiagram
         pulse_rate_in_Hz : numeric, optional
     }
     class Photodetector{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -290,7 +260,7 @@ classDiagram
         gain_unit : text, false
     }
     class ObjectiveLens{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -298,7 +268,7 @@ classDiagram
         magnification : numeric, optional
     }
     class OpticalFiber{
-        <<DeviceModel>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -306,15 +276,15 @@ classDiagram
         core_diameter_in_um : numeric, optional
     }
     
-    ExcitationSource *-- DeviceModel : extends
+    ExcitationSource *-- Device : extends
     PulsedExcitationSource *-- ExcitationSource : extends
-    Photodetector *-- DeviceModel : extends
-    ObjectiveLens *-- DeviceModel : extends
-    OpticalFilter *-- DeviceModel : extends
+    Photodetector *-- Device : extends
+    ObjectiveLens *-- Device : extends
+    OpticalFilter *-- Device : extends
     BandOpticalFilter *-- OpticalFilter : extends
     EdgeOpticalFilter *-- OpticalFilter : extends
-    DichroicMirror *-- DeviceModel : extends
-    OpticalFiber *-- DeviceModel : extends
+    DichroicMirror *-- Device : extends
+    OpticalFiber *-- Device : extends
 ```
 
 ## Contributing

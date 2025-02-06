@@ -3,7 +3,6 @@
 import pytest
 
 from ndx_ophys_devices.testing import (
-    mock_DeviceModel,
     mock_Indicator,
     mock_Effector,
     mock_OpticalFiber,
@@ -16,10 +15,6 @@ from ndx_ophys_devices.testing import (
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
 )
-
-
-def test_constructor_device_model():
-    mock_DeviceModel()
 
 
 def test_constructor_indicator():
