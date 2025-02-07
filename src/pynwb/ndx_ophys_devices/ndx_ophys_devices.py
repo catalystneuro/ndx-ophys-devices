@@ -1,8 +1,10 @@
 from hdmf.utils import docval, popargs_to_dict, get_docval
-from pynwb import register_class
-from pynwb.device import Device
+from pynwb import register_class, get_class
+
 
 extension_name = "ndx-ophys-devices"
+
+DeviceModel = get_class("DeviceModel", extension_name)
 
 
 def _check_excitation_mode_str(excitation_mode):
@@ -16,7 +18,7 @@ def _check_excitation_mode_str(excitation_mode):
 
 
 @register_class("ExcitationSource", extension_name)
-class ExcitationSource(Device):
+class ExcitationSource(DeviceModel):
     """Excitation light path that illuminates an imaging space."""
 
     __nwbfields__ = (
@@ -29,7 +31,7 @@ class ExcitationSource(Device):
     )
 
     @docval(
-        *get_docval(Device.__init__, "name", "description"),
+        *get_docval(DeviceModel.__init__, "name", "description", "model", "manufacturer"),
         {
             "name": "excitation_wavelength_in_nm",
             "type": float,
