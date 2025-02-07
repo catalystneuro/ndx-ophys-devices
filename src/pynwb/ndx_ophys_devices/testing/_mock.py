@@ -5,22 +5,6 @@ from pynwb.testing.mock.utils import name_generator
 import ndx_ophys_devices
 
 
-def mock_DeviceModel(
-    *,
-    name: Optional[str] = None,
-    description: str = "This is a mock instance of a DeviceModel type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock DeviceModel.",
-    model: str = "A fake model of the mock DeviceModel.",
-) -> ndx_ophys_devices.DeviceModel:
-    device_model = ndx_ophys_devices.DeviceModel(
-        name=name or name_generator("DeviceModel"),
-        description=description,
-        manufacturer=manufacturer,
-        model=model,
-    )
-    return device_model
-
-
 def mock_Indicator(
     *,
     name: Optional[str] = None,
@@ -65,16 +49,12 @@ def mock_OpticalFiber(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a OpticalFiber type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an optical fiber.",
-    model: str = "A fake model of the mock an optical fiber.",
     numerical_aperture: float = 0.2,
     core_diameter_in_um: float = 400.0,
 ) -> ndx_ophys_devices.OpticalFiber:
     optical_fiber = ndx_ophys_devices.OpticalFiber(
         name=name or name_generator("OpticalFiber"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         numerical_aperture=numerical_aperture,
         core_diameter_in_um=core_diameter_in_um,
     )
@@ -85,8 +65,6 @@ def mock_Photodetector(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a Photodetector type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an photodetector.",
-    model: str = "A fake model of the mock an photodetector.",
     detector_type: str = "PMT",
     detected_wavelength_in_nm: float = 520.0,
     gain: float = 100.0,
@@ -95,8 +73,6 @@ def mock_Photodetector(
     photodetector = ndx_ophys_devices.Photodetector(
         name=name or name_generator("Photodetector"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         detector_type=detector_type,
         detected_wavelength_in_nm=detected_wavelength_in_nm,
         gain=gain,
@@ -109,8 +85,6 @@ def mock_DichroicMirror(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a DichroicMirror type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an dichroic mirror.",
-    model: str = "A fake model of the mock an dichroic mirror.",
     cut_on_wavelength_in_nm: float = 470.0,
     cut_off_wavelength_in_nm: float = 500.0,
     reflection_band_in_nm: list = [460.0, 480.0],
@@ -120,8 +94,6 @@ def mock_DichroicMirror(
     dichroic_mirror = ndx_ophys_devices.DichroicMirror(
         name=name or name_generator("DichroicMirror"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         cut_on_wavelength_in_nm=cut_on_wavelength_in_nm,
         cut_off_wavelength_in_nm=cut_off_wavelength_in_nm,
         reflection_band_in_nm=reflection_band_in_nm,
@@ -135,15 +107,11 @@ def mock_OpticalFilter(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a OpticalFilter type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an optical filter.",
-    model: str = "A fake model of the mock an optical filter.",
     filter_type: str = "Longpass",
 ) -> ndx_ophys_devices.EdgeOpticalFilter:
     optical_filter = ndx_ophys_devices.OpticalFilter(
         name=name or name_generator("OpticalFilter"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         filter_type=filter_type,
     )
     return optical_filter
@@ -153,8 +121,6 @@ def mock_BandOpticalFilter(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a BandOpticalFilter type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an band optical filter.",
-    model: str = "A fake model of the mock an band optical filter.",
     center_wavelength_in_nm: float = 505.0,
     bandwidth_in_nm: float = 30.0,  # 505±15nm
     filter_type: str = "Bandpass",
@@ -162,8 +128,6 @@ def mock_BandOpticalFilter(
     band_optical_filter = ndx_ophys_devices.BandOpticalFilter(
         name=name or name_generator("BandOpticalFilter"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         center_wavelength_in_nm=center_wavelength_in_nm,
         bandwidth_in_nm=bandwidth_in_nm,
         filter_type=filter_type,
@@ -175,8 +139,6 @@ def mock_EdgeOpticalFilter(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a EdgeOpticalFilter type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an edge optical filter.",
-    model: str = "A fake model of the mock an edge optical filter.",
     cut_wavelength_in_nm: float = 585.0,
     slope_in_percent_cut_wavelength: float = 1.0,
     slope_starting_transmission_in_percent: float = 10.0,
@@ -186,8 +148,6 @@ def mock_EdgeOpticalFilter(
     edge_optical_filter = ndx_ophys_devices.EdgeOpticalFilter(
         name=name or name_generator("EdgeOpticalFilter"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         cut_wavelength_in_nm=cut_wavelength_in_nm,
         slope_in_percent_cut_wavelength=slope_in_percent_cut_wavelength,
         slope_starting_transmission_in_percent=slope_starting_transmission_in_percent,
@@ -201,16 +161,12 @@ def mock_ObjectiveLens(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a ObjectiveLens type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock an objective lens.",
-    model: str = "A fake model of the mock an objective lens.",
     numerical_aperture: float = 0.2,
     magnification: float = 10.0,
 ) -> ndx_ophys_devices.ObjectiveLens:
     objective_lens = ndx_ophys_devices.ObjectiveLens(
         name=name or name_generator("ObjectiveLens"),
         description=description,
-        manufacturer=manufacturer,
-        model=model,
         numerical_aperture=numerical_aperture,
         magnification=magnification,
     )
@@ -249,8 +205,6 @@ def mock_PulsedExcitationSource(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a PulsedExcitationSource type to be used for rapid testing.",
-    manufacturer: str = "A fake manufacturer of the mock excitation source.",
-    model: str = "A fake model of the mock excitation source.",
     illumination_type: str = "Laser.",
     excitation_mode: str = "two-photon",
     excitation_wavelength_in_nm: float = 500.0,
