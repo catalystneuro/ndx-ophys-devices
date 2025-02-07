@@ -42,6 +42,9 @@ groups:
     neurodata_type_inc: Device
     doc: Extends Device to hold metadata on the Excitation Source.
     attributes:
+      - name: excitation_mode
+        dtype: text
+        doc: The type of excitation used in the light path (e.g., 'one-photon', 'two-photon', 'three-photon', 'other').
       - name: illumination_type
         dtype: text
         doc: 

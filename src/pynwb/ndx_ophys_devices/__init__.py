@@ -18,10 +18,11 @@ if not os.path.exists(__spec_path):
 # Load the namespace
 load_namespaces(str(__spec_path))
 
+from .ndx_ophys_devices import ExcitationSource
 
 Indicator = get_class("Indicator", "ndx-ophys-devices")
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
-ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
+# ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
 PulsedExcitationSource = get_class("PulsedExcitationSource", "ndx-ophys-devices")
 Photodetector = get_class("Photodetector", "ndx-ophys-devices")
 DichroicMirror = get_class("DichroicMirror", "ndx-ophys-devices")
@@ -30,5 +31,19 @@ BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
 EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
 ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
 Effector = get_class("Effector", "ndx-ophys-devices")
+
+__all__ = [
+    "Indicator",
+    "OpticalFiber",
+    "ExcitationSource",
+    "PulsedExcitationSource",
+    "Photodetector",
+    "DichroicMirror",
+    "OpticalFilter",
+    "BandOpticalFilter",
+    "EdgeOpticalFilter",
+    "ObjectiveLens",
+    "Effector",
+]
 
 del load_namespaces, get_class
