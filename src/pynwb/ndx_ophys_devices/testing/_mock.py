@@ -177,6 +177,7 @@ def mock_ExcitationSource(
     *,
     name: Optional[str] = None,
     description: str = "This is a mock instance of a ExcitationSource type to be used for rapid testing.",
+    excitation_mode: str = "one-photon",
     illumination_type: str = "Laser.",
     excitation_wavelength_in_nm: float = 500.0,
     power_in_W: float = 0.7,
@@ -186,6 +187,7 @@ def mock_ExcitationSource(
     excitation_source = ndx_ophys_devices.ExcitationSource(
         name=name or name_generator("ExcitationSource"),
         description=description,
+        excitation_mode=excitation_mode,
         illumination_type=illumination_type,
         excitation_wavelength_in_nm=excitation_wavelength_in_nm,
         power_in_W=power_in_W,
@@ -200,6 +202,7 @@ def mock_PulsedExcitationSource(
     name: Optional[str] = None,
     description: str = "This is a mock instance of a PulsedExcitationSource type to be used for rapid testing.",
     illumination_type: str = "Laser.",
+    excitation_mode: str = "two-photon",
     excitation_wavelength_in_nm: float = 500.0,
     peak_power_in_W: float = 0.7,
     peak_pulse_energy_in_J: float = 0.7,
@@ -210,6 +213,7 @@ def mock_PulsedExcitationSource(
     pulsed_excitation_source = ndx_ophys_devices.PulsedExcitationSource(
         name=name or name_generator("PulsedExcitationSource"),
         description=description,
+        excitation_mode=excitation_mode,
         illumination_type=illumination_type,
         excitation_wavelength_in_nm=excitation_wavelength_in_nm,
         peak_power_in_W=peak_power_in_W,
