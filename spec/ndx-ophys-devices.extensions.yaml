@@ -52,9 +52,12 @@ groups:
     attributes:
       - name: illumination_type
         dtype: text
-        doc: 
+        doc:
           "Type of illumination. Suggested values: LED, Gas Laser (e.g., Argon, Krypton),
-           Solid-State Laser (e.g., Diode, DPSS)."
+          Solid-State Laser (e.g., Diode, DPSS)."
+      - name: excitation_mode
+        dtype: text
+        doc: The type of excitation used in the light path (e.g., 'one-photon', 'two-photon', 'three-photon', 'other').
       - name: excitation_wavelength_in_nm
         dtype: float
         doc: Excitation wavelength of the stimulation light (nanometers).
@@ -123,7 +126,7 @@ groups:
       - name: reflection_band_in_nm
         dtype: float
         shape:
-        - 2
+          - 2
         doc:
           The range of wavelengths that are primarily reflected.The start and end wavelengths
           needs to be specified.
@@ -131,7 +134,7 @@ groups:
       - name: transmission_band_in_nm
         dtype: float
         shape:
-        - 2
+          - 2
         doc:
           The range of wavelengths that are primarily transmitted.The start and end
           wavelengths needs to be specified.
@@ -223,4 +226,3 @@ groups:
           Effector injection location in stereotactic coordinates (AP, ML, DV) mm
           relative to Bregma.
         required: false
-
