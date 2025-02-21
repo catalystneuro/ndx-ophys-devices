@@ -8,4 +8,4 @@
 ## Features
 
 ## Improvements
-
+* Add example notebook ([PR#8](https://github.com/catalystneuro/ndx-ophys-devices/pull/8))
