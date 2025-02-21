@@ -84,6 +84,7 @@ excitation_source = ExcitationSource(
     description="excitation sources for green indicator",
     manufacturer="laser manufacturer",
     model="laser model",
+    excitation_mode = "one-photon",
     illumination_type="laser",
     excitation_wavelength_in_nm=470.0,
     power_in_W= 0.7,
@@ -94,6 +95,7 @@ pulsed_excitation_source = PulsedExcitationSource(
     description="pulsed excitation sources for red indicator",
     manufacturer="laser manufacturer",
     model="laser model",
+    excitation_mode = "two-photon",
     illumination_type="laser",
     excitation_wavelength_in_nm=525.0,
     peak_power_in_W=0.7,
@@ -221,7 +223,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        filter_type : text, optional
+        filter_type : text
     }
     class BandOpticalFilter{
         <<OpticalFilter>>
@@ -264,8 +266,9 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        illumination_type : text, optional
-        excitation_wavelength_in_nm : numeric, optional
+        illumination_type : text
+        excitation_mode : text
+        excitation_wavelength_in_nm : numeric
         power_in_W : numeric, optional
         intensity_in_W_per_m2 : numeric, optional
         exposure_time_in_s : numeric, optional
@@ -284,8 +287,8 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        detector_type : text, optional
-        detected_wavelength_in_nm : numeric, optional
+        detector_type : text
+        detected_wavelength_in_nm : numeric
         gain : numeric, optional
         gain_unit : text, false
     }
@@ -327,7 +330,7 @@ From your local copy directory, use the following commands.
 
 If you have not already, you will need to clone the repo:
 ```bash
-$ git clone https://github.com/catalystneuro/neuroconv
+$ git clone https://github.com/catalystneuro/ndx-ophys-devices
 ```
 
 First create a new branch to work on

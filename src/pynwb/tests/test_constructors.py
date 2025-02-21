@@ -62,8 +62,32 @@ def test_constructor_excitation_source():
     mock_ExcitationSource()
 
 
+def test_constructor_excitation_source_with_wrong_mode():
+    excitation_mode = "1P"
+    expected_error_message = (
+        f"excitation_mode must be one of 'one-photon', 'two-photon', "
+        f"'three-photon', 'other', not {excitation_mode}. "
+        f"If you want to include a different excitation mode, please open an issue on GitHub at "
+        f"https://github.com/CatalystNeuro/ndx-microscopy/issues"
+    )
+    with pytest.raises(ValueError, match=expected_error_message):
+        _ = mock_ExcitationSource(excitation_mode=excitation_mode)
+
+
 def test_constructor_pulsed_excitation_source():
     mock_PulsedExcitationSource()
+
+
+def test_constructor_pulsed_excitation_source_with_wrong_mode():
+    excitation_mode = "1P"
+    expected_error_message = (
+        f"excitation_mode must be one of 'one-photon', 'two-photon', "
+        f"'three-photon', 'other', not {excitation_mode}. "
+        f"If you want to include a different excitation mode, please open an issue on GitHub at "
+        f"https://github.com/CatalystNeuro/ndx-microscopy/issues"
+    )
+    with pytest.raises(ValueError, match=expected_error_message):
+        _ = mock_PulsedExcitationSource(excitation_mode=excitation_mode)
 
 
 if __name__ == "__main__":
