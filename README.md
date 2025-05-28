@@ -2,19 +2,36 @@
 
 This is an NWB extension for storing metadata of devices used in optical experimental setup (microscopy, fiber photometry, optogenetic stimulation etc.)
 
-This extension consists of 11 new neurodata types:
+This extension consists of neurodata types in the following categories:
 
-Indicator extends NWBContainer to hold metadata on the fluorescent indicator (ex. label=GCaMP6).
-Effector extends NWBContainer to hold metadata on the effector/opsin (ex. label=hChR2).
-OpticalFiber extends Device to hold metadata on the optical fiber (ex. numerical_aperture=0.39).
-ExcitationSource extends Device to hold metadata on the excitation source (ex. excitation_wavelength_in_nm=470.0).
-PulsedExcitationSource extends ExcitationSource to hold metadata on the pulsed excitation source (ex. pulse_rate_in_Hz=1000.0).
-Photodetector extends Device to hold metadata on the photodetector (ex. detected_wavelength_in_nm=520.0).
-DichroicMirror extends Device to hold metadata on the dichroic mirror (ex. cut_on_wavelength_in_nm=470.0).
-OpticalFilter extends Device to hold metadata on a general optical filter (ex filter_type='Bandpass')
-BandOpticalFilter extends OpticalFilter to hold metadata on any bandpass or bandstop optical filters (ex. center_wavelength_in_nm=505.0).
-EdgeOpticalFilter extends OpticalFilter to hold metadata on any edge optical filters (ex. cut_wavelength_in_nm=585.0).
-ObjectiveLens extends Device to hold metadata on the objective lens (ex magnification=60.0)
+**Container Classes:**
+- **Indicator** extends NWBContainer to hold metadata on the fluorescent indicator.
+- **Effector** extends NWBContainer to hold metadata on the effector/opsin.
+- **LensPositioning** extends NWBContainer to hold metadata on the positioning of a lens relative to the brain.
+- **FiberInsertion** extends NWBContainer to hold metadata on the insertion of a fiber into the brain.
+
+**Model Classes:**
+- **DeviceModel** extends NWBContainer to hold metadata on device models.
+- **OpticalFiberModel** extends DeviceModel to hold metadata on the optical fiber model.
+- **ExcitationSourceModel** extends DeviceModel to hold metadata on the excitation source model.
+- **PhotodetectorModel** extends DeviceModel to hold metadata on the photodetector model.
+- **DichroicMirrorModel** extends DeviceModel to hold metadata on the dichroic mirror model.
+- **OpticalFilterModel** extends DeviceModel to hold metadata on a general optical filter model.
+- **BandOpticalFilterModel** extends OpticalFilterModel to hold metadata on any bandpass or bandstop optical filter models.
+- **EdgeOpticalFilterModel** extends OpticalFilterModel to hold metadata on any edge optical filter models.
+- **OpticalLensModel** extends DeviceModel to hold metadata on the optical lens model.
+
+**Device Instance Classes:**
+- **DeviceInstance** extends Device to hold metadata on device instances.
+- **OpticalFiber** extends DeviceInstance to hold metadata on optical fiber instances.
+- **ExcitationSource** extends DeviceInstance to hold metadata on excitation source instances.
+- **PulsedExcitationSource** extends ExcitationSource to hold metadata on pulsed excitation source instances.
+- **Photodetector** extends DeviceInstance to hold metadata on photodetector instances.
+- **DichroicMirror** extends DeviceInstance to hold metadata on dichroic mirror instances.
+- **OpticalFilter** extends DeviceInstance to hold metadata on general optical filter instances.
+- **BandOpticalFilter** extends OpticalFilter to hold metadata on bandpass or bandstop optical filter instances.
+- **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filter instances.
+- **OpticalLens** extends DeviceInstance to hold metadata on optical lens instances.
 
 ## Installation
 To install the latest stable release through PyPI,
@@ -29,17 +46,33 @@ import datetime
 import numpy as np
 from pynwb import NWBFile
 from ndx_ophys_devices import (
+    # Container classes
     Indicator,
+    Effector,
+    LensPositioning,
+    FiberInsertion,
+    
+    # Model classes
+    OpticalFiberModel,
+    ExcitationSourceModel,
+    PhotodetectorModel,
+    DichroicMirrorModel,
+    OpticalFilterModel,
+    BandOpticalFilterModel,
+    EdgeOpticalFilterModel,
+    OpticalLensModel,
+    
+    # Device instance classes
     OpticalFiber,
     ExcitationSource,
     PulsedExcitationSource,
     Photodetector,
     DichroicMirror,
+    OpticalFilter,
     BandOpticalFilter,
     EdgeOpticalFilter,
-    ObjectiveLens,
-    Effector,
-    )
+    OpticalLens,
+)
 
 nwbfile = NWBFile(
     session_description='session_description',
@@ -47,6 +80,7 @@ nwbfile = NWBFile(
     session_start_time=datetime.datetime.now(datetime.timezone.utc)
 )
 
+# Create container objects
 indicator = Indicator(
     name="indicator",
     description="Green indicator",
@@ -54,6 +88,7 @@ indicator = Indicator(
     injection_brain_region="VTA",
     injection_coordinates_in_mm=(3.0, 2.0, 1.0),
 )
+
 effector = Effector(
     name="effector",
     description="Excitatory opsin",
@@ -62,31 +97,145 @@ effector = Effector(
     injection_coordinates_in_mm=(3.0, 2.0, 1.0),
 )
 
-optical_fiber = OpticalFiber(
-    name="optical_fiber",
+fiber_insertion = FiberInsertion(
+    name="fiber_insertion",
+    description="Fiber insertion for optogenetics",
+    depth_in_mm=3.5,
+    insertion_position_ap_in_mm=2.0,
+    insertion_position_ml_in_mm=1.5,
+    insertion_position_dv_in_mm=3.0,
+    position_reference="bregma",
+    hemisphere="right",
+    insertion_angle_pitch_in_deg=10.0,
+)
+
+lens_positioning = LensPositioning(
+    name="lens_positioning",
+    description="Lens positioning for imaging",
+    positioning_type="surface",
+    depth_in_mm=0.0,
+    target_position_ap_in_mm=1.5,
+    target_position_ml_in_mm=2.0,
+    target_position_dv_in_mm=0.0,
+    working_distance_in_mm=2.0,
+    position_reference="bregma",
+    hemisphere="left",
+    optical_axis_angle_pitch_in_deg=0.0,
+)
+
+# Create model objects
+optical_fiber_model = OpticalFiberModel(
+    name="optical_fiber_model",
+    manufacturer="Fiber Manufacturer",
+    model_number="OF-123",
+    description="Optical fiber model for optogenetics",
     numerical_aperture=0.2,
     core_diameter_in_um=400.0,
 )
+nwbfile.add_device(optical_fiber_model)
 
-objective_lens = ObjectiveLens(
-    name="objective_lens",
+optical_lens_model = OpticalLensModel(
+    name="optical_lens_model",
+    manufacturer="Lens Manufacturer",
+    model_number="OL-123",
+    description="Optical lens model for imaging",
     numerical_aperture=0.39,
     magnification=40.0,
+)
+nwbfile.add_device(optical_lens_model)
+
+excitation_source_model = ExcitationSourceModel(
+    name="excitation_source_model",
+    manufacturer="Laser Manufacturer",
+    model_number="ES-123",
+    description="Excitation source model for green indicator",
+    source_type="laser",
+    excitation_mode="one-photon",
+    wavelength_range_in_nm=[400.0, 800.0],
+)
+nwbfile.add_device(excitation_source_model)
+
+photodetector_model = PhotodetectorModel(
+    name="photodetector_model",
+    manufacturer="Detector Manufacturer",
+    model_number="PD-123",
+    description="Photodetector model for green emission",
+    detector_type="PMT",
+    wavelength_range_in_nm=[400.0, 800.0],
+    gain=100.0,
+    gain_unit="A/W",
+)
+nwbfile.add_device(photodetector_model)
+
+dichroic_mirror_model = DichroicMirrorModel(
+    name="dichroic_mirror_model",
+    manufacturer="Mirror Manufacturer",
+    model_number="DM-123",
+    description="Dichroic mirror model for green indicator",
+    cut_on_wavelength_in_nm=470.0,
+    cut_off_wavelength_in_nm=500.0,
+    reflection_band_in_nm=[460.0, 480.0],
+    transmission_band_in_nm=[490.0, 520.0],
+    angle_of_incidence_in_degrees=45.0,
+)
+nwbfile.add_device(dichroic_mirror_model)
+
+band_optical_filter_model = BandOpticalFilterModel(
+    name="band_optical_filter_model",
+    manufacturer="Filter Manufacturer",
+    model_number="BOF-123",
+    description="Band optical filter model for green indicator",
+    filter_type="Bandpass",
+    center_wavelength_in_nm=480.0,
+    bandwidth_in_nm=30.0,  # 480±15nm
+)
+nwbfile.add_device(band_optical_filter_model)
+
+edge_optical_filter_model = EdgeOpticalFilterModel(
+    name="edge_optical_filter_model",
+    manufacturer="Filter Manufacturer",
+    model_number="EOF-123",
+    description="Edge optical filter model for green indicator",
+    filter_type="Longpass",
+    cut_wavelength_in_nm=585.0,
+    slope_in_percent_cut_wavelength=1.0,
+    slope_starting_transmission_in_percent=10.0,
+    slope_ending_transmission_in_percent=80.0,
+)
+nwbfile.add_device(edge_optical_filter_model)
+
+# Create device instances
+optical_fiber = OpticalFiber(
+    name="optical_fiber",
+    description="Optical fiber for optogenetics",
+    serial_number="OF-SN-123456",
+    model=optical_fiber_model,
+    fiber_insertion=fiber_insertion,
+)
+
+optical_lens = OpticalLens(
+    name="optical_lens",
+    description="Optical lens for imaging",
+    serial_number="OL-SN-123456",
+    model=optical_lens_model,
+    lens_positioning=lens_positioning,
 )
 
 excitation_source = ExcitationSource(
     name="excitation_source",
-    description="excitation sources for green indicator",
-    illumination_type="laser",
-    excitation_wavelength_in_nm=470.0,
-    power_in_W= 0.7,
-    intensity_in_W_per_m2= 0.005,
+    description="Excitation source for green indicator",
+    serial_number="ES-SN-123456",
+    model=excitation_source_model,
+    power_in_W=0.7,
+    intensity_in_W_per_m2=0.005,
+    exposure_time_in_s=2.51e-13,
 )
+
 pulsed_excitation_source = PulsedExcitationSource(
     name="pulsed_excitation_source",
-    description="pulsed excitation sources for red indicator",
-    illumination_type="laser",
-    excitation_wavelength_in_nm=525.0,
+    description="Pulsed excitation source for red indicator",
+    serial_number="PES-SN-123456",
+    model=excitation_source_model,
     peak_power_in_W=0.7,
     peak_pulse_energy_in_J=0.7,
     intensity_in_W_per_m2=0.005,
@@ -96,45 +245,37 @@ pulsed_excitation_source = PulsedExcitationSource(
 
 photodetector = Photodetector(
     name="photodetector",
-    description="photodetector for green emission",
-    detector_type="PMT",
-    detected_wavelength_in_nm=520.0,
-    gain=100.0,
+    description="Photodetector for green emission",
+    serial_number="PD-SN-123456",
+    model=photodetector_model,
 )
 
 dichroic_mirror = DichroicMirror(
     name="dichroic_mirror",
     description="Dichroic mirror for green indicator",
-    cut_on_wavelength_in_nm=470.0,
-    transmission_band_in_nm=(460.0, 480.0),
-    cut_off_wavelength_in_nm=500.0,
-    reflection_band_in_nm=(490.0, 520.0),
-    angle_of_incidence_in_degrees=45.0,
+    serial_number="DM-SN-123456",
+    model=dichroic_mirror_model,
 )
 
 band_optical_filter = BandOpticalFilter(
     name="band_optical_filter",
-    description="excitation filter for green indicator",
-    center_wavelength_in_nm=480.0,
-    bandwidth_in_nm=30.0, # 480±15nm
-    filter_type="Bandpass",
+    description="Band optical filter for green indicator",
+    serial_number="BOF-SN-123456",
+    model=band_optical_filter_model,
 )
 
 edge_optical_filter = EdgeOpticalFilter(
     name="edge_optical_filter",
-    description="emission filter for green indicator",
-    cut_wavelength_in_nm=585.0,
-    slope_in_percent_cut_wavelength=1.0,
-    slope_starting_transmission_in_percent=10.0,
-    slope_ending_transmission_in_percent=80.0,
-    filter_type="Longpass",
+    description="Edge optical filter for green indicator",
+    serial_number="EOF-SN-123456",
+    model=edge_optical_filter_model,
 )
 
-
+# Add objects to the NWBFile
 nwbfile.add_lab_metadata(indicator)
 nwbfile.add_lab_metadata(effector)
 nwbfile.add_device(optical_fiber)
-nwbfile.add_device(objective_lens)
+nwbfile.add_device(optical_lens)
 nwbfile.add_device(excitation_source)
 nwbfile.add_device(pulsed_excitation_source)
 nwbfile.add_device(photodetector)
@@ -176,14 +317,269 @@ classDiagram
         injection_coordinates_in_mm : numeric, length 3, optional
     }
 ```
-#### Optical Filters
+
+#### Device Models and Instances
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
-    direction BT
-    class DichroicMirror{
+    direction TB
+    
+    class DeviceModel{
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        manufacturer : text
+        model_number : text, optional
+    }
+    
+    class DeviceInstance{
         <<Device>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        serial_number : text, optional
+        --------------------------------------
+        links
+        --------------------------------------
+        model : DeviceModel, optional
+    }
+    
+    class ExcitationSourceModel{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        source_type : text, optional
+        excitation_mode : text, optional
+        wavelength_range_in_nm : numeric, optional
+    }
+    
+    class ExcitationSource{
+        <<DeviceInstance>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        power_in_W : numeric, optional
+        intensity_in_W_per_m2 : numeric, optional
+        exposure_time_in_s : numeric, optional
+    }
+    
+    class PulsedExcitationSource{
+        <<ExcitationSource>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        peak_power_in_W : numeric, optional
+        peak_pulse_energy_in_J : numeric, optional
+        pulse_rate_in_Hz : numeric, optional
+    }
+    
+    class PhotodetectorModel{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        detector_type : text, optional
+        wavelength_range_in_nm : numeric, optional
+        gain : numeric, optional
+        gain_unit : text, optional
+    }
+    
+    class Photodetector{
+        <<DeviceInstance>>
+    }
+    
+    DeviceInstance o--> DeviceModel : links
+
+    DeviceModel <|-- ExcitationSourceModel : extends
+    DeviceInstance <|-- ExcitationSource : extends
+    ExcitationSource o--> ExcitationSourceModel : links
+    ExcitationSource <|-- PulsedExcitationSource : extends
+    PulsedExcitationSource o--> ExcitationSourceModel : links
+
+    DeviceModel <|-- PhotodetectorModel : extends
+    DeviceInstance <|-- Photodetector : extends
+    Photodetector o--> PhotodetectorModel : links
+```
+
+#### Optical Fiber and Optical Lens
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
+classDiagram
+    direction TB    
+    
+    class DeviceModel{
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        manufacturer : text
+        model_number : text, optional
+    }
+    
+    class DeviceInstance{
+        <<Device>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        serial_number : text, optional
+        --------------------------------------
+        links
+        --------------------------------------
+        model : DeviceModel, optional
+    }
+    
+    class FiberInsertion{
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        insertion_position_ap_in_mm : numeric, optional
+        insertion_position_ml_in_mm : numeric, optional
+        insertion_position_dv_in_mm : numeric, optional
+        depth_in_mm : numeric, optional
+        position_reference : text, optional
+        hemisphere : text, optional
+        insertion_angle_yaw_in_deg : numeric, optional
+        insertion_angle_pitch_in_deg : numeric, optional
+        insertion_angle_roll_in_deg : numeric, optional
+    }
+
+     class OpticalFiberModel{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        numerical_aperture : numeric, optional
+        core_diameter_in_um : numeric, optional
+    }
+    
+    class OpticalFiber{
+        <<DeviceInstance>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        fiber_insertion : FiberInsertion, optional
+    }
+    
+    class LensPositioning{
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        positioning_type : text
+        target_position_ap_in_mm : numeric, optional
+        target_position_ml_in_mm : numeric, optional
+        target_position_dv_in_mm : numeric, optional
+        depth_in_mm : numeric
+        working_distance_in_mm : numeric, optional
+        position_reference : text, optional
+        hemisphere : text, optional
+        optical_axis_angle_yaw_in_deg : numeric, optional
+        optical_axis_angle_pitch_in_deg : numeric, optional
+        optical_axis_angle_roll_in_deg : numeric, optional
+    }
+
+    class OpticalLensModel{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        numerical_aperture : numeric, optional
+        magnification : numeric, optional
+    }
+    
+    class OpticalLens{
+        <<DeviceInstance>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        lens_positioning : LensPositioning, optional
+    }
+
+    DeviceModel <|-- OpticalFiberModel : extends
+    DeviceInstance <|-- OpticalFiber : extends
+    OpticalFiber *-- FiberInsertion : contains
+    OpticalFiber o--> OpticalFiberModel : links
+
+    DeviceModel <|-- OpticalLensModel : extends
+    DeviceInstance <|-- OpticalLens : extends
+    OpticalLens *-- LensPositioning : contains
+    OpticalLens o--> OpticalLensModel : links
+```
+
+#### Optical Filters and Dichroic Mirrors
+
+```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
+classDiagram
+    direction TB 
+    
+    class DeviceModel{
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        manufacturer : text
+        model_number : text, optional
+    }
+    
+    class DeviceInstance{
+        <<Device>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        serial_number : text, optional
+        --------------------------------------
+        links
+        --------------------------------------
+        model : DeviceModel, optional
+    }
+    
+    class OpticalFilterModel{
+        <<DeviceModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        filter_type : text, optional
+    }
+    
+    class OpticalFilter{
+        <<DeviceInstance>>
+    }
+    
+    class BandOpticalFilterModel{
+        <<OpticalFilterModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        center_wavelength_in_nm : numeric
+        bandwidth_in_nm : numeric
+    }
+    
+    class BandOpticalFilter{
+        <<OpticalFilter>>
+    }
+    
+    class EdgeOpticalFilterModel{
+        <<OpticalFilterModel>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        cut_wavelength_in_nm : numeric
+        slope_in_percent_cut_wavelength : numeric, optional
+        slope_starting_transmission_in_percent : numeric, optional
+        slope_ending_transmission_in_percent : numeric, optional
+    }
+    
+    class EdgeOpticalFilter{
+        <<OpticalFilter>>
+    }
+    
+    class DichroicMirrorModel{
+        <<DeviceModel>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -193,98 +589,27 @@ classDiagram
         transmission_band_in_nm : numeric, optional
         angle_of_incidence_in_degrees : numeric, optional
     }
-    class OpticalFilter{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        filter_type : text, optional
-    }
-    class BandOpticalFilter{
-        <<OpticalFilter>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        center_wavelength_in_nm : numeric
-        bandwidth_in_nm : numeric
-    }
-    class EdgeOpticalFilter{
-        <<OpticalFilter>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        cut_wavelength_in_nm : numeric
-        slope_in_percent_cut_wavelength : numeric, optional
-        slope_starting_transmission_in_percent : numeric, optional
-        slope_ending_transmission_in_percent : numeric, optional
-    }
-    DichroicMirror *-- Device : extends
-    OpticalFilter *-- Device : extends
-    BandOpticalFilter *-- OpticalFilter : extends
-    EdgeOpticalFilter *-- OpticalFilter : extends
-```
-#### Other devices in the optical setup
-
-```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
-classDiagram
-    direction BT
-    class ExcitationSource{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        illumination_type : text, optional
-        excitation_wavelength_in_nm : numeric, optional
-        power_in_W : numeric, optional
-        intensity_in_W_per_m2 : numeric, optional
-        exposure_time_in_s : numeric, optional
-    }
-    class PulsedExcitationSource{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        peak_power_in_W : numeric, optional
-        peak_pulse_energy_in_J : numeric, optional
-        pulse_rate_in_Hz : numeric, optional
-    }
-    class Photodetector{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        detector_type : text, optional
-        detected_wavelength_in_nm : numeric, optional
-        gain : numeric, optional
-        gain_unit : text, false
-    }
-    class ObjectiveLens{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        numerical_aperture : numeric, optional
-        magnification : numeric, optional
-    }
-    class OpticalFiber{
-        <<Device>>
-        --------------------------------------
-        attributes
-        --------------------------------------
-        numerical_aperture : numeric, optional
-        core_diameter_in_um : numeric, optional
+    
+    class DichroicMirror{
+        <<DeviceInstance>>
     }
     
-    ExcitationSource *-- Device : extends
-    PulsedExcitationSource *-- ExcitationSource : extends
-    Photodetector *-- Device : extends
-    ObjectiveLens *-- Device : extends
-    OpticalFilter *-- Device : extends
-    BandOpticalFilter *-- OpticalFilter : extends
-    EdgeOpticalFilter *-- OpticalFilter : extends
-    DichroicMirror *-- Device : extends
-    OpticalFiber *-- Device : extends
+
+    DeviceModel <|-- OpticalFilterModel : extends
+    DeviceInstance <|-- OpticalFilter : extends
+    OpticalFilter o--> OpticalFilterModel : links
+    
+    OpticalFilterModel <|-- BandOpticalFilterModel : extends
+    OpticalFilter <|-- BandOpticalFilter : extends
+    BandOpticalFilter o--> BandOpticalFilterModel : links
+    
+    OpticalFilterModel <|-- EdgeOpticalFilterModel : extends
+    OpticalFilter <|-- EdgeOpticalFilter : extends
+    EdgeOpticalFilter o--> EdgeOpticalFilterModel : links
+
+    DeviceModel <|-- DichroicMirrorModel : extends
+    DeviceInstance <|-- DichroicMirror : extends
+    DichroicMirror o--> DichroicMirrorModel : links
 ```
 
 ## Contributing
