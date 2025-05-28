@@ -107,6 +107,8 @@ def mock_OpticalFiber(
 ) -> ndx_ophys_devices.OpticalFiber:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_OpticalFiberModel()
+    if fiber_insertion is None:
+        fiber_insertion = mock_FiberInsertion()
     optical_fiber = ndx_ophys_devices.OpticalFiber(
         name=name or name_generator("OpticalFiber"),
         description=description,
@@ -353,6 +355,8 @@ def mock_OpticalLens(
 ) -> ndx_ophys_devices.OpticalLens:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_OpticalLensModel()
+    if lens_positioning is None:
+        lens_positioning = mock_LensPositioning()
     objective_lens = ndx_ophys_devices.OpticalLens(
         name=name or name_generator("OpticalLens"),
         description=description,
@@ -439,7 +443,6 @@ def mock_PulsedExcitationSource(
 
 def mock_LensPositioning(
     *,
-    name: Optional[str] = None,
     positioning_type: str = "surface",
     target_position_ap_in_mm: Optional[float] = 2.0,
     target_position_ml_in_mm: Optional[float] = 1.5,
@@ -453,7 +456,7 @@ def mock_LensPositioning(
     optical_axis_angle_roll_in_deg: Optional[float] = 0.0,
 ) -> ndx_ophys_devices.LensPositioning:
     lens_positioning = ndx_ophys_devices.LensPositioning(
-        name=name or name_generator("LensPositioning"),
+        name="lens_positioning",
         positioning_type=positioning_type,
         target_position_ap_in_mm=target_position_ap_in_mm,
         target_position_ml_in_mm=target_position_ml_in_mm,
@@ -471,7 +474,6 @@ def mock_LensPositioning(
 
 def mock_FiberInsertion(
     *,
-    name: Optional[str] = None,
     insertion_position_ap_in_mm: Optional[float] = 2.0,
     insertion_position_ml_in_mm: Optional[float] = 1.5,
     insertion_position_dv_in_mm: Optional[float] = 0.0,
@@ -483,7 +485,7 @@ def mock_FiberInsertion(
     insertion_angle_roll_in_deg: Optional[float] = 0.0,
 ) -> ndx_ophys_devices.FiberInsertion:
     fiber_insertion = ndx_ophys_devices.FiberInsertion(
-        name=name or name_generator("FiberInsertion"),
+        name="fiber_insertion",
         insertion_position_ap_in_mm=insertion_position_ap_in_mm,
         insertion_position_ml_in_mm=insertion_position_ml_in_mm,
         insertion_position_dv_in_mm=insertion_position_dv_in_mm,

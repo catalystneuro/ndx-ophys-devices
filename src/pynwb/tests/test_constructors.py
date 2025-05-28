@@ -34,7 +34,6 @@ def test_constructor_device_model():
 
 
 def test_constructor_device_instance():
-    mock_DeviceInstance()
     model = mock_DeviceModel()
     mock_DeviceInstance(model=model)
 
@@ -53,9 +52,6 @@ def test_constructor_optical_fiber_model():
 
 def test_constructor_optical_fiber():
     mock_OpticalFiber()
-    model = mock_OpticalFiberModel()
-    fiber_insertion = mock_FiberInsertion()
-    mock_OpticalFiber(model=model, fiber_insertion=fiber_insertion)
 
 
 def test_constructor_photodetector_model():
@@ -64,8 +60,6 @@ def test_constructor_photodetector_model():
 
 def test_constructor_photodetector():
     mock_Photodetector()
-    model = mock_PhotodetectorModel()
-    mock_Photodetector(model=model)
 
 
 def test_constructor_dichroic_mirror_model():
@@ -74,8 +68,6 @@ def test_constructor_dichroic_mirror_model():
 
 def test_constructor_dichroic_mirror():
     mock_DichroicMirror()
-    model = mock_DichroicMirrorModel()
-    mock_DichroicMirror(model=model)
 
 
 def test_constructor_optical_filter_model():
@@ -84,8 +76,6 @@ def test_constructor_optical_filter_model():
 
 def test_constructor_optical_filter():
     mock_OpticalFilter()
-    model = mock_OpticalFilterModel()
-    mock_OpticalFilter(model=model)
 
 
 def test_constructor_band_optical_filter_model():
@@ -94,8 +84,6 @@ def test_constructor_band_optical_filter_model():
 
 def test_constructor_band_optical_filter():
     mock_BandOpticalFilter()
-    model = mock_BandOpticalFilterModel()
-    mock_BandOpticalFilter(model=model)
 
 
 def test_constructor_edge_optical_filter_model():
@@ -104,8 +92,6 @@ def test_constructor_edge_optical_filter_model():
 
 def test_constructor_edge_optical_filter():
     mock_EdgeOpticalFilter()
-    model = mock_EdgeOpticalFilterModel()
-    mock_EdgeOpticalFilter(model=model)
 
 
 def test_constructor_optical_lens_model():
@@ -114,9 +100,6 @@ def test_constructor_optical_lens_model():
 
 def test_constructor_optical_lens():
     mock_OpticalLens()
-    model = mock_OpticalLensModel()
-    lens_positioning = mock_LensPositioning()
-    mock_OpticalLens(model=model, lens_positioning=lens_positioning)
 
 
 def test_constructor_excitation_source_model():
@@ -125,14 +108,10 @@ def test_constructor_excitation_source_model():
 
 def test_constructor_excitation_source():
     mock_ExcitationSource()
-    model = mock_ExcitationSourceModel()
-    mock_ExcitationSource(model=model)
 
 
 def test_constructor_pulsed_excitation_source():
     mock_PulsedExcitationSource()
-    model = mock_ExcitationSourceModel()
-    mock_PulsedExcitationSource(model=model)
 
 
 def test_constructor_lens_positioning():

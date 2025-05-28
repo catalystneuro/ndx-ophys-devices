@@ -1,8 +1,8 @@
 groups:
   # DeviceInstance and DeviceModel are needed to allow inheritance for the new objects.
-  # TODO remove when these two are merged to core [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608)
+  # TODO remove when [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608) is merged to core
   - neurodata_type_def: DeviceInstance
-    neurodata_type_inc: NWBContainer
+    neurodata_type_inc: Device
     doc:
       Metadata about a specific instance of a data acquisition device, e.g., recording system, electrode, microscope.
       Link to a DeviceModel.model to represent information about the model of the device instance.
@@ -23,7 +23,7 @@ groups:
         doc: The model of the device instance.
         quantity: "?"
   - neurodata_type_def: DeviceModel
-    neurodata_type_inc: NWBContainer
+    neurodata_type_inc: Device
     doc:
       Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
       This should be extended for specific types of device models to include additional attributes specific to each type.

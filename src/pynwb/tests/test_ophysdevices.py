@@ -1,8 +1,16 @@
-from pynwb import NWBFile
+from datetime import datetime
+
+from pytz import UTC
+from pynwb.testing import TestCase as pynwb_TestCase
 from pynwb.testing.mock.file import mock_NWBFile
-import pytest
+
+import pynwb
 
 from ndx_ophys_devices.testing import (
+    mock_DeviceModel,
+    mock_DeviceInstance,
+    mock_Indicator,
+    mock_Effector,
     mock_OpticalFiberModel,
     mock_OpticalFiber,
     mock_PhotodetectorModel,
@@ -20,38 +28,77 @@ from ndx_ophys_devices.testing import (
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
+    mock_LensPositioning,
+    mock_FiberInsertion,
 )
 
 
-@pytest.fixture(scope="module")
-def nwbfile_with_ophys_devices():
-    nwbfile = mock_NWBFile()
+class TestOphysDevicesSimpleRoundtrip(pynwb_TestCase):
+    """
+    Simple roundtrip test for OphysDevices.
 
-    # Create models
-    optical_fiber_model = mock_OpticalFiberModel()
-    excitation_source_model = mock_ExcitationSourceModel()
-    photodetector_model = mock_PhotodetectorModel()
-    dichroic_mirror_model = mock_DichroicMirrorModel()
-    optical_filter_model = mock_OpticalFilterModel()
-    band_optical_filter_model = mock_BandOpticalFilterModel()
-    edge_optical_filter_model = mock_EdgeOpticalFilterModel()
-    optical_lens_model = mock_OpticalLensModel()
+    This test creates various optical physiology devices, adds them to an NWBFile,
+    writes the file to disk, reads it back, and verifies that all devices are
+    correctly preserved in the roundtrip process.
+    """
 
-    # Create devices with models
-    mock_OpticalFiber(model=optical_fiber_model)
-    mock_ExcitationSource(model=excitation_source_model)
-    mock_PulsedExcitationSource(model=excitation_source_model)
-    mock_Photodetector(model=photodetector_model)
-    mock_DichroicMirror(model=dichroic_mirror_model)
-    mock_OpticalFilter(model=optical_filter_model)
-    mock_BandOpticalFilter(model=band_optical_filter_model)
-    mock_EdgeOpticalFilter(model=edge_optical_filter_model)
-    mock_OpticalLens(model=optical_lens_model)
+    def setUp(self):
+        self.nwbfile_path = "test_ophys_devices_roundtrip.nwb"
 
-    return nwbfile
+    def tearDown(self):
+        pynwb.testing.remove_test_file(self.nwbfile_path)
 
+    def test_roundtrip(self):
+        """Test that all optical physiology devices can be written to and read from an NWB file."""
+        # Create a mock NWBFile
+        nwbfile = mock_NWBFile(session_start_time=datetime(2000, 1, 1, tzinfo=UTC))
 
-def set_up_nwbfile(nwbfile: NWBFile = None):
-    """Create an NWBFile"""
-    nwbfile = nwbfile or mock_NWBFile()
-    return nwbfile
+        photodetector_model = mock_PhotodetectorModel(name="PhotodetectorModel")
+        nwbfile.add_device(devices=photodetector_model)
+        dichroic_mirror_model = mock_DichroicMirrorModel(name="DichroicMirrorModel")
+        nwbfile.add_device(devices=dichroic_mirror_model)
+        optical_filter_model = mock_OpticalFilterModel(name="OpticalFilterModel")
+        nwbfile.add_device(devices=optical_filter_model)
+        band_optical_filter_model = mock_BandOpticalFilterModel(name="BandOpticalFilterModel")
+        nwbfile.add_device(devices=band_optical_filter_model)
+        edge_optical_filter_model = mock_EdgeOpticalFilterModel(name="EdgeOpticalFilterModel")
+        nwbfile.add_device(devices=edge_optical_filter_model)
+        optical_fiber_model = mock_OpticalFiberModel(name="OpticalFiberModel")
+        nwbfile.add_device(devices=optical_fiber_model)
+        optical_lens_model = mock_OpticalLensModel(name="OpticalLensModel")
+        nwbfile.add_device(devices=optical_lens_model)
+        excitation_source_model = mock_ExcitationSourceModel(name="ExcitationSourceModel")
+        nwbfile.add_device(devices=excitation_source_model)
+        pulsed_excitation_source_model = mock_ExcitationSourceModel(name="PulsedExcitationSourceModel")
+        nwbfile.add_device(devices=pulsed_excitation_source_model)
+
+        # Create a dictionary of devices to test
+        devices = {
+            "photodetector": mock_Photodetector(name="Photodetector", model=photodetector_model),
+            "dichroic_mirror": mock_DichroicMirror(name="DichroicMirror", model=dichroic_mirror_model),
+            "optical_filter": mock_OpticalFilter(name="OpticalFilter", model=optical_filter_model),
+            "band_optical_filter": mock_BandOpticalFilter(name="BandOpticalFilter", model=band_optical_filter_model),
+            "edge_optical_filter": mock_EdgeOpticalFilter(name="EdgeOpticalFilter", model=edge_optical_filter_model),
+            "optical_fiber": mock_OpticalFiber(name="OpticalFiber", model=optical_fiber_model),
+            "optical_lens": mock_OpticalLens(name="OpticalLens", model=optical_lens_model),
+            "excitation_source": mock_ExcitationSource(name="ExcitationSource", model=excitation_source_model),
+            "pulsed_excitation_source": mock_PulsedExcitationSource(
+                name="PulsedExcitationSource", model=pulsed_excitation_source_model
+            ),
+        }
+
+        # Add all devices to the NWBFile
+        for device in devices.values():
+            nwbfile.add_device(devices=device)
+
+        # Write the NWBFile to disk
+        with pynwb.NWBHDF5IO(path=self.nwbfile_path, mode="w") as io:
+            io.write(nwbfile)
+
+        # Read the NWBFile back from disk
+        with pynwb.NWBHDF5IO(path=self.nwbfile_path, mode="r", load_namespaces=True) as io:
+            read_nwbfile = io.read()
+
+            # Verify that all devices are correctly preserved in the roundtrip
+            for device in devices.values():
+                self.assertContainerEqual(device, read_nwbfile.devices[device.name])
