@@ -133,13 +133,17 @@ groups:
         dtype: float
         shape:
           - 2
-        doc: The range of wavelengths that are primarily reflected. The start and end wavelengths needs to be specified.
+        doc:
+          The range of wavelengths that are primarily reflected.The start and end wavelengths
+          needs to be specified.
         required: false
       - name: transmission_band_in_nm
         dtype: float
         shape:
           - 2
-        doc: The range of wavelengths that are primarily transmitted. The start and end wavelengths needs to be specified.
+        doc:
+          The range of wavelengths that are primarily transmitted.The start and end
+          wavelengths needs to be specified.
         required: false
       - name: angle_of_incidence_in_degrees
         dtype: float

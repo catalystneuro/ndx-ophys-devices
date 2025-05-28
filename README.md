@@ -620,7 +620,7 @@ From your local copy directory, use the following commands.
 
 If you have not already, you will need to clone the repo:
 ```bash
-$ git clone https://github.com/catalystneuro/neuroconv
+$ git clone https://github.com/catalystneuro/ndx-ophys-devices
 ```
 
 First create a new branch to work on

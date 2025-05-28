@@ -13,13 +13,7 @@ readme = "README.md"
 # requires-python = ">=3.8"
 license = {text = "BSD-3"}
 classifiers = [
-    # TODO: add classifiers before release
-    # "Programming Language :: Python",
-    # "Programming Language :: Python :: 3.8",
-    # "Programming Language :: Python :: 3.9",
-    # "Programming Language :: Python :: 3.10",
-    # "Programming Language :: Python :: 3.11",
-    # "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.10",
     # "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
@@ -36,13 +30,12 @@ dependencies = [
     "hdmf>=3.13.0",
 ]
 
-# TODO: add URLs before release
-# [project.urls]
-# "Homepage" = "https://github.com/organization/package"
-# "Documentation" = "https://package.readthedocs.io/"
-# "Bug Tracker" = "https://github.com/organization/package/issues"
-# "Discussions" = "https://github.com/organization/package/discussions"
-# "Changelog" = "https://github.com/organization/package/blob/main/CHANGELOG.md"
+[project.urls]
+"Homepage" = "https://github.com/catalystneuro/ndx-ophys-devices"
+"Documentation" = "https://ndx-ophys-devices.readthedocs.io/"
+"Bug Tracker" = "https://github.com/catalystneuro/ndx-ophys-devices/issues"
+"Discussions" = "https://github.com/catalystneuro/ndx-ophys-devices/discussions"
+"Changelog" = "https://github.com/catalystneuro/ndx-ophys-devices/blob/main/CHANGELOG.md"
 
 [tool.hatch.build]
 include = [
@@ -95,7 +88,7 @@ preview = true
 exclude = ".git|.mypy_cache|.tox|.venv|venv|.ipynb_checkpoints|_build/|dist/|__pypackages__|.ipynb|docs/"
 
 [tool.ruff]
-select = ["E", "F", "T100", "T201", "T203"]
+lint.select = ["E", "F", "T100", "T201", "T203"]
 exclude = [
   ".git",
   ".tox",
@@ -106,9 +99,9 @@ exclude = [
 ]
 line-length = 120
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "src/pynwb/ndx_ophys_devices/__init__.py" = ["E402", "F401"]
 "src/spec/create_extension_spec.py" = ["T201"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 17
