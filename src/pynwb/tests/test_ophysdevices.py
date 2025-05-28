@@ -7,10 +7,6 @@ from pynwb.testing.mock.file import mock_NWBFile
 import pynwb
 
 from ndx_ophys_devices.testing import (
-    mock_DeviceModel,
-    mock_DeviceInstance,
-    mock_Indicator,
-    mock_Effector,
     mock_OpticalFiberModel,
     mock_OpticalFiber,
     mock_PhotodetectorModel,
@@ -28,8 +24,6 @@ from ndx_ophys_devices.testing import (
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_LensPositioning,
-    mock_FiberInsertion,
 )
 
 
