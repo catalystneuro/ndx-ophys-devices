@@ -38,6 +38,8 @@ OpticalLensModel = get_class("OpticalLensModel", "ndx-ophys-devices")
 # Device instance classes
 DeviceInstance = get_class("DeviceInstance", "ndx-ophys-devices")
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
+ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
+PulsedExcitationSource = get_class("PulsedExcitationSource", "ndx-ophys-devices")
 Photodetector = get_class("Photodetector", "ndx-ophys-devices")
 DichroicMirror = get_class("DichroicMirror", "ndx-ophys-devices")
 OpticalFilter = get_class("OpticalFilter", "ndx-ophys-devices")
