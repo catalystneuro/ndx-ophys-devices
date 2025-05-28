@@ -15,11 +15,13 @@ from ._mock import (
     mock_BandOpticalFilter,
     mock_EdgeOpticalFilterModel,
     mock_EdgeOpticalFilter,
-    mock_ObjectiveLensModel,
-    mock_ObjectiveLens,
+    mock_OpticalLensModel,
+    mock_OpticalLens,
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
+    mock_LensPositioning,
+    mock_FiberInsertion,
 )
 
 __all__ = [
@@ -39,9 +41,11 @@ __all__ = [
     "mock_BandOpticalFilter",
     "mock_EdgeOpticalFilterModel",
     "mock_EdgeOpticalFilter",
-    "mock_ObjectiveLensModel",
-    "mock_ObjectiveLens",
+    "mock_OpticalLensModel",
+    "mock_OpticalLens",
     "mock_ExcitationSourceModel",
     "mock_ExcitationSource",
     "mock_PulsedExcitationSource",
+    "mock_LensPositioning",
+    "mock_FiberInsertion",
 ]

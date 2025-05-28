@@ -19,11 +19,13 @@ from ndx_ophys_devices.testing import (
     mock_BandOpticalFilter,
     mock_EdgeOpticalFilterModel,
     mock_EdgeOpticalFilter,
-    mock_ObjectiveLensModel,
-    mock_ObjectiveLens,
+    mock_OpticalLensModel,
+    mock_OpticalLens,
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
+    mock_LensPositioning,
+    mock_FiberInsertion,
 )
 
 
@@ -52,7 +54,8 @@ def test_constructor_optical_fiber_model():
 def test_constructor_optical_fiber():
     mock_OpticalFiber()
     model = mock_OpticalFiberModel()
-    mock_OpticalFiber(model=model)
+    fiber_insertion = mock_FiberInsertion()
+    mock_OpticalFiber(model=model, fiber_insertion=fiber_insertion)
 
 
 def test_constructor_photodetector_model():
@@ -105,14 +108,15 @@ def test_constructor_edge_optical_filter():
     mock_EdgeOpticalFilter(model=model)
 
 
-def test_constructor_objective_lens_model():
-    mock_ObjectiveLensModel()
+def test_constructor_optical_lens_model():
+    mock_OpticalLensModel()
 
 
-def test_constructor_objective_lens():
-    mock_ObjectiveLens()
-    model = mock_ObjectiveLensModel()
-    mock_ObjectiveLens(model=model)
+def test_constructor_optical_lens():
+    mock_OpticalLens()
+    model = mock_OpticalLensModel()
+    lens_positioning = mock_LensPositioning()
+    mock_OpticalLens(model=model, lens_positioning=lens_positioning)
 
 
 def test_constructor_excitation_source_model():
@@ -129,6 +133,14 @@ def test_constructor_pulsed_excitation_source():
     mock_PulsedExcitationSource()
     model = mock_ExcitationSourceModel()
     mock_PulsedExcitationSource(model=model)
+
+
+def test_constructor_lens_positioning():
+    mock_LensPositioning()
+
+
+def test_constructor_fiber_insertion():
+    mock_FiberInsertion()
 
 
 if __name__ == "__main__":

@@ -103,6 +103,7 @@ def mock_OpticalFiber(
     description: Optional[str] = "This is a mock instance of an OpticalFiber type.",
     serial_number: Optional[str] = "OF-SN-123456",
     model: Optional[ndx_ophys_devices.OpticalFiberModel] = None,
+    fiber_insertion: Optional[ndx_ophys_devices.FiberInsertion] = None,
 ) -> ndx_ophys_devices.OpticalFiber:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_OpticalFiberModel()
@@ -110,6 +111,7 @@ def mock_OpticalFiber(
         name=name or name_generator("OpticalFiber"),
         description=description,
         serial_number=serial_number,
+        fiber_insertion=fiber_insertion,
         model=model,
     )
     return optical_fiber
@@ -145,7 +147,6 @@ def mock_Photodetector(
     description: Optional[str] = "This is a mock instance of a Photodetector type.",
     serial_number: Optional[str] = "PD-SN-123456",
     model: Optional[ndx_ophys_devices.PhotodetectorModel] = None,
-    detected_wavelength_in_nm: float = 520.0,
 ) -> ndx_ophys_devices.Photodetector:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_PhotodetectorModel()
@@ -154,7 +155,6 @@ def mock_Photodetector(
         description=description,
         serial_number=serial_number,
         model=model,
-        detected_wavelength_in_nm=detected_wavelength_in_nm,
     )
     return photodetector
 
@@ -323,17 +323,17 @@ def mock_EdgeOpticalFilter(
     return edge_optical_filter
 
 
-def mock_ObjectiveLensModel(
+def mock_OpticalLensModel(
     *,
     name: Optional[str] = None,
     manufacturer: str = "A fake manufacturer",
     model_number: Optional[str] = "OL-123",
-    description: Optional[str] = "This is a mock instance of an ObjectiveLensModel type.",
+    description: Optional[str] = "This is a mock instance of an OpticalLensModel type.",
     numerical_aperture: float = 0.2,
     magnification: float = 10.0,
-) -> ndx_ophys_devices.ObjectiveLensModel:
-    objective_lens_model = ndx_ophys_devices.ObjectiveLensModel(
-        name=name or name_generator("ObjectiveLensModel"),
+) -> ndx_ophys_devices.OpticalLensModel:
+    objective_lens_model = ndx_ophys_devices.OpticalLensModel(
+        name=name or name_generator("OpticalLensModel"),
         manufacturer=manufacturer,
         model_number=model_number,
         description=description,
@@ -343,20 +343,22 @@ def mock_ObjectiveLensModel(
     return objective_lens_model
 
 
-def mock_ObjectiveLens(
+def mock_OpticalLens(
     *,
     name: Optional[str] = None,
-    description: Optional[str] = "This is a mock instance of an ObjectiveLens type.",
+    description: Optional[str] = "This is a mock instance of an OpticalLens type.",
     serial_number: Optional[str] = "OL-SN-123456",
-    model: Optional[ndx_ophys_devices.ObjectiveLensModel] = None,
-) -> ndx_ophys_devices.ObjectiveLens:  # TODO: Update return type when core types are updated
+    model: Optional[ndx_ophys_devices.OpticalLensModel] = None,
+    lens_positioning: Optional[ndx_ophys_devices.LensPositioning] = None,
+) -> ndx_ophys_devices.OpticalLens:  # TODO: Update return type when core types are updated
     if model is None:
-        model = mock_ObjectiveLensModel()
-    objective_lens = ndx_ophys_devices.ObjectiveLens(
-        name=name or name_generator("ObjectiveLens"),
+        model = mock_OpticalLensModel()
+    objective_lens = ndx_ophys_devices.OpticalLens(
+        name=name or name_generator("OpticalLens"),
         description=description,
         serial_number=serial_number,
         model=model,
+        lens_positioning=lens_positioning,
     )
     return objective_lens
 
@@ -367,7 +369,7 @@ def mock_ExcitationSourceModel(
     manufacturer: str = "A fake manufacturer",
     model_number: Optional[str] = "ES-123",
     description: Optional[str] = "This is a mock instance of an ExcitationSourceModel type.",
-    illumination_type: str = "Laser",
+    source_type: str = "Laser",
     excitation_mode: str = "one-photon",
     wavelength_range_in_nm: list = [400.0, 800.0],
 ) -> ndx_ophys_devices.ExcitationSourceModel:
@@ -376,7 +378,7 @@ def mock_ExcitationSourceModel(
         manufacturer=manufacturer,
         model_number=model_number,
         description=description,
-        illumination_type=illumination_type,
+        source_type=source_type,
         excitation_mode=excitation_mode,
         wavelength_range_in_nm=wavelength_range_in_nm,
     )
@@ -389,7 +391,6 @@ def mock_ExcitationSource(
     description: Optional[str] = "This is a mock instance of an ExcitationSource type.",
     serial_number: Optional[str] = "ES-SN-123456",
     model: Optional[ndx_ophys_devices.ExcitationSourceModel] = None,
-    excitation_wavelength_in_nm: float = 500.0,
     power_in_W: float = 0.7,
     intensity_in_W_per_m2: float = 0.005,
     exposure_time_in_s: float = 2.51e-13,
@@ -401,7 +402,6 @@ def mock_ExcitationSource(
         description=description,
         serial_number=serial_number,
         model=model,
-        excitation_wavelength_in_nm=excitation_wavelength_in_nm,
         power_in_W=power_in_W,
         intensity_in_W_per_m2=intensity_in_W_per_m2,
         exposure_time_in_s=exposure_time_in_s,
@@ -415,7 +415,6 @@ def mock_PulsedExcitationSource(
     description: Optional[str] = "This is a mock instance of a PulsedExcitationSource type.",
     serial_number: Optional[str] = "PES-SN-123456",
     model: Optional[ndx_ophys_devices.ExcitationSourceModel] = None,
-    excitation_wavelength_in_nm: float = 500.0,
     peak_power_in_W: float = 0.7,
     peak_pulse_energy_in_J: float = 0.7,
     intensity_in_W_per_m2: float = 0.005,
@@ -429,7 +428,6 @@ def mock_PulsedExcitationSource(
         description=description,
         serial_number=serial_number,
         model=model,
-        excitation_wavelength_in_nm=excitation_wavelength_in_nm,
         peak_power_in_W=peak_power_in_W,
         peak_pulse_energy_in_J=peak_pulse_energy_in_J,
         intensity_in_W_per_m2=intensity_in_W_per_m2,
@@ -437,3 +435,63 @@ def mock_PulsedExcitationSource(
         pulse_rate_in_Hz=pulse_rate_in_Hz,
     )
     return pulsed_excitation_source
+
+
+def mock_LensPositioning(
+    *,
+    name: Optional[str] = None,
+    positioning_type: str = "surface",
+    target_position_ap_in_mm: Optional[float] = 2.0,
+    target_position_ml_in_mm: Optional[float] = 1.5,
+    target_position_dv_in_mm: Optional[float] = -3.0,
+    depth_in_mm: float = 0.0,
+    working_distance_in_mm: Optional[float] = 2.0,
+    position_reference: Optional[str] = "Bregma at the cortical surface",
+    hemisphere: Optional[str] = "right",
+    optical_axis_angle_yaw_in_deg: Optional[float] = 0.0,
+    optical_axis_angle_pitch_in_deg: Optional[float] = 0.0,
+    optical_axis_angle_roll_in_deg: Optional[float] = 0.0,
+) -> ndx_ophys_devices.LensPositioning:
+    lens_positioning = ndx_ophys_devices.LensPositioning(
+        name=name or name_generator("LensPositioning"),
+        positioning_type=positioning_type,
+        target_position_ap_in_mm=target_position_ap_in_mm,
+        target_position_ml_in_mm=target_position_ml_in_mm,
+        target_position_dv_in_mm=target_position_dv_in_mm,
+        depth_in_mm=depth_in_mm,
+        working_distance_in_mm=working_distance_in_mm,
+        position_reference=position_reference,
+        hemisphere=hemisphere,
+        optical_axis_angle_yaw_in_deg=optical_axis_angle_yaw_in_deg,
+        optical_axis_angle_pitch_in_deg=optical_axis_angle_pitch_in_deg,
+        optical_axis_angle_roll_in_deg=optical_axis_angle_roll_in_deg,
+    )
+    return lens_positioning
+
+
+def mock_FiberInsertion(
+    *,
+    name: Optional[str] = None,
+    insertion_position_ap_in_mm: Optional[float] = 2.0,
+    insertion_position_ml_in_mm: Optional[float] = 1.5,
+    insertion_position_dv_in_mm: Optional[float] = 0.0,
+    depth_in_mm: Optional[float] = 3.0,
+    position_reference: Optional[str] = "Bregma at the cortical surface",
+    hemisphere: Optional[str] = "right",
+    insertion_angle_yaw_in_deg: Optional[float] = 0.0,
+    insertion_angle_pitch_in_deg: Optional[float] = 0.0,
+    insertion_angle_roll_in_deg: Optional[float] = 0.0,
+) -> ndx_ophys_devices.FiberInsertion:
+    fiber_insertion = ndx_ophys_devices.FiberInsertion(
+        name=name or name_generator("FiberInsertion"),
+        insertion_position_ap_in_mm=insertion_position_ap_in_mm,
+        insertion_position_ml_in_mm=insertion_position_ml_in_mm,
+        insertion_position_dv_in_mm=insertion_position_dv_in_mm,
+        depth_in_mm=depth_in_mm,
+        position_reference=position_reference,
+        hemisphere=hemisphere,
+        insertion_angle_yaw_in_deg=insertion_angle_yaw_in_deg,
+        insertion_angle_pitch_in_deg=insertion_angle_pitch_in_deg,
+        insertion_angle_roll_in_deg=insertion_angle_roll_in_deg,
+    )
+    return fiber_insertion

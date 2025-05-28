@@ -18,6 +18,12 @@ if not os.path.exists(__spec_path):
 # Load the namespace
 load_namespaces(str(__spec_path))
 
+# Container classes
+LensPositioning = get_class("LensPositioning", "ndx-ophys-devices")
+FiberInsertion = get_class("FiberInsertion", "ndx-ophys-devices")
+Indicator = get_class("Indicator", "ndx-ophys-devices")
+Effector = get_class("Effector", "ndx-ophys-devices")
+
 # Model classes
 DeviceModel = get_class("DeviceModel", "ndx-ophys-devices")
 OpticalFiberModel = get_class("OpticalFiberModel", "ndx-ophys-devices")
@@ -27,11 +33,10 @@ DichroicMirrorModel = get_class("DichroicMirrorModel", "ndx-ophys-devices")
 OpticalFilterModel = get_class("OpticalFilterModel", "ndx-ophys-devices")
 BandOpticalFilterModel = get_class("BandOpticalFilterModel", "ndx-ophys-devices")
 EdgeOpticalFilterModel = get_class("EdgeOpticalFilterModel", "ndx-ophys-devices")
-ObjectiveLensModel = get_class("ObjectiveLensModel", "ndx-ophys-devices")
+OpticalLensModel = get_class("OpticalLensModel", "ndx-ophys-devices")
 
 # Device instance classes
 DeviceInstance = get_class("DeviceInstance", "ndx-ophys-devices")
-Indicator = get_class("Indicator", "ndx-ophys-devices")
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
 ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
 PulsedExcitationSource = get_class("PulsedExcitationSource", "ndx-ophys-devices")
@@ -40,7 +45,6 @@ DichroicMirror = get_class("DichroicMirror", "ndx-ophys-devices")
 OpticalFilter = get_class("OpticalFilter", "ndx-ophys-devices")
 BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
 EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
-ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
-Effector = get_class("Effector", "ndx-ophys-devices")
+OpticalLens = get_class("OpticalLens", "ndx-ophys-devices")
 
 del load_namespaces, get_class

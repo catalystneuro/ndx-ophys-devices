@@ -285,9 +285,9 @@ groups:
         doc: Information about the insertion of an optical fiber into the brain.
         quantity: 1 # required
 
-  - neurodata_type_def: ObjectiveLensModel
+  - neurodata_type_def: OpticalLensModel
     neurodata_type_inc: DeviceModel
-    doc: Extends DeviceModel to hold metadata on the Objective Lens Model.
+    doc: Extends DeviceModel to hold metadata on the Optical Lens Model.
     attributes:
       - name: numerical_aperture
         dtype: float
@@ -299,7 +299,7 @@ groups:
   - neurodata_type_def: LensPositioning
     neurodata_type_inc: NWBContainer
     default_name: lens_positioning
-    doc: Metadata about the positioning of a lens relative to the brain, which can describe both inserted lenses (e.g., GRIN lenses) and surface-positioned lenses (e.g., objective lenses above cranial windows).
+    doc: Metadata about the positioning of a lens relative to the brain, which can describe both inserted lenses (e.g., GRIN lenses) and surface-positioned lenses (e.g., optical lenses above cranial windows).
     attributes:
       - name: positioning_type
         dtype: text
@@ -370,14 +370,14 @@ groups:
           around anterior-posterior axis (+ is rotating the right side downward).
           Zero is parallel to a coronal slice. Order: yaw, pitch, roll.
         required: false
-  - neurodata_type_def: ObjectiveLens
+  - neurodata_type_def: OpticalLens
     neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold metadata on the Objective Lens instance.
+    doc: Extends DeviceInstance to hold metadata on the Optical Lens instance.
     groups:
       - name: lens_positioning
         neurodata_type_inc: LensPositioning
         doc: |
-          Information about the positioning of the objective lens relative to the brain.
+          Information about the positioning of the optical lens relative to the brain.
         quantity: "?" # optional
 
   - neurodata_type_def: Indicator
