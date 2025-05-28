@@ -99,7 +99,6 @@ effector = Effector(
 
 fiber_insertion = FiberInsertion(
     name="fiber_insertion",
-    description="Fiber insertion for optogenetics",
     depth_in_mm=3.5,
     insertion_position_ap_in_mm=2.0,
     insertion_position_ml_in_mm=1.5,
@@ -111,7 +110,6 @@ fiber_insertion = FiberInsertion(
 
 lens_positioning = LensPositioning(
     name="lens_positioning",
-    description="Lens positioning for imaging",
     positioning_type="surface",
     depth_in_mm=0.0,
     target_position_ap_in_mm=1.5,
