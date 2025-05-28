@@ -33,6 +33,7 @@ groups:
       - name: manufacturer
         dtype: text
         doc: The name of the manufacturer of the device model, e.g., Imec, Plexon, Thorlabs.
+        required: false
       - name: model_number
         dtype: text
         doc:

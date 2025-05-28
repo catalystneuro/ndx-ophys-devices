@@ -297,7 +297,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        label : text
+        **label** : text
         description : text, optional
         manufacturer : text, optional
         injection_brain_region : text, optional
@@ -308,7 +308,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        label : text
+        **label** : text
         description : text, optional
         manufacturer : text, optional
         injection_brain_region : text, optional
@@ -349,8 +349,8 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        source_type : text, optional
-        excitation_mode : text, optional
+        **source_type** : text
+        **excitation_mode** : text
         wavelength_range_in_nm : numeric, optional
     }
     
@@ -379,7 +379,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        detector_type : text, optional
+        **detector_type** : text
         wavelength_range_in_nm : numeric, optional
         gain : numeric, optional
         gain_unit : text, optional
@@ -450,7 +450,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        numerical_aperture : numeric, optional
+        **numerical_aperture** : numeric
         core_diameter_in_um : numeric, optional
     }
     
@@ -459,7 +459,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        fiber_insertion : FiberInsertion, optional
+        **fiber_insertion** : FiberInsertion
     }
     
     class LensPositioning{
@@ -467,7 +467,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        positioning_type : text
+        **positioning_type** : text
         target_position_ap_in_mm : numeric, optional
         target_position_ml_in_mm : numeric, optional
         target_position_dv_in_mm : numeric, optional
@@ -485,7 +485,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        numerical_aperture : numeric, optional
+        **numerical_aperture** : numeric
         magnification : numeric, optional
     }
     
@@ -494,7 +494,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        lens_positioning : LensPositioning, optional
+        **lens_positioning** : LensPositioning
     }
 
     DeviceModel <|-- OpticalFiberModel : extends
@@ -520,7 +520,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        manufacturer : text
+        manufacturer : text, optional
         model_number : text, optional
     }
     
@@ -541,7 +541,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        filter_type : text, optional
+        **filter_type** : text
     }
     
     class OpticalFilter{
@@ -553,8 +553,8 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        center_wavelength_in_nm : numeric
-        bandwidth_in_nm : numeric
+        **center_wavelength_in_nm** : numeric
+        **bandwidth_in_nm** : numeric
     }
     
     class BandOpticalFilter{
@@ -566,7 +566,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        cut_wavelength_in_nm : numeric
+        **cut_wavelength_in_nm** : numeric
         slope_in_percent_cut_wavelength : numeric, optional
         slope_starting_transmission_in_percent : numeric, optional
         slope_ending_transmission_in_percent : numeric, optional
