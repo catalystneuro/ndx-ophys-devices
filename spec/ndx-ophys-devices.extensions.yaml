@@ -3,96 +3,54 @@ groups:
   # TODO remove when these two are merged to core [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608)
   - neurodata_type_def: DeviceInstance
     neurodata_type_inc: NWBContainer
-    doc: Metadata about a specific instance of a data acquisition device, e.g., recording system, electrode, microscope.
+    doc:
+      Metadata about a specific instance of a data acquisition device, e.g., recording system, electrode, microscope.
       Link to a DeviceModel.model to represent information about the model of the device instance.
     attributes:
-    - name: description
-      dtype: text
-      doc: Description of the device instance as free-form text. If there is any software/firmware associated
-        with the device instance, the names and versions of those can be added to NWBFile.was_generated_by. 
-      required: false
-    - name: serial_number
-      dtype: text
-      doc: The serial number of the device instance.
-      required: false
+      - name: description
+        dtype: text
+        doc:
+          Description of the device instance as free-form text. If there is any software/firmware associated
+          with the device instance, the names and versions of those can be added to NWBFile.was_generated_by.
+        required: false
+      - name: serial_number
+        dtype: text
+        doc: The serial number of the device instance.
+        required: false
     links:
-    - name: model
-      target_type: DeviceModel
-      doc: The model of the device instance.
-      quantity: '?'
-  - neurodata_type_def: DeviceModel 
+      - name: model
+        target_type: DeviceModel
+        doc: The model of the device instance.
+        quantity: "?"
+  - neurodata_type_def: DeviceModel
     neurodata_type_inc: NWBContainer
-    doc: Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
+    doc:
+      Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
       This should be extended for specific types of device models to include additional attributes specific to each type.
       The name of the DeviceModel should be the most common representation of the model name, e.g.,
       Neuropixels 1.0, V-Probe, Bergamo III.
     attributes:
-    - name: manufacturer
-      dtype: text
-      doc: The name of the manufacturer of the device model, e.g., Imec, Plexon, Thorlabs.
-    - name: model_number
-      dtype: text
-      doc: The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1, 
-        PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
-      required: false
-    - name: description
-      dtype: text
-      doc: Description of the device model as free-form text.
-      required: false
-  - neurodata_type_def: Indicator
-    neurodata_type_inc: NWBContainer
-    doc: An NWBContainer to hold metadata on the Indicator.
-    attributes:
-      - name: label
-        dtype: text
-        doc: Indicator standard notation.
-      - name: description
-        dtype: text
-        doc: Indicator description.
-        required: false
       - name: manufacturer
         dtype: text
-        doc: Indicator manufacturer.
-        required: false
-      - name: injection_brain_region
+        doc: The name of the manufacturer of the device model, e.g., Imec, Plexon, Thorlabs.
+      - name: model_number
         dtype: text
-        doc: Injection brain region name.
+        doc:
+          The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1,
+          PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
         required: false
-      - name: injection_coordinates_in_mm
-        dtype: float
-        shape:
-          - 3
-        doc: Indicator injection location in stereotactic coordinates (AP, ML, DV) mm relative to Bregma.
+      - name: description
+        dtype: text
+        doc: Description of the device model as free-form text.
         required: false
-
-  - neurodata_type_def: OpticalFiberModel
-    neurodata_type_inc: DeviceModel
-    doc: Extends DeviceModel to hold metadata on the Optical Fiber Model.
-    attributes:
-      - name: numerical_aperture
-        dtype: float
-        doc: Numerical aperture, e.g., 0.39 NA.
-      - name: core_diameter_in_um
-        dtype: float
-        doc: Core diameter in micrometers.
-        required: false
-
-  - neurodata_type_def: OpticalFiber
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold metadata on the Optical Fiber instance.
-    # groups:
-    # - name: fiber_insertion
-    #   neurodata_type_inc: FiberInsertion
-    #   doc: Information about the insertion of an optical fiber into the brain.
-    #   quantity: '?'  # optional
 
   - neurodata_type_def: ExcitationSourceModel
     neurodata_type_inc: DeviceModel
     doc: Extends DeviceModel to hold metadata on the Excitation Source Model.
     attributes:
-      - name: illumination_type
+      - name: source_type
         dtype: text
-        doc: "Type of illumination. Suggested values: LED, Gas Laser (e.g., Argon, Krypton), Solid-State Laser (e.g., Diode, DPSS)."
+        doc: "Type of source. Suggested values: LED, Gas Laser (e.g., Argon, Krypton), Solid-State Laser (e.g., Diode, DPSS)."
       - name: excitation_mode
         dtype: text
         doc: The type of excitation used in the light path (e.g., 'one-photon', 'two-photon', 'three-photon', 'other').
@@ -101,14 +59,11 @@ groups:
         shape:
           - 2
         doc: The range of wavelengths that can be produced by the source.
-
+        required: false
   - neurodata_type_def: ExcitationSource
     neurodata_type_inc: DeviceInstance
     doc: Extends DeviceInstance to hold metadata on the Excitation Source instance.
     attributes:
-      - name: excitation_wavelength_in_nm
-        dtype: float
-        doc: Excitation wavelength of the stimulation light (nanometers).
       - name: power_in_W
         dtype: float
         doc: Incident power of stimulation device (in Watts).
@@ -121,7 +76,6 @@ groups:
         dtype: float
         doc: Exposure time of the sample (in sec).
         required: false
-
   - neurodata_type_def: PulsedExcitationSource
     neurodata_type_inc: ExcitationSource
     doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance.
@@ -150,6 +104,7 @@ groups:
         shape:
           - 2
         doc: The range of wavelengths that can be detected.
+        required: false
       - name: gain
         dtype: float
         doc: Gain on the photodetector.
@@ -158,14 +113,9 @@ groups:
         dtype: text
         doc: Unit of the gain value.
         required: false
-
   - neurodata_type_def: Photodetector
     neurodata_type_inc: DeviceInstance
     doc: Extends DeviceInstance to hold metadata on the Photodetector instance.
-    attributes:
-      - name: detected_wavelength_in_nm
-        dtype: float
-        doc: Wavelength detected by photodetector.
 
   - neurodata_type_def: DichroicMirrorModel
     neurodata_type_inc: DeviceModel
@@ -195,7 +145,6 @@ groups:
         dtype: float
         doc: Intended angle at which light strikes the mirror.
         required: false
-
   - neurodata_type_def: DichroicMirror
     neurodata_type_inc: DeviceInstance
     doc: Extends DeviceInstance to hold a Dichroic Mirror instance.
@@ -207,11 +156,9 @@ groups:
       - name: filter_type
         dtype: text
         doc: Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass').
-
   - neurodata_type_def: OpticalFilter
     neurodata_type_inc: DeviceInstance
     doc: Extends DeviceInstance to hold an Optical Filter instance.
-
   - neurodata_type_def: BandOpticalFilterModel
     neurodata_type_inc: OpticalFilterModel
     doc: Extends OpticalFilterModel to hold metadata on the Band Optical Filter Model (Bandpass or Bandstop).
@@ -222,11 +169,9 @@ groups:
       - name: bandwidth_in_nm
         dtype: float
         doc: The width of the wavelength range that the filter transmits or blocks (full width at half maximum).
-
   - neurodata_type_def: BandOpticalFilter
     neurodata_type_inc: OpticalFilter
     doc: Extends OpticalFilter to hold a Band Optical Filter instance (Bandpass or Bandstop).
-
   - neurodata_type_def: EdgeOpticalFilterModel
     neurodata_type_inc: OpticalFilterModel
     doc: Extends OpticalFilterModel to hold metadata on the Edge Optical Filter Model (Longpass or Shortpass).
@@ -246,10 +191,99 @@ groups:
         dtype: float
         doc: The percent transmission that defines the ending point for the slope (e.g. 80%).
         required: false
-
   - neurodata_type_def: EdgeOpticalFilter
     neurodata_type_inc: OpticalFilter
     doc: Extends OpticalFilter to hold an Edge Optical Filter instance (Longpass or Shortpass).
+
+  - neurodata_type_def: OpticalFiberModel
+    neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Optical Fiber Model.
+    attributes:
+      - name: numerical_aperture
+        dtype: float
+        doc: Numerical aperture, e.g., 0.39 NA.
+      - name: core_diameter_in_um
+        dtype: float
+        doc: Core diameter in micrometers.
+        required: false
+  - neurodata_type_def: FiberInsertion
+    neurodata_type_inc: NWBContainer
+    default_name: fiber_insertion
+    doc: Metadata about the insertion of a fiber into the brain, which can be used to determine the location of the fiber in the brain.
+    attributes:
+      - name: insertion_position_ap_in_mm
+        dtype: float
+        doc:
+          Anteroposterior (AP) stereotactic coordinate of where the fiber was inserted,
+          in millimeters. + is anterior. Coordinate is relative to the zero-point described
+          in `position_reference`.
+        required: false
+      - name: insertion_position_ml_in_mm
+        dtype: float
+        doc:
+          Mediolateral (ML) stereotactic coordinate of where the fiber was inserted,
+          in millimeters. + is right. Coordinate is relative to the zero-point described
+          in `position_reference`.
+        required: false
+      - name: insertion_position_dv_in_mm
+        dtype: float
+        doc:
+          Dorsoventral (DV) stereotactic coordinate of where the fiber was inserted,
+          in millimeters. + is up. Coordinate is relative to the zero-point described
+          in `position_reference`. The zero-point is typically the surface of the brain,
+          so this value is typically 0.
+        required: false
+      - name: depth_in_mm
+        dtype: float
+        doc:
+          Depth that the fiber was driven along `insertion_angle` starting from `insertion_position_{X}_in_mm`,
+          in millimeters.
+        required: false
+      - name: position_reference
+        dtype: text
+        doc:
+          Location of the origin (0, 0, 0) for `insertion_position_{X}_in_mm` coordinates,
+          e.g., "(AP, ML, DV) = (0, 0, 0) corresponds to bregma at the cortical surface".
+        required: false
+      - name: hemisphere
+        dtype: text
+        doc:
+          The hemisphere ("left" or "right") of the targeted location of the optogenetic
+          stimulus site. Should be consistent with `insertion_position_in_mm.ml` coordinate
+          (left = ml < 0, right = ml > 0).
+        required: false
+      - name: insertion_angle_yaw_in_deg
+        dtype: float
+        doc:
+          The yaw angle of the fiber at the time of insertion, in degrees. Yaw = rotation
+          around dorsal-ventral axis, like shaking (+ is rotating the nose rightward).
+          Zero is defined as the fiber being parallel to an sagittal slice of the brain.
+          The order of rotations is yaw, pitch, roll.
+        required: false
+      - name: insertion_angle_pitch_in_deg
+        dtype: float
+        doc:
+          The pitch angle of the fiber at the time of insertion, in degrees. Pitch
+          = rotation around left-right axis, like nodding (+ is rotating the nose upward).
+          Zero is defined as the fiber being parallel to an axial slice of the brain.
+          The order of rotations is yaw, pitch, roll.
+        required: false
+      - name: insertion_angle_roll_in_deg
+        dtype: float
+        doc:
+          The roll angle of the fiber at the time of insertion, in degrees. Roll =
+          rotation around anterior-posterior axis, like tilting (+ is rotating the right
+          side downward). Zero is defined as the fiber being parallel to a coronal slice
+          of the brain. The order of rotations is yaw, pitch, roll.
+        required: false
+  - neurodata_type_def: OpticalFiber
+    neurodata_type_inc: DeviceInstance
+    doc: Extends DeviceInstance to hold metadata on the Optical Fiber instance.
+    groups:
+      - name: fiber_insertion
+        neurodata_type_inc: FiberInsertion
+        doc: Information about the insertion of an optical fiber into the brain.
+        quantity: 1 # required
 
   - neurodata_type_def: ObjectiveLensModel
     neurodata_type_inc: DeviceModel
@@ -262,16 +296,115 @@ groups:
         dtype: float
         doc: The magnification of the lens as specified by the manufacturer, i.e. '60.0' is a 60X lens.
         required: false
-
+  - neurodata_type_def: LensPositioning
+    neurodata_type_inc: NWBContainer
+    default_name: lens_positioning
+    doc: Metadata about the positioning of a lens relative to the brain, which can describe both inserted lenses (e.g., GRIN lenses) and surface-positioned lenses (e.g., objective lenses above cranial windows).
+    attributes:
+      - name: positioning_type
+        dtype: text
+        doc: Type of lens positioning. Suggested values are "inserted" (lens penetrates brain tissue), "surface" (lens positioned above brain surface or cranial window), "transcranial" (lens positioned above intact skull).
+      - name: target_position_ap_in_mm
+        dtype: float
+        doc: |
+          Anteroposterior (AP) stereotactic coordinate of the target location,
+          in millimeters. + is anterior. Coordinate is relative to the zero-point described
+          in `position_reference`.
+        required: false
+      - name: target_position_ml_in_mm
+        dtype: float
+        doc: |
+          Mediolateral (ML) stereotactic coordinate of the target location,
+          in millimeters. + is right. Coordinate is relative to the zero-point described
+          in `position_reference`.
+        required: false
+      - name: target_position_dv_in_mm
+        dtype: float
+        doc: |
+          Dorsoventral (DV) stereotactic coordinate of the target location,
+          in millimeters. + is up. Coordinate is relative to the zero-point described
+          in `position_reference`.
+        required: false
+      - name: depth_in_mm
+        dtype: float
+        doc: |
+          Depth that the lens was inserted into the brain tissue, measured
+          along the optical axis from the brain surface, in millimeters. 0 is the surface of the brain.
+      - name: working_distance_in_mm
+        dtype: float
+        doc: |
+          Distance between the lens front element and the brain surface or 
+          cranial window surface, in millimeters.
+        required: false
+      - name: position_reference
+        dtype: text
+        doc: |
+          Location of the origin (0, 0, 0) for position coordinates,
+          e.g., "(AP, ML, DV) = (0, 0, 0) corresponds to bregma at the cortical surface".
+        required: false
+      - name: hemisphere
+        dtype: text
+        doc: |
+          The hemisphere ("left" or "right") of the targeted location.
+          Should be consistent with target_position_ml_in_mm coordinate
+          (left = ml < 0, right = ml > 0).
+        required: false
+      - name: optical_axis_angle_yaw_in_deg
+        dtype: float
+        doc: |
+          The yaw angle of the lens optical axis, in degrees. Yaw = rotation
+          around dorsal-ventral axis (+ is rotating the nose rightward).
+          Zero is parallel to a sagittal slice. Order: yaw, pitch, roll.
+        required: false
+      - name: optical_axis_angle_pitch_in_deg
+        dtype: float
+        doc: |
+          The pitch angle of the lens optical axis, in degrees. Pitch = rotation
+          around left-right axis (+ is rotating the nose upward).
+          Zero is parallel to an axial slice. Order: yaw, pitch, roll.
+        required: false
+      - name: optical_axis_angle_roll_in_deg
+        dtype: float
+        doc: |
+          The roll angle of the lens optical axis, in degrees. Roll = rotation
+          around anterior-posterior axis (+ is rotating the right side downward).
+          Zero is parallel to a coronal slice. Order: yaw, pitch, roll.
+        required: false
   - neurodata_type_def: ObjectiveLens
     neurodata_type_inc: DeviceInstance
     doc: Extends DeviceInstance to hold metadata on the Objective Lens instance.
-    # groups:
-    # - name: lens_insertion
-    #   neurodata_type_inc: LensInsertion
-    #   doc: Information about the insertion of a lens into the brain.
-    #   quantity: '?'  # optional
+    groups:
+      - name: lens_positioning
+        neurodata_type_inc: LensPositioning
+        doc: |
+          Information about the positioning of the objective lens relative to the brain.
+        quantity: "?" # optional
 
+  - neurodata_type_def: Indicator
+    neurodata_type_inc: NWBContainer
+    doc: An NWBContainer to hold metadata on the Indicator.
+    attributes:
+      - name: label
+        dtype: text
+        doc: Indicator standard notation.
+      - name: description
+        dtype: text
+        doc: Indicator description.
+        required: false
+      - name: manufacturer
+        dtype: text
+        doc: Indicator manufacturer.
+        required: false
+      - name: injection_brain_region
+        dtype: text
+        doc: Injection brain region name.
+        required: false
+      - name: injection_coordinates_in_mm
+        dtype: float
+        shape:
+          - 3
+        doc: Indicator injection location in stereotactic coordinates (AP, ML, DV) mm relative to Bregma.
+        required: false
   - neurodata_type_def: Effector
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Effector or Opsin.
