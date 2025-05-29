@@ -277,8 +277,14 @@ Usage
     )
 
     # Add objects to the NWBFile
-    nwbfile.add_lab_metadata(indicator)
-    nwbfile.add_lab_metadata(effector)
+    nwbfile.add_device(optical_fiber_model)
+    nwbfile.add_device(optical_lens_model)
+    nwbfile.add_device(excitation_source_model)
+    nwbfile.add_device(photodetector_model)
+    nwbfile.add_device(dichroic_mirror_model)
+    nwbfile.add_device(band_optical_filter_model)
+    nwbfile.add_device(edge_optical_filter_model)
+    
     nwbfile.add_device(optical_fiber)
     nwbfile.add_device(optical_lens)
     nwbfile.add_device(excitation_source)
