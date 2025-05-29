@@ -324,7 +324,7 @@ classDiagram
     direction TB
     
     class DeviceModel{
-        <<NWBContainer>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -409,7 +409,7 @@ classDiagram
     direction TB    
     
     class DeviceModel{
-        <<NWBContainer>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -516,7 +516,7 @@ classDiagram
     direction TB 
     
     class DeviceModel{
-        <<NWBContainer>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
