@@ -47,17 +47,28 @@ BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
 EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
 OpticalLens = get_class("OpticalLens", "ndx-ophys-devices")
 __all__ = [
-    "DeviceModel",
-    "ExcitationSource",
+    "LensPositioning",
+    "FiberInsertion",
     "Indicator",
+    "Effector",
+    "DeviceModel",
+    "OpticalFiberModel",
+    "ExcitationSourceModel",
+    "PhotodetectorModel",
+    "DichroicMirrorModel",
+    "OpticalFilterModel",
+    "BandOpticalFilterModel",
+    "EdgeOpticalFilterModel",
+    "OpticalLensModel",
+    "DeviceInstance",
     "OpticalFiber",
+    "ExcitationSource",
     "PulsedExcitationSource",
     "Photodetector",
     "DichroicMirror",
     "OpticalFilter",
     "BandOpticalFilter",
     "EdgeOpticalFilter",
-    "ObjectiveLens",
-    "Effector",
+    "OpticalLens",
 ]
 del load_namespaces, get_class
