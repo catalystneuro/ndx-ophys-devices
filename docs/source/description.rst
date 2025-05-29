@@ -15,7 +15,7 @@ This extension consists of neurodata types in the following categories:
 - **LensPositioning** extends ``NWBContainer`` to hold metadata on the positioning of a lens relative to the brain.
 - **FiberInsertion** extends ``NWBContainer`` to hold metadata on the insertion of a fiber into the brain.
 
-**Model Classes:**
+**Device Model Classes:**
 
 - **DeviceModel** extends ``Device`` to hold metadata on device models.
 - **OpticalFiberModel** extends ``DeviceModel`` to hold metadata on the optical fiber model.
