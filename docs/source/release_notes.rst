@@ -1,7 +1,7 @@
 Release Notes
 =============
 
-Version 0.2.0 (May 2025)
+Version 0.2.0 (Jun 3, 2025)
 ------------------------
 
 Major Refactoring:

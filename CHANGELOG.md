@@ -1,4 +1,4 @@
-# v0.2.0 (Upcoming)
+# v0.2.0 (Jun 3, 2025)
 
 ## Deprecations and Changes
 ### Major Refactoring:
