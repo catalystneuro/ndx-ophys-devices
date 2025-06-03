@@ -10,7 +10,7 @@ project = "ndx-ophys-devices"
 copyright = "2024, Alessandra Trapani"
 author = "Alessandra Trapani"
 
-version = "0.1.1"
+version = "0.2.0"
 release = "alpha"
 
 # -- General configuration ---------------------------------------------------
