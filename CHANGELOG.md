@@ -1,3 +1,8 @@
+# v0.3.0 (Upcoming)
+
+### Changes
+- Added `wavelength_in_nm` to `ExcitationSource` [PR #12](https://github.com/catalystneuro/ndx-ophys-devices/pull/12)
+
 # v0.2.0 (Jun 3, 2025)
 
 ## Deprecations and Changes

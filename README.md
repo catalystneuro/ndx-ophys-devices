@@ -362,6 +362,7 @@ classDiagram
         power_in_W : numeric, optional
         intensity_in_W_per_m2 : numeric, optional
         exposure_time_in_s : numeric, optional
+        wavelength_in_nm : numeric, optional
     }
     
     class PulsedExcitationSource{
