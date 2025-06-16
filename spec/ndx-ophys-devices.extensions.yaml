@@ -77,6 +77,10 @@ groups:
         dtype: float
         doc: Exposure time of the sample (in sec).
         required: false
+      - name: wavelength_in_nm
+        dtype: float
+        doc: Peak excitation wavelength of the stimulation light in nm.
+        required: false
   - neurodata_type_def: PulsedExcitationSource
     neurodata_type_inc: ExcitationSource
     doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance.

@@ -398,6 +398,7 @@ def mock_ExcitationSource(
     power_in_W: float = 0.7,
     intensity_in_W_per_m2: float = 0.005,
     exposure_time_in_s: float = 2.51e-13,
+    wavelength_in_nm: float = 480.0,
 ) -> ndx_ophys_devices.ExcitationSource:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_ExcitationSourceModel()
@@ -409,6 +410,7 @@ def mock_ExcitationSource(
         power_in_W=power_in_W,
         intensity_in_W_per_m2=intensity_in_W_per_m2,
         exposure_time_in_s=exposure_time_in_s,
+        wavelength_in_nm=wavelength_in_nm,
     )
     return excitation_source
 
