@@ -227,6 +227,7 @@ excitation_source = ExcitationSource(
     power_in_W=0.7,
     intensity_in_W_per_m2=0.005,
     exposure_time_in_s=2.51e-13,
+    wavelength_in_nm=480.0,
 )
 
 pulsed_excitation_source = PulsedExcitationSource(
