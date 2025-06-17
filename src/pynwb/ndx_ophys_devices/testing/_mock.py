@@ -1,9 +1,11 @@
 from typing import Optional
+from datetime import datetime
 
 from pynwb.testing.mock.utils import name_generator
 
 import ndx_ophys_devices
 
+sentinel = object()  # Used to distinguish between explicit None and "no value provided" -- see https://python-patterns.guide/python/sentinel-object/
 
 def mock_DeviceModel(
     *,
@@ -36,6 +38,66 @@ def mock_DeviceInstance(
     )
     return device_instance
 
+def mock_ViralVector(
+    *,
+    name: Optional[str] = None,
+    description: str = "This is a mock instance of a ViralVector type to be used for rapid testing.",
+    construct_name: str = "AAV-EF1a-DIO-hChR2(H134R)-EYFP",
+    manufacturer: str = "A fake manufacturer of the mock viral vector.",
+    titer_in_vg_per_ml: float = 1.0e12,
+) -> ndx_ophys_devices.ViralVector:
+    viral_vector = ndx_ophys_devices.ViralVector(
+        name=name or name_generator("ViralVector"),
+        description=description,
+        construct_name=construct_name,
+        manufacturer=manufacturer,
+        titer_in_vg_per_ml=titer_in_vg_per_ml,
+    )
+    return viral_vector
+
+
+def mock_ViralVectorInjection(
+    *,
+    name: Optional[str] = None,
+    description: Optional[str] = "This is a mock instance of a ViralVectorInjection type to be used for rapid testing.",
+    location: str = "Hippocampus",
+    hemisphere: str = "right",
+    reference: str = "Bregma at the cortical surface",
+    ap_in_mm: float = 2.0,
+    ml_in_mm: float = 1.5,
+    dv_in_mm: float = -3.0,
+    pitch_in_deg: Optional[float] = 0.0,
+    yaw_in_deg: Optional[float] = 0.0,
+    roll_in_deg: Optional[float] = 0.0,
+    stereotactic_rotation_in_deg: Optional[float] = 0.0,
+    stereotactic_tilt_in_deg: Optional[float] = 0.0,
+    volume_in_uL: float = 0.45,
+    injection_date: datetime = sentinel,
+    viral_vector: Optional[ndx_ophys_devices.ViralVector] = sentinel,
+) -> ndx_ophys_devices.ViralVectorInjection:
+    injection_date = injection_date if injection_date is not sentinel else datetime.now()
+    viral_vector = viral_vector if viral_vector is not sentinel else mock_ViralVector()
+
+    viral_vector_injection = ndx_ophys_devices.ViralVectorInjection(
+        name=name or name_generator("ViralVectorInjection"),
+        description=description,
+        location=location,
+        hemisphere=hemisphere,
+        reference=reference,
+        ap_in_mm=ap_in_mm,
+        ml_in_mm=ml_in_mm,
+        dv_in_mm=dv_in_mm,
+        pitch_in_deg=pitch_in_deg,
+        yaw_in_deg=yaw_in_deg,
+        roll_in_deg=roll_in_deg,
+        stereotactic_rotation_in_deg=stereotactic_rotation_in_deg,
+        stereotactic_tilt_in_deg=stereotactic_tilt_in_deg,
+        volume_in_uL=volume_in_uL,
+        injection_date=injection_date,
+        viral_vector=viral_vector,
+    )
+    return viral_vector_injection
+
 
 def mock_Indicator(
     *,
@@ -43,16 +105,15 @@ def mock_Indicator(
     description: str = "This is a mock instance of a Indicator type to be used for rapid testing.",
     manufacturer: str = "A fake manufacturer of the mock indicator.",
     label: str = "A fake label of the indicator.",
-    injection_brain_region: str = "A fake injection brain region of the indicator.",
-    injection_coordinates_in_mm: list = [3.0, 2.0, 1.0],
+    viral_vector_injection: Optional[ndx_ophys_devices.ViralVectorInjection] = sentinel,
 ) -> ndx_ophys_devices.Indicator:
+    viral_vector_injection = viral_vector_injection if viral_vector_injection is not sentinel else mock_ViralVectorInjection()
     indicator = ndx_ophys_devices.Indicator(
         name=name or name_generator("Indicator"),
         description=description,
         manufacturer=manufacturer,
         label=label,
-        injection_brain_region=injection_brain_region,
-        injection_coordinates_in_mm=injection_coordinates_in_mm,
+        viral_vector_injection=viral_vector_injection,
     )
     return indicator
 
@@ -63,16 +124,15 @@ def mock_Effector(
     description: str = "This is a mock instance of a Effector type to be used for rapid testing.",
     manufacturer: str = "A fake manufacturer of the mock effector.",
     label: str = "A fake label of the effector.",
-    injection_brain_region: str = "A fake injection brain region of the effector.",
-    injection_coordinates_in_mm: list = [3.0, 2.0, 1.0],
+    viral_vector_injection: Optional[ndx_ophys_devices.ViralVectorInjection] = sentinel,
 ) -> ndx_ophys_devices.Effector:
+    viral_vector_injection = viral_vector_injection if viral_vector_injection is not sentinel else mock_ViralVectorInjection()
     effector = ndx_ophys_devices.Effector(
         name=name or name_generator("Effector"),
         description=description,
         manufacturer=manufacturer,
         label=label,
-        injection_brain_region=injection_brain_region,
-        injection_coordinates_in_mm=injection_coordinates_in_mm,
+        viral_vector_injection=viral_vector_injection,
     )
     return effector
 

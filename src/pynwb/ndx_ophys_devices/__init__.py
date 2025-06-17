@@ -21,6 +21,8 @@ load_namespaces(str(__spec_path))
 # Container classes
 LensPositioning = get_class("LensPositioning", "ndx-ophys-devices")
 FiberInsertion = get_class("FiberInsertion", "ndx-ophys-devices")
+ViralVector = get_class("ViralVector", "ndx-ophys-devices")
+ViralVectorInjection = get_class("ViralVectorInjection", "ndx-ophys-devices")
 Indicator = get_class("Indicator", "ndx-ophys-devices")
 Effector = get_class("Effector", "ndx-ophys-devices")
 
