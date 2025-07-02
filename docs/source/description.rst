@@ -309,10 +309,6 @@ Usage
     )
 
     # Add objects to the NWBFile
-    nwbfile.add_lab_metadata(viral_vector)
-    nwbfile.add_lab_metadata(viral_vector_injection)
-    nwbfile.add_lab_metadata(indicator)
-    nwbfile.add_lab_metadata(effector)
     nwbfile.add_device(optical_fiber)
     nwbfile.add_device(optical_lens)
     nwbfile.add_device(excitation_source)
