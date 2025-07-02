@@ -35,6 +35,10 @@ This extension consists of neurodata types in the following categories:
 - **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filter instances.
 - **OpticalLens** extends DeviceInstance to hold metadata on optical lens instances.
 
+Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
+contain one or more of these container classes in a separate extension. 
+For example, see [ndx-optogenetics](https://github.com/rly/ndx-optogenetics). 
+
 ## Installation
 To install the latest stable release through PyPI,
 ```bash
