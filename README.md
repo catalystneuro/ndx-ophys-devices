@@ -5,6 +5,8 @@ This is an NWB extension for storing metadata of devices used in optical experim
 This extension consists of neurodata types in the following categories:
 
 **Container Classes:**
+- **ViralVector** extends NWBContainer to hold metadata on viral vectors used for gene delivery.
+- **ViralVectorInjection** extends NWBContainer to hold metadata on viral vector injection procedures.
 - **Indicator** extends NWBContainer to hold metadata on the fluorescent indicator.
 - **Effector** extends NWBContainer to hold metadata on the effector/opsin.
 - **LensPositioning** extends NWBContainer to hold metadata on the positioning of a lens relative to the brain.
