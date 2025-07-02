@@ -107,7 +107,8 @@ def mock_Indicator(
     label: str = "A fake label of the indicator.",
     viral_vector_injection: Optional[ndx_ophys_devices.ViralVectorInjection] = sentinel,
 ) -> ndx_ophys_devices.Indicator:
-    viral_vector_injection = viral_vector_injection if viral_vector_injection is not sentinel else mock_ViralVectorInjection()
+    if viral_vector_injection is sentinel:
+        viral_vector_injection = mock_ViralVectorInjection()
     indicator = ndx_ophys_devices.Indicator(
         name=name or name_generator("Indicator"),
         description=description,
@@ -126,7 +127,8 @@ def mock_Effector(
     label: str = "A fake label of the effector.",
     viral_vector_injection: Optional[ndx_ophys_devices.ViralVectorInjection] = sentinel,
 ) -> ndx_ophys_devices.Effector:
-    viral_vector_injection = viral_vector_injection if viral_vector_injection is not sentinel else mock_ViralVectorInjection()
+    if viral_vector_injection is sentinel:
+        viral_vector_injection = mock_ViralVectorInjection()
     effector = ndx_ophys_devices.Effector(
         name=name or name_generator("Effector"),
         description=description,
