@@ -59,6 +59,8 @@ Usage
     from pynwb import NWBFile
     from ndx_ophys_devices import (
         # Container classes
+        ViralVector,
+        ViralVectorInjection,
         Indicator,
         Effector,
         LensPositioning,
@@ -93,25 +95,49 @@ Usage
     )
 
     # Create container objects
+    viral_vector = ViralVector(
+        name="viral_vector",
+        description="AAV viral vector for optogenetic stimulation",
+        construct_name="AAV-EF1a-DIO-hChR2(H134R)-EYFP",
+        manufacturer="Vector Manufacturer",
+        titer_in_vg_per_ml=1.0e12,
+    )
+
+    viral_vector_injection = ViralVectorInjection(
+        name="viral_vector_injection",
+        description="Viral vector injection for optogenetic stimulation",
+        location="Hippocampus",
+        hemisphere="right",
+        reference="Bregma at the cortical surface",
+        ap_in_mm=2.0,
+        ml_in_mm=1.5,
+        dv_in_mm=-3.0,
+        pitch_in_deg=0.0,
+        yaw_in_deg=0.0,
+        roll_in_deg=0.0,
+        stereotactic_rotation_in_deg=0.0,
+        stereotactic_tilt_in_deg=0.0,
+        volume_in_uL=0.45,
+        injection_date=datetime.datetime.now(),
+        viral_vector=viral_vector,
+    )
+
     indicator = Indicator(
         name="indicator",
         description="Green indicator",
         label="GCamp6f",
-        injection_brain_region="VTA",
-        injection_coordinates_in_mm=(3.0, 2.0, 1.0),
+        viral_vector_injection=viral_vector_injection,
     )
 
     effector = Effector(
         name="effector",
         description="Excitatory opsin",
         label="hChR2",
-        injection_brain_region="VTA",
-        injection_coordinates_in_mm=(3.0, 2.0, 1.0),
+        viral_vector_injection=viral_vector_injection,
     )
 
     fiber_insertion = FiberInsertion(
         name="fiber_insertion",
-        description="Fiber insertion for optogenetics",
         depth_in_mm=3.5,
         insertion_position_ap_in_mm=2.0,
         insertion_position_ml_in_mm=1.5,
@@ -123,7 +149,6 @@ Usage
 
     lens_positioning = LensPositioning(
         name="lens_positioning",
-        description="Lens positioning for imaging",
         positioning_type="surface",
         depth_in_mm=0.0,
         target_position_ap_in_mm=1.5,
@@ -144,6 +169,7 @@ Usage
         numerical_aperture=0.2,
         core_diameter_in_um=400.0,
     )
+    nwbfile.add_device(optical_fiber_model)
 
     optical_lens_model = OpticalLensModel(
         name="optical_lens_model",
@@ -153,6 +179,7 @@ Usage
         numerical_aperture=0.39,
         magnification=40.0,
     )
+    nwbfile.add_device(optical_lens_model)
 
     excitation_source_model = ExcitationSourceModel(
         name="excitation_source_model",
@@ -163,6 +190,7 @@ Usage
         excitation_mode="one-photon",
         wavelength_range_in_nm=[400.0, 800.0],
     )
+    nwbfile.add_device(excitation_source_model)
 
     photodetector_model = PhotodetectorModel(
         name="photodetector_model",
@@ -174,6 +202,7 @@ Usage
         gain=100.0,
         gain_unit="A/W",
     )
+    nwbfile.add_device(photodetector_model)
 
     dichroic_mirror_model = DichroicMirrorModel(
         name="dichroic_mirror_model",
@@ -186,6 +215,7 @@ Usage
         transmission_band_in_nm=[490.0, 520.0],
         angle_of_incidence_in_degrees=45.0,
     )
+    nwbfile.add_device(dichroic_mirror_model)
 
     band_optical_filter_model = BandOpticalFilterModel(
         name="band_optical_filter_model",
@@ -196,6 +226,7 @@ Usage
         center_wavelength_in_nm=480.0,
         bandwidth_in_nm=30.0,  # 480±15nm
     )
+    nwbfile.add_device(band_optical_filter_model)
 
     edge_optical_filter_model = EdgeOpticalFilterModel(
         name="edge_optical_filter_model",
@@ -208,6 +239,7 @@ Usage
         slope_starting_transmission_in_percent=10.0,
         slope_ending_transmission_in_percent=80.0,
     )
+    nwbfile.add_device(edge_optical_filter_model)
 
     # Create device instances
     optical_fiber = OpticalFiber(
@@ -277,14 +309,10 @@ Usage
     )
 
     # Add objects to the NWBFile
-    nwbfile.add_device(optical_fiber_model)
-    nwbfile.add_device(optical_lens_model)
-    nwbfile.add_device(excitation_source_model)
-    nwbfile.add_device(photodetector_model)
-    nwbfile.add_device(dichroic_mirror_model)
-    nwbfile.add_device(band_optical_filter_model)
-    nwbfile.add_device(edge_optical_filter_model)
-    
+    nwbfile.add_lab_metadata(viral_vector)
+    nwbfile.add_lab_metadata(viral_vector_injection)
+    nwbfile.add_lab_metadata(indicator)
+    nwbfile.add_lab_metadata(effector)
     nwbfile.add_device(optical_fiber)
     nwbfile.add_device(optical_lens)
     nwbfile.add_device(excitation_source)
