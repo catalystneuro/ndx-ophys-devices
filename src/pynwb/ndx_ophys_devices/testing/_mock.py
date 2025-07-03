@@ -147,6 +147,10 @@ def mock_OpticalFiberModel(
     description: Optional[str] = "This is a mock instance of an OpticalFiberModel type.",
     numerical_aperture: float = 0.2,
     core_diameter_in_um: float = 400.0,
+    active_length_in_mm: float = 2.0,
+    ferrule_name: str = "cFCF - ∅2.5mm Ceramic Ferrule",
+    ferrule_model: str = "SM-SC-CF-10-FM",
+    ferrule_diameter_in_mm: float = 2.5,
 ) -> ndx_ophys_devices.OpticalFiberModel:
     optical_fiber_model = ndx_ophys_devices.OpticalFiberModel(
         name=name or name_generator("OpticalFiberModel"),

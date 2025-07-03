@@ -211,6 +211,23 @@ groups:
         dtype: float
         doc: Core diameter in micrometers.
         required: false
+      - name: active_length_in_mm
+        dtype: float
+        doc: Active length in mm for a tapered fiber, e.g., Optogenix Lambda fiber. See
+          https://www.optogenix.com/lambda-fibers/ for details of one example.
+        required: false
+      - name: ferrule_name
+        dtype: text
+        doc: Product name of the ferrule.
+        required: false
+      - name: ferrule_model
+        dtype: text
+        doc: Model (or product ID) of the ferrule from the manufacturer.
+        required: false
+      - name: ferrule_diameter_in_mm
+        dtype: float
+        doc: Ferrule diameter in mm, e.g., 1.25 mm (LC) or 2.5 mm (FC).
+        required: false
   - neurodata_type_def: FiberInsertion
     neurodata_type_inc: NWBContainer
     default_name: fiber_insertion
