@@ -1,6 +1,8 @@
 from ._mock import (
     mock_DeviceModel,
     mock_DeviceInstance,
+    mock_ViralVector,
+    mock_ViralVectorInjection,
     mock_Indicator,
     mock_Effector,
     mock_OpticalFiberModel,
@@ -27,6 +29,8 @@ from ._mock import (
 __all__ = [
     "mock_DeviceModel",
     "mock_DeviceInstance",
+    "mock_ViralVector",
+    "mock_ViralVectorInjection",
     "mock_Indicator",
     "mock_Effector",
     "mock_OpticalFiberModel",

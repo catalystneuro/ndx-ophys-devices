@@ -5,6 +5,8 @@ This is an NWB extension for storing metadata of devices used in optical experim
 This extension consists of neurodata types in the following categories:
 
 **Container Classes:**
+- **ViralVector** extends NWBContainer to hold metadata on viral vectors used for gene delivery.
+- **ViralVectorInjection** extends NWBContainer to hold metadata on viral vector injection procedures.
 - **Indicator** extends NWBContainer to hold metadata on the fluorescent indicator.
 - **Effector** extends NWBContainer to hold metadata on the effector/opsin.
 - **LensPositioning** extends NWBContainer to hold metadata on the positioning of a lens relative to the brain.
@@ -33,6 +35,10 @@ This extension consists of neurodata types in the following categories:
 - **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filter instances.
 - **OpticalLens** extends DeviceInstance to hold metadata on optical lens instances.
 
+Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
+contain one or more of these container classes in a separate extension. 
+For example, see [ndx-optogenetics](https://github.com/rly/ndx-optogenetics). 
+
 ## Installation
 To install the latest stable release through PyPI,
 ```bash
@@ -47,6 +53,8 @@ import numpy as np
 from pynwb import NWBFile
 from ndx_ophys_devices import (
     # Container classes
+    ViralVector,
+    ViralVectorInjection,
     Indicator,
     Effector,
     LensPositioning,
@@ -81,20 +89,45 @@ nwbfile = NWBFile(
 )
 
 # Create container objects
+viral_vector = ViralVector(
+    name="viral_vector",
+    description="AAV viral vector for optogenetic stimulation",
+    construct_name="AAV-EF1a-DIO-hChR2(H134R)-EYFP",
+    manufacturer="Vector Manufacturer",
+    titer_in_vg_per_ml=1.0e12,
+)
+
+viral_vector_injection = ViralVectorInjection(
+    name="viral_vector_injection",
+    description="Viral vector injection for optogenetic stimulation",
+    location="Hippocampus",
+    hemisphere="right",
+    reference="Bregma at the cortical surface",
+    ap_in_mm=2.0,
+    ml_in_mm=1.5,
+    dv_in_mm=-3.0,
+    pitch_in_deg=0.0,
+    yaw_in_deg=0.0,
+    roll_in_deg=0.0,
+    stereotactic_rotation_in_deg=0.0,
+    stereotactic_tilt_in_deg=0.0,
+    volume_in_uL=0.45,
+    injection_date=datetime.datetime.now(),
+    viral_vector=viral_vector,
+)
+
 indicator = Indicator(
     name="indicator",
     description="Green indicator",
     label="GCamp6f",
-    injection_brain_region="VTA",
-    injection_coordinates_in_mm=(3.0, 2.0, 1.0),
+    viral_vector_injection=viral_vector_injection,
 )
 
 effector = Effector(
     name="effector",
     description="Excitatory opsin",
     label="hChR2",
-    injection_brain_region="VTA",
-    injection_coordinates_in_mm=(3.0, 2.0, 1.0),
+    viral_vector_injection=viral_vector_injection,
 )
 
 fiber_insertion = FiberInsertion(
@@ -274,8 +307,6 @@ edge_optical_filter = EdgeOpticalFilter(
 )
 
 # Add objects to the NWBFile
-nwbfile.add_lab_metadata(indicator)
-nwbfile.add_lab_metadata(effector)
 nwbfile.add_device(optical_fiber)
 nwbfile.add_device(optical_lens)
 nwbfile.add_device(excitation_source)
@@ -290,13 +321,42 @@ nwbfile.add_device(edge_optical_filter)
 
 ## Entity relationship diagrams
 
-#### Indicator and Effector
+#### Molecular Tools
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
     direction BT
-    class Indicator{
+    class ViralVector {
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        **construct_name** : text
+        titer_in_vg_per_ml : numeric, optional
+        manufacturer : text, optional
+        description : text, optional
+    }
+    class ViralVectorInjection {
+        <<NWBContainer>>
+        --------------------------------------
+        attributes
+        --------------------------------------
+        location : text, optional
+        hemisphere : text, optional
+        ap_in_mm : numeric, optional
+        ml_in_mm : numeric, optional
+        dv_in_mm : numeric, optional
+        pitch_in_deg : numeric, optional
+        yaw_in_deg : numeric, optional
+        roll_in_deg : numeric, optional
+        stereotactic_rotation_in_deg : numeric, optional
+        stereotactic_tilt_in_deg : numeric, optional
+        volume_in_uL : numeric, optional
+        injection_date : datetime, optional
+        **viral_vector** : ViralVector
+        }
+    class Indicator {
         <<NWBContainer>>
         --------------------------------------
         attributes
@@ -306,8 +366,9 @@ classDiagram
         manufacturer : text, optional
         injection_brain_region : text, optional
         injection_coordinates_in_mm : numeric, length 3, optional
+        **viral_vector_injection** : ViralVectorInjection
     }
-    class Effector{
+    class Effector {
         <<NWBContainer>>
         --------------------------------------
         attributes
@@ -317,7 +378,11 @@ classDiagram
         manufacturer : text, optional
         injection_brain_region : text, optional
         injection_coordinates_in_mm : numeric, length 3, optional
+        **viral_vector_injection** : ViralVectorInjection
     }
+    Indicator --> ViralVectorInjection : links
+    Effector --> ViralVectorInjection : links
+    ViralVectorInjection --> ViralVector : links
 ```
 
 #### Device Models and Instances

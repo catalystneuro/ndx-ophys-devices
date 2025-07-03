@@ -5,6 +5,8 @@ import pytest
 from ndx_ophys_devices.testing import (
     mock_DeviceModel,
     mock_DeviceInstance,
+    mock_ViralVector,
+    mock_ViralVectorInjection,
     mock_Indicator,
     mock_Effector,
     mock_OpticalFiberModel,
@@ -37,6 +39,11 @@ def test_constructor_device_instance():
     model = mock_DeviceModel()
     mock_DeviceInstance(model=model)
 
+def test_constructor_viral_vector():
+    mock_ViralVector()
+
+def test_constructor_viral_vector_injection():
+    mock_ViralVectorInjection()
 
 def test_constructor_indicator():
     mock_Indicator()

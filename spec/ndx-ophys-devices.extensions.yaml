@@ -402,6 +402,91 @@ groups:
           Information about the positioning of the optical lens relative to the brain.
         quantity: "?" # optional
 
+  - neurodata_type_def: ViralVector
+    neurodata_type_inc: NWBContainer
+    doc: Metadata about the viral vector used to deliver indicators or effectors for ophys experiments.
+    attributes:
+      - name: construct_name
+        dtype: text
+        doc: Name of the virus construct/vector, e.g., "AAV-EF1a-DIO-hChR2(H134R)-EYFP".
+      - name: description
+        dtype: text
+        doc: Description of the virus.
+        required: false
+      - name: manufacturer
+        dtype: text
+        doc: Manufacturer of the virus.
+      - name: titer_in_vg_per_ml
+        dtype: float
+        doc: Titer of the virus, in vg/ml, e.g., 1x10^12 vg/ml.
+  - neurodata_type_def: ViralVectorInjection
+    neurodata_type_inc: NWBContainer
+    doc: Information about the injection of a viral vector that delivers indicators or effectors for ophys experiments. 
+      Use two ViralVectorInjection objects for a bilateral injection, one per hemisphere.
+    attributes:
+      - name: description
+        dtype: text
+        doc: Description of the virus injection.
+        required: false
+      - name: location
+        dtype: text
+        doc: Name of the targeted location of the virus injection.
+      - name: hemisphere
+        dtype: text
+        doc: The hemisphere ("left" or "right") of the targeted location of the virus
+          injection. Should be consistent with `ml_in_mm` coordinate.
+      - name: reference
+        dtype: text
+        doc: Reference point for `ap_in_mm`, `ml_in_mm`, and `dv_in_mm` coordinates, e.g.,
+          "Bregma at the cortical surface".
+      - name: ap_in_mm
+        dtype: float
+        doc: Anteroposterior coordinate in mm of the virus injection site
+          (+ is anterior), with reference to `reference`.
+      - name: ml_in_mm
+        dtype: float
+        doc: Mediolateral coordinate in mm of the virus injection site (+
+          is right), with reference to `reference`.
+      - name: dv_in_mm
+        dtype: float
+        doc: Dorsoventral coordinate in mm of the virus injection site (+
+          is dorsal/above the brain), with reference to `reference`.
+      - name: pitch_in_deg
+        dtype: float
+        doc: Pitch angle in degrees of the virus injection (rotation around
+          left-right axis, + is rotating the nose upward).
+        required: false
+      - name: yaw_in_deg
+        dtype: float
+        doc: Yaw angle in degrees of the virus injection (rotation around
+          dorsal-ventral axis, + is rotating the nose rightward).
+        required: false
+      - name: roll_in_deg
+        dtype: float
+        doc: Roll angle in degrees of the virus injection (rotation around
+          anterior-posterior axis, + is rotating the right side downward).
+        required: false
+      - name: stereotactic_rotation_in_deg
+        dtype: float
+        doc: TODO
+        required: false
+      - name: stereotactic_tilt_in_deg
+        dtype: float
+        doc: TODO
+        required: false
+      - name: volume_in_uL
+        dtype: float
+        doc: Volume of injection, in uL., e.g., 0.45 uL (450 nL)
+      - name: injection_date
+        dtype: isodatetime
+        doc: Date of injection.
+        required: false
+    links:
+      - name: viral_vector
+        target_type: ViralVector
+        doc: Link to ViralVector object with metadata about the name, manufacturer,
+          and titer.
+
   - neurodata_type_def: Indicator
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Indicator.
@@ -417,16 +502,11 @@ groups:
         dtype: text
         doc: Indicator manufacturer.
         required: false
-      - name: injection_brain_region
-        dtype: text
-        doc: Injection brain region name.
-        required: false
-      - name: injection_coordinates_in_mm
-        dtype: float
-        shape:
-          - 3
-        doc: Indicator injection location in stereotactic coordinates (AP, ML, DV) mm relative to Bregma.
-        required: false
+    links:
+      - name: viral_vector_injection
+        target_type: ViralVectorInjection
+        doc: Link to ViralVectorInjection object with metadata about the injection of the indicator.
+        quantity: "?" # optional
   - neurodata_type_def: Effector
     neurodata_type_inc: NWBContainer
     doc: An NWBContainer to hold metadata on the Effector or Opsin.
@@ -442,13 +522,8 @@ groups:
         dtype: text
         doc: Effector manufacturer.
         required: false
-      - name: injection_brain_region
-        dtype: text
-        doc: Injection brain region name.
-        required: false
-      - name: injection_coordinates_in_mm
-        dtype: float
-        shape:
-          - 3
-        doc: Effector injection location in stereotactic coordinates (AP, ML, DV) mm relative to Bregma.
-        required: false
+    links:
+      - name: viral_vector_injection
+        target_type: ViralVectorInjection
+        doc: Link to ViralVectorInjection object with metadata about the injection of the effector.
+        quantity: "?" # optional
