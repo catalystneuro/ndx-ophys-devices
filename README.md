@@ -129,6 +129,10 @@ optical_fiber_model = OpticalFiberModel(
     description="Optical fiber model for optogenetics",
     numerical_aperture=0.2,
     core_diameter_in_um=400.0,
+    active_length_in_mm=2.0,
+    ferrule_name="cFCF - ∅2.5mm Ceramic Ferrule",
+    ferrule_model="SM-SC-CF-10-FM",
+    ferrule_diameter_in_mm=2.5,
 )
 nwbfile.add_device(optical_fiber_model)
 
@@ -452,6 +456,10 @@ classDiagram
         --------------------------------------
         **numerical_aperture** : numeric
         core_diameter_in_um : numeric, optional
+        active_length_in_mm : numeric, optional
+        ferrule_name : text, optional
+        ferrule_model : text, optional
+        ferrule_diameter_in_mm : numeric, optional 
     }
     
     class OpticalFiber{

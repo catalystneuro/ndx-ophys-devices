@@ -1,3 +1,8 @@
+# v0.3.0 (Upcoming)
+
+### Changes
+- Added extra optional attributes to `OpticalFiberModel` [PR #13](https://github.com/catalystneuro/ndx-ophys-devices/pull/13)
+
 # v0.2.0 (Jun 3, 2025)
 
 ## Deprecations and Changes
