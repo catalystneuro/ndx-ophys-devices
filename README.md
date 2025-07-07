@@ -353,7 +353,7 @@ classDiagram
         stereotactic_rotation_in_deg : numeric, optional
         stereotactic_tilt_in_deg : numeric, optional
         volume_in_uL : numeric, optional
-        injection_date : datetime, optional
+        injection_date : text, optional
         **viral_vector** : ViralVector
         }
     class Indicator {
