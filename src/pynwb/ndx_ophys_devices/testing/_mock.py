@@ -1,5 +1,4 @@
 from typing import Optional
-from datetime import datetime
 
 from pynwb.testing.mock.utils import name_generator
 
