@@ -72,10 +72,9 @@ def mock_ViralVectorInjection(
     stereotactic_rotation_in_deg: Optional[float] = 0.0,
     stereotactic_tilt_in_deg: Optional[float] = 0.0,
     volume_in_uL: float = 0.45,
-    injection_date: datetime = sentinel,
+    injection_date: str = "1970-01-01T00:00:00+00:00",
     viral_vector: Optional[ndx_ophys_devices.ViralVector] = sentinel,
 ) -> ndx_ophys_devices.ViralVectorInjection:
-    injection_date = injection_date if injection_date is not sentinel else datetime.now()
     viral_vector = viral_vector if viral_vector is not sentinel else mock_ViralVector()
 
     viral_vector_injection = ndx_ophys_devices.ViralVectorInjection(
