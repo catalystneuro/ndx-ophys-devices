@@ -478,7 +478,7 @@ groups:
         dtype: float
         doc: Volume of injection, in uL., e.g., 0.45 uL (450 nL)
       - name: injection_date
-        dtype: text
+        dtype: text # TODO: change to isodatetime when https://github.com/hdmf-dev/hdmf/issues/429 is fixed.
         doc: Date of injection.
         required: false
     links:
