@@ -112,7 +112,7 @@ viral_vector_injection = ViralVectorInjection(
     stereotactic_rotation_in_deg=0.0,
     stereotactic_tilt_in_deg=0.0,
     volume_in_uL=0.45,
-    injection_date=datetime.datetime.now(),
+    injection_date="1970-01-01T00:00:00+00:00",
     viral_vector=viral_vector,
 )
 
@@ -353,7 +353,7 @@ classDiagram
         stereotactic_rotation_in_deg : numeric, optional
         stereotactic_tilt_in_deg : numeric, optional
         volume_in_uL : numeric, optional
-        injection_date : datetime, optional
+        injection_date : text, optional
         **viral_vector** : ViralVector
         }
     class Indicator {

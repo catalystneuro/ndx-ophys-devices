@@ -1,5 +1,9 @@
 # v0.3.0 (Upcoming)
 
+### New Features
+- Added `ViralVector` and `ViralVectorInjection` classes to hold metadata about viral vectors used for gene delivery [PR #14](https://github.com/catalystneuro/ndx-ophys-devices/pull/14)
+- Updated `injection_date` in `ViralVectorInjection` to plain text [PR #18](https://github.com/catalystneuro/ndx-ophys-devices/pull/18)
+
 ### Changes
 - Added extra optional attributes to `OpticalFiberModel` [PR #13](https://github.com/catalystneuro/ndx-ophys-devices/pull/13)
 
