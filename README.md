@@ -13,7 +13,6 @@ This extension consists of neurodata types in the following categories:
 - **FiberInsertion** extends NWBContainer to hold metadata on the insertion of a fiber into the brain.
 
 **Model Classes:**
-- **DeviceModel** extends NWBContainer to hold metadata on device models.
 - **OpticalFiberModel** extends DeviceModel to hold metadata on the optical fiber model.
 - **ExcitationSourceModel** extends DeviceModel to hold metadata on the excitation source model.
 - **PhotodetectorModel** extends DeviceModel to hold metadata on the photodetector model.
@@ -23,17 +22,16 @@ This extension consists of neurodata types in the following categories:
 - **EdgeOpticalFilterModel** extends OpticalFilterModel to hold metadata on any edge optical filter models.
 - **OpticalLensModel** extends DeviceModel to hold metadata on the optical lens model.
 
-**Device Instance Classes:**
-- **DeviceInstance** extends Device to hold metadata on device instances.
-- **OpticalFiber** extends DeviceInstance to hold metadata on optical fiber instances.
-- **ExcitationSource** extends DeviceInstance to hold metadata on excitation source instances.
-- **PulsedExcitationSource** extends ExcitationSource to hold metadata on pulsed excitation source instances.
-- **Photodetector** extends DeviceInstance to hold metadata on photodetector instances.
-- **DichroicMirror** extends DeviceInstance to hold metadata on dichroic mirror instances.
-- **OpticalFilter** extends DeviceInstance to hold metadata on general optical filter instances.
-- **BandOpticalFilter** extends OpticalFilter to hold metadata on bandpass or bandstop optical filter instances.
-- **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filter instances.
-- **OpticalLens** extends DeviceInstance to hold metadata on optical lens instances.
+**Device Classes:**
+- **OpticalFiber** extends Device to hold metadata on optical fibers.
+- **ExcitationSource** extends Device to hold metadata on excitation sources.
+- **PulsedExcitationSource** extends ExcitationSource to hold metadata on pulsed excitation sources.
+- **Photodetector** extends Device to hold metadata on photodetectors.
+- **DichroicMirror** extends Device to hold metadata on dichroic mirrors.
+- **OpticalFilter** extends Device to hold metadata on general optical filters.
+- **BandOpticalFilter** extends OpticalFilter to hold metadata on bandpass or bandstop optical filters.
+- **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filters.
+- **OpticalLens** extends Device to hold metadata on optical lenses.
 
 Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
 contain one or more of these container classes in a separate extension. 
@@ -70,7 +68,7 @@ from ndx_ophys_devices import (
     EdgeOpticalFilterModel,
     OpticalLensModel,
     
-    # Device instance classes
+    # Device classes
     OpticalFiber,
     ExcitationSource,
     PulsedExcitationSource,
@@ -154,7 +152,7 @@ lens_positioning = LensPositioning(
     optical_axis_angle_pitch_in_deg=0.0,
 )
 
-# Create model objects
+# Create device models
 optical_fiber_model = OpticalFiberModel(
     name="optical_fiber_model",
     manufacturer="Fiber Manufacturer",
@@ -239,7 +237,7 @@ edge_optical_filter_model = EdgeOpticalFilterModel(
 )
 nwbfile.add_device(edge_optical_filter_model)
 
-# Create device instances
+# Create devices
 optical_fiber = OpticalFiber(
     name="optical_fiber",
     description="Optical fiber for optogenetics",
@@ -385,7 +383,7 @@ classDiagram
     ViralVectorInjection --> ViralVector : links
 ```
 
-#### Device Models and Instances
+#### Device Models and Devices
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
@@ -393,7 +391,7 @@ classDiagram
     direction TB
     
     class DeviceModel{
-        <<Device>>
+        <<DeviceModel>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -401,7 +399,7 @@ classDiagram
         model_number : text, optional
     }
     
-    class DeviceInstance{
+    class Device{
         <<Device>>
         --------------------------------------
         attributes
@@ -424,7 +422,7 @@ classDiagram
     }
     
     class ExcitationSource{
-        <<DeviceInstance>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -455,19 +453,19 @@ classDiagram
     }
     
     class Photodetector{
-        <<DeviceInstance>>
+        <<Device>>
     }
     
-    DeviceInstance o--> DeviceModel : links
+    Device o--> DeviceModel : links
 
     DeviceModel <|-- ExcitationSourceModel : extends
-    DeviceInstance <|-- ExcitationSource : extends
+    Device <|-- ExcitationSource : extends
     ExcitationSource o--> ExcitationSourceModel : links
     ExcitationSource <|-- PulsedExcitationSource : extends
     PulsedExcitationSource o--> ExcitationSourceModel : links
 
     DeviceModel <|-- PhotodetectorModel : extends
-    DeviceInstance <|-- Photodetector : extends
+    Device <|-- Photodetector : extends
     Photodetector o--> PhotodetectorModel : links
 ```
 
@@ -478,7 +476,7 @@ classDiagram
     direction TB    
     
     class DeviceModel{
-        <<Device>>
+        <<DeviceModel>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -486,7 +484,7 @@ classDiagram
         model_number : text, optional
     }
     
-    class DeviceInstance{
+    class Device{
         <<Device>>
         --------------------------------------
         attributes
@@ -528,7 +526,7 @@ classDiagram
     }
     
     class OpticalFiber{
-        <<DeviceInstance>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -563,7 +561,7 @@ classDiagram
     }
     
     class OpticalLens{
-        <<DeviceInstance>>
+        <<Device>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -571,12 +569,12 @@ classDiagram
     }
 
     DeviceModel <|-- OpticalFiberModel : extends
-    DeviceInstance <|-- OpticalFiber : extends
+    Device <|-- OpticalFiber : extends
     OpticalFiber *-- FiberInsertion : contains
     OpticalFiber o--> OpticalFiberModel : links
 
     DeviceModel <|-- OpticalLensModel : extends
-    DeviceInstance <|-- OpticalLens : extends
+    Device <|-- OpticalLens : extends
     OpticalLens *-- LensPositioning : contains
     OpticalLens o--> OpticalLensModel : links
 ```
@@ -589,7 +587,7 @@ classDiagram
     direction TB 
     
     class DeviceModel{
-        <<Device>>
+        <<DeviceModel>>
         --------------------------------------
         attributes
         --------------------------------------
@@ -597,7 +595,7 @@ classDiagram
         model_number : text, optional
     }
     
-    class DeviceInstance{
+    class Device{
         <<Device>>
         --------------------------------------
         attributes
@@ -618,7 +616,7 @@ classDiagram
     }
     
     class OpticalFilter{
-        <<DeviceInstance>>
+        <<Device>>
     }
     
     class BandOpticalFilterModel{
@@ -662,12 +660,12 @@ classDiagram
     }
     
     class DichroicMirror{
-        <<DeviceInstance>>
+        <<Device>>
     }
     
 
     DeviceModel <|-- OpticalFilterModel : extends
-    DeviceInstance <|-- OpticalFilter : extends
+    Device <|-- OpticalFilter : extends
     OpticalFilter o--> OpticalFilterModel : links
     
     OpticalFilterModel <|-- BandOpticalFilterModel : extends
@@ -679,7 +677,7 @@ classDiagram
     EdgeOpticalFilter o--> EdgeOpticalFilterModel : links
 
     DeviceModel <|-- DichroicMirrorModel : extends
-    DeviceInstance <|-- DichroicMirror : extends
+    Device <|-- DichroicMirror : extends
     DichroicMirror o--> DichroicMirrorModel : links
 ```
 
