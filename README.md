@@ -165,7 +165,7 @@ optical_fiber_model = OpticalFiberModel(
     ferrule_model="SM-SC-CF-10-FM",
     ferrule_diameter_in_mm=2.5,
 )
-nwbfile.add_device(optical_fiber_model)
+nwbfile.add_device_model(optical_fiber_model)
 
 optical_lens_model = OpticalLensModel(
     name="optical_lens_model",
@@ -175,7 +175,7 @@ optical_lens_model = OpticalLensModel(
     numerical_aperture=0.39,
     magnification=40.0,
 )
-nwbfile.add_device(optical_lens_model)
+nwbfile.add_device_model(optical_lens_model)
 
 excitation_source_model = ExcitationSourceModel(
     name="excitation_source_model",
@@ -186,7 +186,7 @@ excitation_source_model = ExcitationSourceModel(
     excitation_mode="one-photon",
     wavelength_range_in_nm=[400.0, 800.0],
 )
-nwbfile.add_device(excitation_source_model)
+nwbfile.add_device_model(excitation_source_model)
 
 photodetector_model = PhotodetectorModel(
     name="photodetector_model",
@@ -198,7 +198,7 @@ photodetector_model = PhotodetectorModel(
     gain=100.0,
     gain_unit="A/W",
 )
-nwbfile.add_device(photodetector_model)
+nwbfile.add_device_model(photodetector_model)
 
 dichroic_mirror_model = DichroicMirrorModel(
     name="dichroic_mirror_model",
@@ -211,7 +211,7 @@ dichroic_mirror_model = DichroicMirrorModel(
     transmission_band_in_nm=[490.0, 520.0],
     angle_of_incidence_in_degrees=45.0,
 )
-nwbfile.add_device(dichroic_mirror_model)
+nwbfile.add_device_model(dichroic_mirror_model)
 
 band_optical_filter_model = BandOpticalFilterModel(
     name="band_optical_filter_model",
@@ -222,7 +222,7 @@ band_optical_filter_model = BandOpticalFilterModel(
     center_wavelength_in_nm=480.0,
     bandwidth_in_nm=30.0,  # 480±15nm
 )
-nwbfile.add_device(band_optical_filter_model)
+nwbfile.add_device_model(band_optical_filter_model)
 
 edge_optical_filter_model = EdgeOpticalFilterModel(
     name="edge_optical_filter_model",
@@ -235,7 +235,7 @@ edge_optical_filter_model = EdgeOpticalFilterModel(
     slope_starting_transmission_in_percent=10.0,
     slope_ending_transmission_in_percent=80.0,
 )
-nwbfile.add_device(edge_optical_filter_model)
+nwbfile.add_device_model(edge_optical_filter_model)
 
 # Create devices
 optical_fiber = OpticalFiber(
