@@ -1,50 +1,4 @@
 groups:
-  # DeviceInstance and DeviceModel are needed to allow inheritance for the new objects.
-  # TODO remove when [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608) is merged to core
-  - neurodata_type_def: DeviceInstance
-    neurodata_type_inc: Device
-    doc:
-      Metadata about a specific instance of a data acquisition device, e.g., recording system, electrode, microscope.
-      Link to a DeviceModel.model to represent information about the model of the device instance.
-    attributes:
-      - name: description
-        dtype: text
-        doc:
-          Description of the device instance as free-form text. If there is any software/firmware associated
-          with the device instance, the names and versions of those can be added to NWBFile.was_generated_by.
-        required: false
-      - name: serial_number
-        dtype: text
-        doc: The serial number of the device instance.
-        required: false
-    links:
-      - name: model
-        target_type: DeviceModel
-        doc: The model of the device instance.
-        quantity: "?"
-  - neurodata_type_def: DeviceModel
-    neurodata_type_inc: Device
-    doc:
-      Model properties of a data acquisition device, e.g., recording system, electrode, microscope.
-      This should be extended for specific types of device models to include additional attributes specific to each type.
-      The name of the DeviceModel should be the most common representation of the model name, e.g.,
-      Neuropixels 1.0, V-Probe, Bergamo III.
-    attributes:
-      - name: manufacturer
-        dtype: text
-        doc: The name of the manufacturer of the device model, e.g., Imec, Plexon, Thorlabs.
-        required: false
-      - name: model_number
-        dtype: text
-        doc:
-          The model number (or part/product number) of the device, e.g., PRB_1_4_0480_1,
-          PLX-VP-32-15SE(75)-(260-80)(460-10)-300-(1)CON/32m-V, BERGAMO.
-        required: false
-      - name: description
-        dtype: text
-        doc: Description of the device model as free-form text.
-        required: false
-
   - neurodata_type_def: ExcitationSourceModel
     neurodata_type_inc: DeviceModel
     doc: Extends DeviceModel to hold metadata on the Excitation Source Model.
@@ -62,8 +16,8 @@ groups:
         doc: The range of wavelengths that can be produced by the source.
         required: false
   - neurodata_type_def: ExcitationSource
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold metadata on the Excitation Source instance.
+    neurodata_type_inc: Device
+    doc: Extends Device to hold metadata on the Excitation Source instance.
     attributes:
       - name: power_in_W
         dtype: float
@@ -115,8 +69,8 @@ groups:
         doc: Unit of the gain value.
         required: false
   - neurodata_type_def: Photodetector
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold metadata on the Photodetector instance.
+    neurodata_type_inc: Device
+    doc: Extends Device to hold metadata on the Photodetector instance.
 
   - neurodata_type_def: DichroicMirrorModel
     neurodata_type_inc: DeviceModel
@@ -151,8 +105,8 @@ groups:
         doc: Intended angle at which light strikes the mirror.
         required: false
   - neurodata_type_def: DichroicMirror
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold a Dichroic Mirror instance.
+    neurodata_type_inc: Device
+    doc: Extends Device to hold a Dichroic Mirror instance.
 
   - neurodata_type_def: OpticalFilterModel
     neurodata_type_inc: DeviceModel
@@ -162,8 +116,8 @@ groups:
         dtype: text
         doc: Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass').
   - neurodata_type_def: OpticalFilter
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold an Optical Filter instance.
+    neurodata_type_inc: Device
+    doc: Extends Device to hold an Optical Filter instance.
   - neurodata_type_def: BandOpticalFilterModel
     neurodata_type_inc: OpticalFilterModel
     doc: Extends OpticalFilterModel to hold metadata on the Band Optical Filter Model (Bandpass or Bandstop).
@@ -299,8 +253,8 @@ groups:
           of the brain. The order of rotations is yaw, pitch, roll.
         required: false
   - neurodata_type_def: OpticalFiber
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold metadata on the Optical Fiber instance.
+    neurodata_type_inc: Device
+    doc: Extends Device to hold metadata on the Optical Fiber instance.
     groups:
       - name: fiber_insertion
         neurodata_type_inc: FiberInsertion
@@ -393,8 +347,8 @@ groups:
           Zero is parallel to a coronal slice. Order: yaw, pitch, roll.
         required: false
   - neurodata_type_def: OpticalLens
-    neurodata_type_inc: DeviceInstance
-    doc: Extends DeviceInstance to hold metadata on the Optical Lens instance.
+    neurodata_type_inc: Device
+    doc: Extends Device to hold metadata on the Optical Lens instance.
     groups:
       - name: lens_positioning
         neurodata_type_inc: LensPositioning
