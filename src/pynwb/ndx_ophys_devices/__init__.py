@@ -27,7 +27,6 @@ Indicator = get_class("Indicator", "ndx-ophys-devices")
 Effector = get_class("Effector", "ndx-ophys-devices")
 
 # Model classes
-DeviceModel = get_class("DeviceModel", "ndx-ophys-devices")
 OpticalFiberModel = get_class("OpticalFiberModel", "ndx-ophys-devices")
 ExcitationSourceModel = get_class("ExcitationSourceModel", "ndx-ophys-devices")
 PhotodetectorModel = get_class("PhotodetectorModel", "ndx-ophys-devices")
@@ -37,8 +36,7 @@ BandOpticalFilterModel = get_class("BandOpticalFilterModel", "ndx-ophys-devices"
 EdgeOpticalFilterModel = get_class("EdgeOpticalFilterModel", "ndx-ophys-devices")
 OpticalLensModel = get_class("OpticalLensModel", "ndx-ophys-devices")
 
-# Device instance classes
-DeviceInstance = get_class("DeviceInstance", "ndx-ophys-devices")
+# Device classes
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
 ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
 PulsedExcitationSource = get_class("PulsedExcitationSource", "ndx-ophys-devices")
@@ -53,7 +51,6 @@ __all__ = [
     "FiberInsertion",
     "Indicator",
     "Effector",
-    "DeviceModel",
     "OpticalFiberModel",
     "ExcitationSourceModel",
     "PhotodetectorModel",
@@ -62,7 +59,6 @@ __all__ = [
     "BandOpticalFilterModel",
     "EdgeOpticalFilterModel",
     "OpticalLensModel",
-    "DeviceInstance",
     "OpticalFiber",
     "ExcitationSource",
     "PulsedExcitationSource",

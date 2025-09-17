@@ -6,37 +6,6 @@ import ndx_ophys_devices
 
 sentinel = object()  # Used to distinguish between explicit None and "no value provided" -- see https://python-patterns.guide/python/sentinel-object/
 
-def mock_DeviceModel(
-    *,
-    name: Optional[str] = None,
-    manufacturer: str = "A fake manufacturer",
-    model_number: Optional[str] = "MODEL-123",
-    description: Optional[str] = "This is a mock instance of a DeviceModel type.",
-) -> ndx_ophys_devices.DeviceModel:
-    device_model = ndx_ophys_devices.DeviceModel(
-        name=name or name_generator("DeviceModel"),
-        manufacturer=manufacturer,
-        model_number=model_number,
-        description=description,
-    )
-    return device_model
-
-
-def mock_DeviceInstance(
-    *,
-    name: Optional[str] = None,
-    description: Optional[str] = "This is a mock instance of a DeviceInstance type.",
-    serial_number: Optional[str] = "SN-123456",
-    model: Optional[ndx_ophys_devices.DeviceModel] = None,
-) -> ndx_ophys_devices.DeviceInstance:
-    device_instance = ndx_ophys_devices.DeviceInstance(
-        name=name or name_generator("DeviceInstance"),
-        description=description,
-        serial_number=serial_number,
-        model=model,
-    )
-    return device_instance
-
 def mock_ViralVector(
     *,
     name: Optional[str] = None,

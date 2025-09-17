@@ -6,6 +6,7 @@
 
 ### Changes
 - Added extra optional attributes to `OpticalFiberModel` [PR #13](https://github.com/catalystneuro/ndx-ophys-devices/pull/13)
+- Switched to core pynwb `DeviceModel` and `Device` classes now that they are available in pynwb 3.1.0 [PR #20](https://github.com/catalystneuro/ndx-ophys-devices/pull/20)
 
 # v0.2.0 (Jun 3, 2025)
 
