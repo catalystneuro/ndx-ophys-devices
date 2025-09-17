@@ -4,9 +4,10 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ndx-ophys-devices"
-version = "0.2.0"
+version = "0.4.0"
 authors = [
     { name="Alessandra Trapani", email="alessandra.trapani@catalystneuro.com" },
+    { name="Paul Adkisson-Floro", email="paul.adkisson@catalystneuro.com" },
 ]
 description = "This is an NWB extension for storing metadata of devices used in optical experimental setup (microscopy, fiber photometry, optogenetic stimulation etc.)"
 readme = "README.md"

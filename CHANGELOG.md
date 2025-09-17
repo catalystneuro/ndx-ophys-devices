@@ -1,4 +1,6 @@
-# v0.3.0 (Upcoming)
+# v0.4.0 (Upcoming)
+
+# v0.3.0 (September 17, 2025)
 
 ### New Features
 - Added `ViralVector` and `ViralVectorInjection` classes to hold metadata about viral vectors used for gene delivery [PR #14](https://github.com/catalystneuro/ndx-ophys-devices/pull/14)
