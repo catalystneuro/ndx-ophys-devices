@@ -1,5 +1,8 @@
 # v0.4.0 (Upcoming)
 
+## New Features
+- Added auto-publish.yml GitHub Action to automatically publish new versions to PyPI upon GitHub Release.
+
 # v0.3.0 (September 17, 2025)
 
 ### New Features
