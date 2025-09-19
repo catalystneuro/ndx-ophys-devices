@@ -10,7 +10,7 @@ namespaces:
     schema:
       - namespace: core
         neurodata_types:
-        # - Device # TODO remove comment when merged to core [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608)
-        # - DeviceModel # TODO remove comment when merged to core [PR#608](https://github.com/NeurodataWithoutBorders/nwb-schema/pull/608)
+        - Device
+        - DeviceModel
       - source: ndx-ophys-devices.extensions.yaml
-    version: 0.2.0
+    version: 0.3.1
