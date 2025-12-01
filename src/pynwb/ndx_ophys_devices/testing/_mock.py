@@ -358,17 +358,17 @@ def mock_EdgeOpticalFilter(
     return edge_optical_filter
 
 
-def mock_OpticalLensModel(
+def mock_ObjectiveLensModel(
     *,
     name: Optional[str] = None,
     manufacturer: str = "A fake manufacturer",
     model_number: Optional[str] = "OL-123",
-    description: Optional[str] = "This is a mock instance of an OpticalLensModel type.",
+    description: Optional[str] = "This is a mock instance of an ObjectiveLensModel type.",
     numerical_aperture: float = 0.2,
     magnification: float = 10.0,
-) -> ndx_ophys_devices.OpticalLensModel:
-    objective_lens_model = ndx_ophys_devices.OpticalLensModel(
-        name=name or name_generator("OpticalLensModel"),
+) -> ndx_ophys_devices.ObjectiveLensModel:
+    objective_lens_model = ndx_ophys_devices.ObjectiveLensModel(
+        name=name or name_generator("ObjectiveLensModel"),
         manufacturer=manufacturer,
         model_number=model_number,
         description=description,
@@ -378,20 +378,20 @@ def mock_OpticalLensModel(
     return objective_lens_model
 
 
-def mock_OpticalLens(
+def mock_ObjectiveLens(
     *,
     name: Optional[str] = None,
-    description: Optional[str] = "This is a mock instance of an OpticalLens type.",
+    description: Optional[str] = "This is a mock instance of an ObjectiveLens type.",
     serial_number: Optional[str] = "OL-SN-123456",
-    model: Optional[ndx_ophys_devices.OpticalLensModel] = None,
+    model: Optional[ndx_ophys_devices.ObjectiveLensModel] = None,
     lens_positioning: Optional[ndx_ophys_devices.LensPositioning] = None,
-) -> ndx_ophys_devices.OpticalLens:  # TODO: Update return type when core types are updated
+) -> ndx_ophys_devices.ObjectiveLens:  # TODO: Update return type when core types are updated
     if model is None:
-        model = mock_OpticalLensModel()
+        model = mock_ObjectiveLensModel()
     if lens_positioning is None:
         lens_positioning = mock_LensPositioning()
-    objective_lens = ndx_ophys_devices.OpticalLens(
-        name=name or name_generator("OpticalLens"),
+    objective_lens = ndx_ophys_devices.ObjectiveLens(
+        name=name or name_generator("ObjectiveLens"),
         description=description,
         serial_number=serial_number,
         model=model,

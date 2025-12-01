@@ -9,7 +9,7 @@ Major Refactoring:
   - Added ``DeviceModel`` as a base class for all device model classes
   - Added ``DeviceInstance`` as a base class for all device instance classes
   - Refactored all device classes into model and instance pairs (e.g., ``OpticalFiberModel`` and ``OpticalFiber``)
-  - Renamed ``ObjectiveLens`` to ``OpticalLens`` for consistency
+  - Renamed ``ObjectiveLens`` to ``ObjectiveLens`` for consistency
 
 New Features:
 - Added new neurodata types:

@@ -20,7 +20,7 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilterModel** extends DeviceModel to hold metadata on a general optical filter model.
 - **BandOpticalFilterModel** extends OpticalFilterModel to hold metadata on any bandpass or bandstop optical filter models.
 - **EdgeOpticalFilterModel** extends OpticalFilterModel to hold metadata on any edge optical filter models.
-- **OpticalLensModel** extends DeviceModel to hold metadata on the optical lens model.
+- **ObjectiveLensModel** extends DeviceModel to hold metadata on the objective lens model.
 
 **Device Classes:**
 - **OpticalFiber** extends Device to hold metadata on optical fibers.
@@ -31,7 +31,7 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilter** extends Device to hold metadata on general optical filters.
 - **BandOpticalFilter** extends OpticalFilter to hold metadata on bandpass or bandstop optical filters.
 - **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filters.
-- **OpticalLens** extends Device to hold metadata on optical lenses.
+- **ObjectiveLens** extends Device to hold metadata on objective lenses.
 
 Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
 contain one or more of these container classes in a separate extension. 
@@ -66,7 +66,7 @@ from ndx_ophys_devices import (
     OpticalFilterModel,
     BandOpticalFilterModel,
     EdgeOpticalFilterModel,
-    OpticalLensModel,
+    ObjectiveLensModel,
     
     # Device classes
     OpticalFiber,
@@ -77,7 +77,7 @@ from ndx_ophys_devices import (
     OpticalFilter,
     BandOpticalFilter,
     EdgeOpticalFilter,
-    OpticalLens,
+    ObjectiveLens,
 )
 
 nwbfile = NWBFile(
@@ -167,15 +167,15 @@ optical_fiber_model = OpticalFiberModel(
 )
 nwbfile.add_device_model(optical_fiber_model)
 
-optical_lens_model = OpticalLensModel(
-    name="optical_lens_model",
+objective_lens_model = ObjectiveLensModel(
+    name="objective_lens_model",
     manufacturer="Lens Manufacturer",
     model_number="OL-123",
-    description="Optical lens model for imaging",
+    description="Objective lens model for imaging",
     numerical_aperture=0.39,
     magnification=40.0,
 )
-nwbfile.add_device_model(optical_lens_model)
+nwbfile.add_device_model(objective_lens_model)
 
 excitation_source_model = ExcitationSourceModel(
     name="excitation_source_model",
@@ -246,11 +246,11 @@ optical_fiber = OpticalFiber(
     fiber_insertion=fiber_insertion,
 )
 
-optical_lens = OpticalLens(
-    name="optical_lens",
-    description="Optical lens for imaging",
+objective_lens = ObjectiveLens(
+    name="objective_lens",
+    description="Objective lens for imaging",
     serial_number="OL-SN-123456",
-    model=optical_lens_model,
+    model=objective_lens_model,
     lens_positioning=lens_positioning,
 )
 
@@ -306,7 +306,7 @@ edge_optical_filter = EdgeOpticalFilter(
 
 # Add objects to the NWBFile
 nwbfile.add_device(optical_fiber)
-nwbfile.add_device(optical_lens)
+nwbfile.add_device(objective_lens)
 nwbfile.add_device(excitation_source)
 nwbfile.add_device(pulsed_excitation_source)
 nwbfile.add_device(photodetector)
@@ -469,7 +469,7 @@ classDiagram
     Photodetector o--> PhotodetectorModel : links
 ```
 
-#### Optical Fiber and Optical Lens
+#### Optical Fiber and Objective Lens
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
@@ -551,7 +551,7 @@ classDiagram
         optical_axis_angle_roll_in_deg : numeric, optional
     }
 
-    class OpticalLensModel{
+    class ObjectiveLensModel{
         <<DeviceModel>>
         --------------------------------------
         attributes
@@ -560,7 +560,7 @@ classDiagram
         magnification : numeric, optional
     }
     
-    class OpticalLens{
+    class ObjectiveLens{
         <<Device>>
         --------------------------------------
         attributes
@@ -573,10 +573,10 @@ classDiagram
     OpticalFiber *-- FiberInsertion : contains
     OpticalFiber o--> OpticalFiberModel : links
 
-    DeviceModel <|-- OpticalLensModel : extends
-    Device <|-- OpticalLens : extends
-    OpticalLens *-- LensPositioning : contains
-    OpticalLens o--> OpticalLensModel : links
+    DeviceModel <|-- ObjectiveLensModel : extends
+    Device <|-- ObjectiveLens : extends
+    ObjectiveLens *-- LensPositioning : contains
+    ObjectiveLens o--> ObjectiveLensModel : links
 ```
 
 #### Optical Filters and Dichroic Mirrors

@@ -27,7 +27,7 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilterModel** extends ``DeviceModel`` to hold metadata on a general optical filter model.
 - **BandOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any bandpass or bandstop optical filter models.
 - **EdgeOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any edge optical filter models.
-- **OpticalLensModel** extends ``DeviceModel`` to hold metadata on the optical lens model.
+- **ObjectiveLensModel** extends ``DeviceModel`` to hold metadata on the objective lens model.
 
 **Device Instance Classes:**
 
@@ -40,7 +40,7 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilter** extends ``DeviceInstance`` to hold metadata on general optical filter instances.
 - **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filter instances.
 - **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filter instances.
-- **OpticalLens** extends ``DeviceInstance`` to hold metadata on optical lens instances.
+- **ObjectiveLens** extends ``DeviceInstance`` to hold metadata on objective lens instances.
 
 Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
 contain one or more of these container classes in a separate extension. 
@@ -80,7 +80,7 @@ Usage
         OpticalFilterModel,
         BandOpticalFilterModel,
         EdgeOpticalFilterModel,
-        OpticalLensModel,
+        ObjectiveLensModel,
         
         # Device instance classes
         OpticalFiber,
@@ -91,7 +91,7 @@ Usage
         OpticalFilter,
         BandOpticalFilter,
         EdgeOpticalFilter,
-        OpticalLens,
+        ObjectiveLens,
     )
 
     nwbfile = NWBFile(
@@ -181,15 +181,15 @@ Usage
     )
     nwbfile.add_device(optical_fiber_model)
 
-    optical_lens_model = OpticalLensModel(
-        name="optical_lens_model",
+    objective_lens_model = ObjectiveLensModel(
+        name="objective_lens_model",
         manufacturer="Lens Manufacturer",
         model_number="OL-123",
-        description="Optical lens model for imaging",
+        description="Objective lens model for imaging",
         numerical_aperture=0.39,
         magnification=40.0,
     )
-    nwbfile.add_device(optical_lens_model)
+    nwbfile.add_device(objective_lens_model)
 
     excitation_source_model = ExcitationSourceModel(
         name="excitation_source_model",
@@ -260,11 +260,11 @@ Usage
         fiber_insertion=fiber_insertion,
     )
 
-    optical_lens = OpticalLens(
-        name="optical_lens",
-        description="Optical lens for imaging",
+    objective_lens = ObjectiveLens(
+        name="objective_lens",
+        description="Objective lens for imaging",
         serial_number="OL-SN-123456",
-        model=optical_lens_model,
+        model=objective_lens_model,
         lens_positioning=lens_positioning,
     )
 
@@ -320,7 +320,7 @@ Usage
 
     # Add objects to the NWBFile
     nwbfile.add_device(optical_fiber)
-    nwbfile.add_device(optical_lens)
+    nwbfile.add_device(objective_lens)
     nwbfile.add_device(excitation_source)
     nwbfile.add_device(pulsed_excitation_source)
     nwbfile.add_device(photodetector)
