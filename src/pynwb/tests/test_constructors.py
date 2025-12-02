@@ -28,11 +28,14 @@ from ndx_ophys_devices.testing import (
     mock_FiberInsertion,
 )
 
+
 def test_constructor_viral_vector():
     mock_ViralVector()
 
+
 def test_constructor_viral_vector_injection():
     mock_ViralVectorInjection()
+
 
 def test_constructor_indicator():
     mock_Indicator()
