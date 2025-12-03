@@ -4,7 +4,38 @@ from pynwb.testing.mock.utils import name_generator
 
 import ndx_ophys_devices
 
-sentinel = object()  # Used to distinguish between explicit None and "no value provided" -- see https://python-patterns.guide/python/sentinel-object/
+sentinel = (
+    object()
+)  # Used to distinguish between explicit None and "no value provided" -- see https://python-patterns.guide/python/sentinel-object/
+
+
+def mock_StereotacticPosition(
+    *,
+    name: Optional[str] = None,
+    anatomical_target: str = "Hippocampus",
+    origin: str = "bregma",
+    orientation: str = "RAS",
+    x_in_mm: float = 1.5,
+    y_in_mm: float = -3.0,
+    z_in_mm: float = 0.0,
+    pitch_in_deg: float = 180.0,
+    yaw_in_deg: float = 90.0,
+    roll_in_deg: float = 0.0,
+) -> ndx_ophys_devices.StereotacticPosition:
+    stereotactic_position = ndx_ophys_devices.StereotacticPosition(
+        name=name or name_generator("StereotacticPosition"),
+        anatomical_target=anatomical_target,
+        origin=origin,
+        orientation=orientation,
+        x_in_mm=x_in_mm,
+        y_in_mm=y_in_mm,
+        z_in_mm=z_in_mm,
+        pitch_in_deg=pitch_in_deg,
+        yaw_in_deg=yaw_in_deg,
+        roll_in_deg=roll_in_deg,
+    )
+    return stereotactic_position
+
 
 def mock_ViralVector(
     *,
@@ -28,39 +59,24 @@ def mock_ViralVectorInjection(
     *,
     name: Optional[str] = None,
     description: Optional[str] = "This is a mock instance of a ViralVectorInjection type to be used for rapid testing.",
-    location: str = "Hippocampus",
-    hemisphere: str = "right",
-    reference: str = "Bregma at the cortical surface",
-    ap_in_mm: float = 2.0,
-    ml_in_mm: float = 1.5,
-    dv_in_mm: float = -3.0,
-    pitch_in_deg: Optional[float] = 0.0,
-    yaw_in_deg: Optional[float] = 0.0,
-    roll_in_deg: Optional[float] = 0.0,
-    stereotactic_rotation_in_deg: Optional[float] = 0.0,
-    stereotactic_tilt_in_deg: Optional[float] = 0.0,
     volume_in_uL: float = 0.45,
     injection_date: str = "1970-01-01T00:00:00+00:00",
+    viral_injection_coordinates: Optional[ndx_ophys_devices.StereotacticPosition] = sentinel,
     viral_vector: Optional[ndx_ophys_devices.ViralVector] = sentinel,
 ) -> ndx_ophys_devices.ViralVectorInjection:
     viral_vector = viral_vector if viral_vector is not sentinel else mock_ViralVector()
+    viral_injection_coordinates = (
+        viral_injection_coordinates
+        if viral_injection_coordinates is not sentinel
+        else mock_StereotacticPosition(name="viral_injection_coordinates")
+    )
 
     viral_vector_injection = ndx_ophys_devices.ViralVectorInjection(
         name=name or name_generator("ViralVectorInjection"),
         description=description,
-        location=location,
-        hemisphere=hemisphere,
-        reference=reference,
-        ap_in_mm=ap_in_mm,
-        ml_in_mm=ml_in_mm,
-        dv_in_mm=dv_in_mm,
-        pitch_in_deg=pitch_in_deg,
-        yaw_in_deg=yaw_in_deg,
-        roll_in_deg=roll_in_deg,
-        stereotactic_rotation_in_deg=stereotactic_rotation_in_deg,
-        stereotactic_tilt_in_deg=stereotactic_tilt_in_deg,
         volume_in_uL=volume_in_uL,
         injection_date=injection_date,
+        viral_injection_coordinates=viral_injection_coordinates,
         viral_vector=viral_vector,
     )
     return viral_vector_injection
@@ -126,6 +142,10 @@ def mock_OpticalFiberModel(
         description=description,
         numerical_aperture=numerical_aperture,
         core_diameter_in_um=core_diameter_in_um,
+        active_length_in_mm=active_length_in_mm,
+        ferrule_name=ferrule_name,
+        ferrule_model=ferrule_model,
+        ferrule_diameter_in_mm=ferrule_diameter_in_mm,
     )
     return optical_fiber_model
 
@@ -136,12 +156,12 @@ def mock_OpticalFiber(
     description: Optional[str] = "This is a mock instance of an OpticalFiber type.",
     serial_number: Optional[str] = "OF-SN-123456",
     model: Optional[ndx_ophys_devices.OpticalFiberModel] = None,
-    fiber_insertion: Optional[ndx_ophys_devices.FiberInsertion] = None,
+    fiber_insertion: Optional[ndx_ophys_devices.StereotacticPosition] = None,
 ) -> ndx_ophys_devices.OpticalFiber:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_OpticalFiberModel()
     if fiber_insertion is None:
-        fiber_insertion = mock_FiberInsertion()
+        fiber_insertion = mock_StereotacticPosition(name="fiber_insertion")
     optical_fiber = ndx_ophys_devices.OpticalFiber(
         name=name or name_generator("OpticalFiber"),
         description=description,
@@ -384,12 +404,12 @@ def mock_ObjectiveLens(
     description: Optional[str] = "This is a mock instance of an ObjectiveLens type.",
     serial_number: Optional[str] = "OL-SN-123456",
     model: Optional[ndx_ophys_devices.ObjectiveLensModel] = None,
-    lens_positioning: Optional[ndx_ophys_devices.LensPositioning] = None,
+    lens_positioning: Optional[ndx_ophys_devices.StereotacticPosition] = None,
 ) -> ndx_ophys_devices.ObjectiveLens:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_ObjectiveLensModel()
     if lens_positioning is None:
-        lens_positioning = mock_LensPositioning()
+        lens_positioning = mock_StereotacticPosition(name="lens_positioning")
     objective_lens = ndx_ophys_devices.ObjectiveLens(
         name=name or name_generator("ObjectiveLens"),
         description=description,
@@ -472,61 +492,3 @@ def mock_PulsedExcitationSource(
         pulse_rate_in_Hz=pulse_rate_in_Hz,
     )
     return pulsed_excitation_source
-
-
-def mock_LensPositioning(
-    *,
-    positioning_type: str = "surface",
-    target_position_ap_in_mm: Optional[float] = 2.0,
-    target_position_ml_in_mm: Optional[float] = 1.5,
-    target_position_dv_in_mm: Optional[float] = -3.0,
-    depth_in_mm: float = 0.0,
-    working_distance_in_mm: Optional[float] = 2.0,
-    position_reference: Optional[str] = "Bregma at the cortical surface",
-    hemisphere: Optional[str] = "right",
-    optical_axis_angle_yaw_in_deg: Optional[float] = 0.0,
-    optical_axis_angle_pitch_in_deg: Optional[float] = 0.0,
-    optical_axis_angle_roll_in_deg: Optional[float] = 0.0,
-) -> ndx_ophys_devices.LensPositioning:
-    lens_positioning = ndx_ophys_devices.LensPositioning(
-        name="lens_positioning",
-        positioning_type=positioning_type,
-        target_position_ap_in_mm=target_position_ap_in_mm,
-        target_position_ml_in_mm=target_position_ml_in_mm,
-        target_position_dv_in_mm=target_position_dv_in_mm,
-        depth_in_mm=depth_in_mm,
-        working_distance_in_mm=working_distance_in_mm,
-        position_reference=position_reference,
-        hemisphere=hemisphere,
-        optical_axis_angle_yaw_in_deg=optical_axis_angle_yaw_in_deg,
-        optical_axis_angle_pitch_in_deg=optical_axis_angle_pitch_in_deg,
-        optical_axis_angle_roll_in_deg=optical_axis_angle_roll_in_deg,
-    )
-    return lens_positioning
-
-
-def mock_FiberInsertion(
-    *,
-    insertion_position_ap_in_mm: Optional[float] = 2.0,
-    insertion_position_ml_in_mm: Optional[float] = 1.5,
-    insertion_position_dv_in_mm: Optional[float] = 0.0,
-    depth_in_mm: Optional[float] = 3.0,
-    position_reference: Optional[str] = "Bregma at the cortical surface",
-    hemisphere: Optional[str] = "right",
-    insertion_angle_yaw_in_deg: Optional[float] = 0.0,
-    insertion_angle_pitch_in_deg: Optional[float] = 0.0,
-    insertion_angle_roll_in_deg: Optional[float] = 0.0,
-) -> ndx_ophys_devices.FiberInsertion:
-    fiber_insertion = ndx_ophys_devices.FiberInsertion(
-        name="fiber_insertion",
-        insertion_position_ap_in_mm=insertion_position_ap_in_mm,
-        insertion_position_ml_in_mm=insertion_position_ml_in_mm,
-        insertion_position_dv_in_mm=insertion_position_dv_in_mm,
-        depth_in_mm=depth_in_mm,
-        position_reference=position_reference,
-        hemisphere=hemisphere,
-        insertion_angle_yaw_in_deg=insertion_angle_yaw_in_deg,
-        insertion_angle_pitch_in_deg=insertion_angle_pitch_in_deg,
-        insertion_angle_roll_in_deg=insertion_angle_roll_in_deg,
-    )
-    return fiber_insertion

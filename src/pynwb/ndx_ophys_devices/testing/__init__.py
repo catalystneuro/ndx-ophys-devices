@@ -20,8 +20,7 @@ from ._mock import (
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_LensPositioning,
-    mock_FiberInsertion,
+    mock_StereotacticPosition,
 )
 
 __all__ = [
@@ -46,6 +45,5 @@ __all__ = [
     "mock_ExcitationSourceModel",
     "mock_ExcitationSource",
     "mock_PulsedExcitationSource",
-    "mock_LensPositioning",
-    "mock_FiberInsertion",
+    "mock_StereotacticPosition",
 ]

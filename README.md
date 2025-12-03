@@ -5,6 +5,7 @@ This is an NWB extension for storing metadata of devices used in optical experim
 This extension consists of neurodata types in the following categories:
 
 **Container Classes:**
+
 - **ViralVector** extends NWBContainer to hold metadata on viral vectors used for gene delivery.
 - **ViralVectorInjection** extends NWBContainer to hold metadata on viral vector injection procedures.
 - **Indicator** extends NWBContainer to hold metadata on the fluorescent indicator.
@@ -13,6 +14,7 @@ This extension consists of neurodata types in the following categories:
 - **FiberInsertion** extends NWBContainer to hold metadata on the insertion of a fiber into the brain.
 
 **Model Classes:**
+
 - **OpticalFiberModel** extends DeviceModel to hold metadata on the optical fiber model.
 - **ExcitationSourceModel** extends DeviceModel to hold metadata on the excitation source model.
 - **PhotodetectorModel** extends DeviceModel to hold metadata on the photodetector model.
@@ -23,6 +25,7 @@ This extension consists of neurodata types in the following categories:
 - **ObjectiveLensModel** extends DeviceModel to hold metadata on the objective lens model.
 
 **Device Classes:**
+
 - **OpticalFiber** extends Device to hold metadata on optical fibers.
 - **ExcitationSource** extends Device to hold metadata on excitation sources.
 - **PulsedExcitationSource** extends ExcitationSource to hold metadata on pulsed excitation sources.

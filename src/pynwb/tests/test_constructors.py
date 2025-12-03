@@ -24,8 +24,7 @@ from ndx_ophys_devices.testing import (
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_LensPositioning,
-    mock_FiberInsertion,
+    mock_StereotacticPosition,
 )
 
 
@@ -113,12 +112,8 @@ def test_constructor_pulsed_excitation_source():
     mock_PulsedExcitationSource()
 
 
-def test_constructor_lens_positioning():
-    mock_LensPositioning()
-
-
-def test_constructor_fiber_insertion():
-    mock_FiberInsertion()
+def test_constructor_stereotactic_position():
+    mock_StereotacticPosition()
 
 
 if __name__ == "__main__":
