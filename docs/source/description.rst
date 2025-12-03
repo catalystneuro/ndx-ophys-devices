@@ -14,8 +14,7 @@ This extension consists of neurodata types in the following categories:
 - **ViralVectorInjection** extends NWBContainer to hold metadata on viral vector injection procedures.
 - **Indicator** extends ``NWBContainer`` to hold metadata on the fluorescent indicator.
 - **Effector** extends ``NWBContainer`` to hold metadata on the effector/opsin.
-- **LensPositioning** extends ``NWBContainer`` to hold metadata on the positioning of a lens relative to the brain.
-- **FiberInsertion** extends ``NWBContainer`` to hold metadata on the insertion of a fiber into the brain.
+- **StereotacticPosition** extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
 
 **Device Model Classes:**
 
@@ -69,8 +68,7 @@ Usage
         ViralVectorInjection,
         Indicator,
         Effector,
-        LensPositioning,
-        FiberInsertion,
+        StereotacticPosition,
         
         # Model classes
         OpticalFiberModel,
@@ -109,22 +107,25 @@ Usage
         titer_in_vg_per_ml=1.0e12,
     )
 
-    viral_vector_injection = ViralVectorInjection(
-        name="viral_vector_injection",
-        description="Viral vector injection for optogenetic stimulation",
-        location="Hippocampus",
-        hemisphere="right",
-        reference="Bregma at the cortical surface",
-        ap_in_mm=2.0,
-        ml_in_mm=1.5,
-        dv_in_mm=-3.0,
+    viral_injection_coordinates = StereotacticPosition(
+        name="viral_injection_coordinates",
+        anatomical_target="Hippocampus",
+        origin="bregma",
+        orientation="RAS",
+        x_in_mm=1.5,
+        y_in_mm=2.0,
+        z_in_mm=-3.0,
         pitch_in_deg=0.0,
         yaw_in_deg=0.0,
         roll_in_deg=0.0,
-        stereotactic_rotation_in_deg=0.0,
-        stereotactic_tilt_in_deg=0.0,
+    )
+
+    viral_vector_injection = ViralVectorInjection(
+        name="viral_vector_injection",
+        description="Viral vector injection for optogenetic stimulation",
         volume_in_uL=0.45,
-        injection_date=datetime.datetime.now(),
+        injection_date="1970-01-01T00:00:00+00:00",
+        viral_injection_coordinates=viral_injection_coordinates,
         viral_vector=viral_vector,
     )
 
@@ -142,28 +143,30 @@ Usage
         viral_vector_injection=viral_vector_injection,
     )
 
-    fiber_insertion = FiberInsertion(
+    fiber_insertion = StereotacticPosition(
         name="fiber_insertion",
-        depth_in_mm=3.5,
-        insertion_position_ap_in_mm=2.0,
-        insertion_position_ml_in_mm=1.5,
-        insertion_position_dv_in_mm=3.0,
-        position_reference="bregma",
-        hemisphere="right",
-        insertion_angle_pitch_in_deg=10.0,
+        anatomical_target="Hippocampus",
+        origin="bregma",
+        orientation="RAS",
+        x_in_mm=1.5,
+        y_in_mm=2.0,
+        z_in_mm=0.0,
+        pitch_in_deg=10.0,
+        yaw_in_deg=0.0,
+        roll_in_deg=0.0,
     )
 
-    lens_positioning = LensPositioning(
+    lens_positioning = StereotacticPosition(
         name="lens_positioning",
-        positioning_type="surface",
-        depth_in_mm=0.0,
-        target_position_ap_in_mm=1.5,
-        target_position_ml_in_mm=2.0,
-        target_position_dv_in_mm=0.0,
-        working_distance_in_mm=2.0,
-        position_reference="bregma",
-        hemisphere="left",
-        optical_axis_angle_pitch_in_deg=0.0,
+        anatomical_target="Visual Cortex",
+        origin="bregma",
+        orientation="RAS",
+        x_in_mm=-2.0,
+        y_in_mm=1.5,
+        z_in_mm=0.0,
+        pitch_in_deg=0.0,
+        yaw_in_deg=0.0,
+        roll_in_deg=0.0,
     )
 
     # Create model objects
