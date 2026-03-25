@@ -19,20 +19,22 @@ from ndx_ophys_devices.testing import (
     mock_BandOpticalFilter,
     mock_EdgeOpticalFilterModel,
     mock_EdgeOpticalFilter,
-    mock_OpticalLensModel,
-    mock_OpticalLens,
+    mock_ObjectiveLensModel,
+    mock_ObjectiveLens,
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
-    mock_LensPositioning,
-    mock_FiberInsertion,
+    mock_StereotacticPosition,
 )
+
 
 def test_constructor_viral_vector():
     mock_ViralVector()
 
+
 def test_constructor_viral_vector_injection():
     mock_ViralVectorInjection()
+
 
 def test_constructor_indicator():
     mock_Indicator()
@@ -90,12 +92,12 @@ def test_constructor_edge_optical_filter():
     mock_EdgeOpticalFilter()
 
 
-def test_constructor_optical_lens_model():
-    mock_OpticalLensModel()
+def test_constructor_objective_lens_model():
+    mock_ObjectiveLensModel()
 
 
-def test_constructor_optical_lens():
-    mock_OpticalLens()
+def test_constructor_objective_lens():
+    mock_ObjectiveLens()
 
 
 def test_constructor_excitation_source_model():
@@ -110,12 +112,8 @@ def test_constructor_pulsed_excitation_source():
     mock_PulsedExcitationSource()
 
 
-def test_constructor_lens_positioning():
-    mock_LensPositioning()
-
-
-def test_constructor_fiber_insertion():
-    mock_FiberInsertion()
+def test_constructor_stereotactic_position():
+    mock_StereotacticPosition()
 
 
 if __name__ == "__main__":

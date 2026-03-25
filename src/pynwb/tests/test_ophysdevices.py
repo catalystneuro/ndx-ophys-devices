@@ -19,8 +19,8 @@ from ndx_ophys_devices.testing import (
     mock_BandOpticalFilter,
     mock_EdgeOpticalFilterModel,
     mock_EdgeOpticalFilter,
-    mock_OpticalLensModel,
-    mock_OpticalLens,
+    mock_ObjectiveLensModel,
+    mock_ObjectiveLens,
     mock_ExcitationSourceModel,
     mock_ExcitationSource,
     mock_PulsedExcitationSource,
@@ -59,8 +59,8 @@ class TestOphysDevicesSimpleRoundtrip(pynwb_TestCase):
         nwbfile.add_device_model(device_models=edge_optical_filter_model)
         optical_fiber_model = mock_OpticalFiberModel(name="OpticalFiberModel")
         nwbfile.add_device_model(device_models=optical_fiber_model)
-        optical_lens_model = mock_OpticalLensModel(name="OpticalLensModel")
-        nwbfile.add_device_model(device_models=optical_lens_model)
+        objective_lens_model = mock_ObjectiveLensModel(name="ObjectiveLensModel")
+        nwbfile.add_device_model(device_models=objective_lens_model)
         excitation_source_model = mock_ExcitationSourceModel(name="ExcitationSourceModel")
         nwbfile.add_device_model(device_models=excitation_source_model)
         pulsed_excitation_source_model = mock_ExcitationSourceModel(name="PulsedExcitationSourceModel")
@@ -74,7 +74,7 @@ class TestOphysDevicesSimpleRoundtrip(pynwb_TestCase):
             "band_optical_filter": mock_BandOpticalFilter(name="BandOpticalFilter", model=band_optical_filter_model),
             "edge_optical_filter": mock_EdgeOpticalFilter(name="EdgeOpticalFilter", model=edge_optical_filter_model),
             "optical_fiber": mock_OpticalFiber(name="OpticalFiber", model=optical_fiber_model),
-            "optical_lens": mock_OpticalLens(name="OpticalLens", model=optical_lens_model),
+            "objective_lens": mock_ObjectiveLens(name="ObjectiveLens", model=objective_lens_model),
             "excitation_source": mock_ExcitationSource(name="ExcitationSource", model=excitation_source_model),
             "pulsed_excitation_source": mock_PulsedExcitationSource(
                 name="PulsedExcitationSource", model=pulsed_excitation_source_model
