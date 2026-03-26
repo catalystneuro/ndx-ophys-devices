@@ -18,7 +18,6 @@ This extension consists of neurodata types in the following categories:
 
 **Device Model Classes:**
 
-- **DeviceModel** extends ``Device`` to hold metadata on device models.
 - **OpticalFiberModel** extends ``DeviceModel`` to hold metadata on the optical fiber model.
 - **ExcitationSourceModel** extends ``DeviceModel`` to hold metadata on the excitation source model.
 - **PhotodetectorModel** extends ``DeviceModel`` to hold metadata on the photodetector model.
@@ -28,18 +27,17 @@ This extension consists of neurodata types in the following categories:
 - **EdgeOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any edge optical filter models.
 - **ObjectiveLensModel** extends ``DeviceModel`` to hold metadata on the objective lens model.
 
-**Device Instance Classes:**
+**Device Classes:**
 
-- **DeviceInstance** extends ``Device`` to hold metadata on device instances.
-- **OpticalFiber** extends ``DeviceInstance`` to hold metadata on optical fiber instances.
-- **ExcitationSource** extends ``DeviceInstance`` to hold metadata on excitation source instances.
-- **PulsedExcitationSource** extends ``ExcitationSource`` to hold metadata on pulsed excitation source instances.
-- **Photodetector** extends ``DeviceInstance`` to hold metadata on photodetector instances.
-- **DichroicMirror** extends ``DeviceInstance`` to hold metadata on dichroic mirror instances.
-- **OpticalFilter** extends ``DeviceInstance`` to hold metadata on general optical filter instances.
-- **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filter instances.
-- **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filter instances.
-- **ObjectiveLens** extends ``DeviceInstance`` to hold metadata on objective lens instances.
+- **OpticalFiber** extends ``Device`` to hold metadata on optical fibers.
+- **ExcitationSource** extends ``Device`` to hold metadata on excitation sources.
+- **PulsedExcitationSource** extends ``ExcitationSource`` to hold metadata on pulsed excitation sources.
+- **Photodetector** extends ``Device`` to hold metadata on photodetectors.
+- **DichroicMirror** extends ``Device`` to hold metadata on dichroic mirrors.
+- **OpticalFilter** extends ``Device`` to hold metadata on general optical filters.
+- **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filters.
+- **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filters.
+- **ObjectiveLens** extends ``Device`` to hold metadata on objective lenses.
 
 Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
 contain one or more of these container classes in a separate extension. 
@@ -80,7 +78,7 @@ Usage
         EdgeOpticalFilterModel,
         ObjectiveLensModel,
         
-        # Device instance classes
+        # Device classes
         OpticalFiber,
         ExcitationSource,
         PulsedExcitationSource,
@@ -169,7 +167,7 @@ Usage
         roll_in_deg=0.0,
     )
 
-    # Create model objects
+    # Create device models
     optical_fiber_model = OpticalFiberModel(
         name="optical_fiber_model",
         manufacturer="Fiber Manufacturer",
@@ -182,7 +180,7 @@ Usage
         ferrule_model="SM-SC-CF-10-FM",
         ferrule_diameter_in_mm=2.5,
     )
-    nwbfile.add_device(optical_fiber_model)
+    nwbfile.add_device_model(optical_fiber_model)
 
     objective_lens_model = ObjectiveLensModel(
         name="objective_lens_model",
@@ -192,7 +190,7 @@ Usage
         numerical_aperture=0.39,
         magnification=40.0,
     )
-    nwbfile.add_device(objective_lens_model)
+    nwbfile.add_device_model(objective_lens_model)
 
     excitation_source_model = ExcitationSourceModel(
         name="excitation_source_model",
@@ -203,7 +201,7 @@ Usage
         excitation_mode="one-photon",
         wavelength_range_in_nm=[400.0, 800.0],
     )
-    nwbfile.add_device(excitation_source_model)
+    nwbfile.add_device_model(excitation_source_model)
 
     photodetector_model = PhotodetectorModel(
         name="photodetector_model",
@@ -215,7 +213,7 @@ Usage
         gain=100.0,
         gain_unit="A/W",
     )
-    nwbfile.add_device(photodetector_model)
+    nwbfile.add_device_model(photodetector_model)
 
     dichroic_mirror_model = DichroicMirrorModel(
         name="dichroic_mirror_model",
@@ -228,7 +226,7 @@ Usage
         transmission_band_in_nm=[490.0, 520.0],
         angle_of_incidence_in_degrees=45.0,
     )
-    nwbfile.add_device(dichroic_mirror_model)
+    nwbfile.add_device_model(dichroic_mirror_model)
 
     band_optical_filter_model = BandOpticalFilterModel(
         name="band_optical_filter_model",
@@ -239,7 +237,7 @@ Usage
         center_wavelength_in_nm=480.0,
         bandwidth_in_nm=30.0,  # 480±15nm
     )
-    nwbfile.add_device(band_optical_filter_model)
+    nwbfile.add_device_model(band_optical_filter_model)
 
     edge_optical_filter_model = EdgeOpticalFilterModel(
         name="edge_optical_filter_model",
@@ -252,7 +250,7 @@ Usage
         slope_starting_transmission_in_percent=10.0,
         slope_ending_transmission_in_percent=80.0,
     )
-    nwbfile.add_device(edge_optical_filter_model)
+    nwbfile.add_device_model(edge_optical_filter_model)
 
     # Create device instances
     optical_fiber = OpticalFiber(

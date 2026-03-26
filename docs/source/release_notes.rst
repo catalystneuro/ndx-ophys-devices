@@ -5,6 +5,7 @@ Version 0.4.0 (upcoming)
 New Features:
 - Added new neurodata types:
   - ``StereotacticPosition``: Extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
+- Added realistic configuration examples notebook.
 
 Changes:
 - Renamed `OpticalLens` to `ObjectiveLens`
@@ -12,7 +13,7 @@ Changes:
 - Replaced ``LensPositioning`` with ``StereotacticPosition``
 - Replaced ``ViralVectorInjection`` fields related to coordinates and angles with ``StereotacticPosition`` group
 
-Version 0.3.0 (Sept 19, 2025)
+Version 0.3.1 (Sept 19, 2025)
 ------------------------
 
 New Features

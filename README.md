@@ -337,8 +337,8 @@ classDiagram
         attributes
         --------------------------------------
         **construct_name** : text
-        titer_in_vg_per_ml : numeric, optional
-        manufacturer : text, optional
+        **manufacturer** : text
+        **titer_in_vg_per_ml** : numeric
         description : text, optional
     }
     class StereotacticPosition {
@@ -361,9 +361,9 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        volume_in_uL : numeric, optional
+        **volume_in_uL** : numeric
         injection_date : text, optional
-        **viral_injection_coordinates** : StereotacticPosition
+        viral_injection_coordinates : StereotacticPosition, optional
         **viral_vector** : ViralVector
         }
     class Indicator {
@@ -374,9 +374,7 @@ classDiagram
         **label** : text
         description : text, optional
         manufacturer : text, optional
-        injection_brain_region : text, optional
-        injection_coordinates_in_mm : numeric, length 3, optional
-        **viral_vector_injection** : ViralVectorInjection
+        viral_vector_injection : ViralVectorInjection, optional
     }
     class Effector {
         <<NWBContainer>>
@@ -386,9 +384,7 @@ classDiagram
         **label** : text
         description : text, optional
         manufacturer : text, optional
-        injection_brain_region : text, optional
-        injection_coordinates_in_mm : numeric, length 3, optional
-        **viral_vector_injection** : ViralVectorInjection
+        viral_vector_injection : ViralVectorInjection, optional
     }
     Indicator --> ViralVectorInjection : links
     Effector --> ViralVectorInjection : links
@@ -400,7 +396,7 @@ classDiagram
 #### Photodetector and ExcitationSource
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
     direction TB
     
@@ -450,9 +446,9 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
+        **pulse_rate_in_Hz** : numeric
         peak_power_in_W : numeric, optional
         peak_pulse_energy_in_J : numeric, optional
-        pulse_rate_in_Hz : numeric, optional
     }
     
     class PhotodetectorModel{
@@ -485,7 +481,7 @@ classDiagram
 
 #### Optical Fiber and Objective Lens
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
     direction TB    
     
@@ -561,7 +557,7 @@ classDiagram
         --------------------------------------
         attributes
         --------------------------------------
-        **lens_positioning** : StereotacticPosition
+        lens_positioning : StereotacticPosition, optional
     }
 
     DeviceModel <|-- OpticalFiberModel : extends
@@ -578,7 +574,7 @@ classDiagram
 #### Optical Filters and Dichroic Mirrors
 
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
     direction TB 
     
