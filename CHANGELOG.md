@@ -2,6 +2,7 @@
 
 ## New Features
 - Added auto-publish.yml GitHub Action to automatically publish new versions to PyPI upon GitHub Release.
+- Added realitic configuration examples notebook.
 
 ## Deprecations and Changes
   - Renamed `OpticalLens` to `ObjectiveLens`
