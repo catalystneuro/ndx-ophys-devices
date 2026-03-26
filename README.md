@@ -393,9 +393,11 @@ classDiagram
     Indicator --> ViralVectorInjection : links
     Effector --> ViralVectorInjection : links
     ViralVectorInjection --> ViralVector : links
+    ViralVectorInjection *-- StereotacticPosition : contains
+
 ```
 
-#### Device Models and Devices
+#### Photodetector and ExcitationSource
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', "primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%

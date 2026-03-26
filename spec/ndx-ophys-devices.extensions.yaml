@@ -197,16 +197,19 @@ groups:
           Pitch angle in degrees of the device insertion (rotation around left-right
           axis, + is rotating the nose upward).
         dtype: float
+        required: false
       - name: yaw_in_deg
         doc:
           Yaw angle in degrees of the device insertion (rotation around dorsal-ventral
           axis, + is rotating the nose rightward).
         dtype: float
+        required: false
       - name: roll_in_deg
         doc:
           Roll angle in degrees of the device insertion (rotation around anterior-posterior
           axis, + is rotating the right side downward).
         dtype: float
+        required: false
 
   - neurodata_type_def: OpticalFiberModel
     neurodata_type_inc: DeviceModel
