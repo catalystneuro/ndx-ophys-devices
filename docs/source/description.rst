@@ -14,12 +14,10 @@ This extension consists of neurodata types in the following categories:
 - **ViralVectorInjection** extends NWBContainer to hold metadata on viral vector injection procedures.
 - **Indicator** extends ``NWBContainer`` to hold metadata on the fluorescent indicator.
 - **Effector** extends ``NWBContainer`` to hold metadata on the effector/opsin.
-- **LensPositioning** extends ``NWBContainer`` to hold metadata on the positioning of a lens relative to the brain.
-- **FiberInsertion** extends ``NWBContainer`` to hold metadata on the insertion of a fiber into the brain.
+- **StereotacticPosition** extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
 
 **Device Model Classes:**
 
-- **DeviceModel** extends ``Device`` to hold metadata on device models.
 - **OpticalFiberModel** extends ``DeviceModel`` to hold metadata on the optical fiber model.
 - **ExcitationSourceModel** extends ``DeviceModel`` to hold metadata on the excitation source model.
 - **PhotodetectorModel** extends ``DeviceModel`` to hold metadata on the photodetector model.
@@ -27,20 +25,19 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilterModel** extends ``DeviceModel`` to hold metadata on a general optical filter model.
 - **BandOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any bandpass or bandstop optical filter models.
 - **EdgeOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any edge optical filter models.
-- **OpticalLensModel** extends ``DeviceModel`` to hold metadata on the optical lens model.
+- **ObjectiveLensModel** extends ``DeviceModel`` to hold metadata on the objective lens model.
 
-**Device Instance Classes:**
+**Device Classes:**
 
-- **DeviceInstance** extends ``Device`` to hold metadata on device instances.
-- **OpticalFiber** extends ``DeviceInstance`` to hold metadata on optical fiber instances.
-- **ExcitationSource** extends ``DeviceInstance`` to hold metadata on excitation source instances.
-- **PulsedExcitationSource** extends ``ExcitationSource`` to hold metadata on pulsed excitation source instances.
-- **Photodetector** extends ``DeviceInstance`` to hold metadata on photodetector instances.
-- **DichroicMirror** extends ``DeviceInstance`` to hold metadata on dichroic mirror instances.
-- **OpticalFilter** extends ``DeviceInstance`` to hold metadata on general optical filter instances.
-- **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filter instances.
-- **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filter instances.
-- **OpticalLens** extends ``DeviceInstance`` to hold metadata on optical lens instances.
+- **OpticalFiber** extends ``Device`` to hold metadata on optical fibers.
+- **ExcitationSource** extends ``Device`` to hold metadata on excitation sources.
+- **PulsedExcitationSource** extends ``ExcitationSource`` to hold metadata on pulsed excitation sources.
+- **Photodetector** extends ``Device`` to hold metadata on photodetectors.
+- **DichroicMirror** extends ``Device`` to hold metadata on dichroic mirrors.
+- **OpticalFilter** extends ``Device`` to hold metadata on general optical filters.
+- **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filters.
+- **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filters.
+- **ObjectiveLens** extends ``Device`` to hold metadata on objective lenses.
 
 Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
 contain one or more of these container classes in a separate extension. 
@@ -69,8 +66,7 @@ Usage
         ViralVectorInjection,
         Indicator,
         Effector,
-        LensPositioning,
-        FiberInsertion,
+        StereotacticPosition,
         
         # Model classes
         OpticalFiberModel,
@@ -80,9 +76,9 @@ Usage
         OpticalFilterModel,
         BandOpticalFilterModel,
         EdgeOpticalFilterModel,
-        OpticalLensModel,
+        ObjectiveLensModel,
         
-        # Device instance classes
+        # Device classes
         OpticalFiber,
         ExcitationSource,
         PulsedExcitationSource,
@@ -91,7 +87,7 @@ Usage
         OpticalFilter,
         BandOpticalFilter,
         EdgeOpticalFilter,
-        OpticalLens,
+        ObjectiveLens,
     )
 
     nwbfile = NWBFile(
@@ -109,22 +105,25 @@ Usage
         titer_in_vg_per_ml=1.0e12,
     )
 
-    viral_vector_injection = ViralVectorInjection(
-        name="viral_vector_injection",
-        description="Viral vector injection for optogenetic stimulation",
-        location="Hippocampus",
-        hemisphere="right",
-        reference="Bregma at the cortical surface",
-        ap_in_mm=2.0,
-        ml_in_mm=1.5,
-        dv_in_mm=-3.0,
+    viral_injection_coordinates = StereotacticPosition(
+        name="viral_injection_coordinates",
+        anatomical_target="Hippocampus",
+        origin="bregma",
+        orientation="RAS",
+        x_in_mm=1.5,
+        y_in_mm=2.0,
+        z_in_mm=-3.0,
         pitch_in_deg=0.0,
         yaw_in_deg=0.0,
         roll_in_deg=0.0,
-        stereotactic_rotation_in_deg=0.0,
-        stereotactic_tilt_in_deg=0.0,
+    )
+
+    viral_vector_injection = ViralVectorInjection(
+        name="viral_vector_injection",
+        description="Viral vector injection for optogenetic stimulation",
         volume_in_uL=0.45,
-        injection_date=datetime.datetime.now(),
+        injection_date="1970-01-01T00:00:00+00:00",
+        viral_injection_coordinates=viral_injection_coordinates,
         viral_vector=viral_vector,
     )
 
@@ -142,31 +141,33 @@ Usage
         viral_vector_injection=viral_vector_injection,
     )
 
-    fiber_insertion = FiberInsertion(
+    fiber_insertion = StereotacticPosition(
         name="fiber_insertion",
-        depth_in_mm=3.5,
-        insertion_position_ap_in_mm=2.0,
-        insertion_position_ml_in_mm=1.5,
-        insertion_position_dv_in_mm=3.0,
-        position_reference="bregma",
-        hemisphere="right",
-        insertion_angle_pitch_in_deg=10.0,
+        anatomical_target="Hippocampus",
+        origin="bregma",
+        orientation="RAS",
+        x_in_mm=1.5,
+        y_in_mm=2.0,
+        z_in_mm=0.0,
+        pitch_in_deg=10.0,
+        yaw_in_deg=0.0,
+        roll_in_deg=0.0,
     )
 
-    lens_positioning = LensPositioning(
+    lens_positioning = StereotacticPosition(
         name="lens_positioning",
-        positioning_type="surface",
-        depth_in_mm=0.0,
-        target_position_ap_in_mm=1.5,
-        target_position_ml_in_mm=2.0,
-        target_position_dv_in_mm=0.0,
-        working_distance_in_mm=2.0,
-        position_reference="bregma",
-        hemisphere="left",
-        optical_axis_angle_pitch_in_deg=0.0,
+        anatomical_target="Visual Cortex",
+        origin="bregma",
+        orientation="RAS",
+        x_in_mm=-2.0,
+        y_in_mm=1.5,
+        z_in_mm=0.0,
+        pitch_in_deg=0.0,
+        yaw_in_deg=0.0,
+        roll_in_deg=0.0,
     )
 
-    # Create model objects
+    # Create device models
     optical_fiber_model = OpticalFiberModel(
         name="optical_fiber_model",
         manufacturer="Fiber Manufacturer",
@@ -179,17 +180,17 @@ Usage
         ferrule_model="SM-SC-CF-10-FM",
         ferrule_diameter_in_mm=2.5,
     )
-    nwbfile.add_device(optical_fiber_model)
+    nwbfile.add_device_model(optical_fiber_model)
 
-    optical_lens_model = OpticalLensModel(
-        name="optical_lens_model",
+    objective_lens_model = ObjectiveLensModel(
+        name="objective_lens_model",
         manufacturer="Lens Manufacturer",
         model_number="OL-123",
-        description="Optical lens model for imaging",
+        description="Objective lens model for imaging",
         numerical_aperture=0.39,
         magnification=40.0,
     )
-    nwbfile.add_device(optical_lens_model)
+    nwbfile.add_device_model(objective_lens_model)
 
     excitation_source_model = ExcitationSourceModel(
         name="excitation_source_model",
@@ -200,7 +201,7 @@ Usage
         excitation_mode="one-photon",
         wavelength_range_in_nm=[400.0, 800.0],
     )
-    nwbfile.add_device(excitation_source_model)
+    nwbfile.add_device_model(excitation_source_model)
 
     photodetector_model = PhotodetectorModel(
         name="photodetector_model",
@@ -212,7 +213,7 @@ Usage
         gain=100.0,
         gain_unit="A/W",
     )
-    nwbfile.add_device(photodetector_model)
+    nwbfile.add_device_model(photodetector_model)
 
     dichroic_mirror_model = DichroicMirrorModel(
         name="dichroic_mirror_model",
@@ -225,7 +226,7 @@ Usage
         transmission_band_in_nm=[490.0, 520.0],
         angle_of_incidence_in_degrees=45.0,
     )
-    nwbfile.add_device(dichroic_mirror_model)
+    nwbfile.add_device_model(dichroic_mirror_model)
 
     band_optical_filter_model = BandOpticalFilterModel(
         name="band_optical_filter_model",
@@ -236,7 +237,7 @@ Usage
         center_wavelength_in_nm=480.0,
         bandwidth_in_nm=30.0,  # 480±15nm
     )
-    nwbfile.add_device(band_optical_filter_model)
+    nwbfile.add_device_model(band_optical_filter_model)
 
     edge_optical_filter_model = EdgeOpticalFilterModel(
         name="edge_optical_filter_model",
@@ -249,7 +250,7 @@ Usage
         slope_starting_transmission_in_percent=10.0,
         slope_ending_transmission_in_percent=80.0,
     )
-    nwbfile.add_device(edge_optical_filter_model)
+    nwbfile.add_device_model(edge_optical_filter_model)
 
     # Create device instances
     optical_fiber = OpticalFiber(
@@ -260,11 +261,11 @@ Usage
         fiber_insertion=fiber_insertion,
     )
 
-    optical_lens = OpticalLens(
-        name="optical_lens",
-        description="Optical lens for imaging",
+    objective_lens = ObjectiveLens(
+        name="objective_lens",
+        description="Objective lens for imaging",
         serial_number="OL-SN-123456",
-        model=optical_lens_model,
+        model=objective_lens_model,
         lens_positioning=lens_positioning,
     )
 
@@ -320,7 +321,7 @@ Usage
 
     # Add objects to the NWBFile
     nwbfile.add_device(optical_fiber)
-    nwbfile.add_device(optical_lens)
+    nwbfile.add_device(objective_lens)
     nwbfile.add_device(excitation_source)
     nwbfile.add_device(pulsed_excitation_source)
     nwbfile.add_device(photodetector)

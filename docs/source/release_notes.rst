@@ -1,5 +1,28 @@
 Release Notes
 =============
+Version 0.4.0 (upcoming)
+------------------------
+New Features:
+- Added new neurodata types:
+  - ``StereotacticPosition``: Extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
+- Added realistic configuration examples notebook.
+
+Changes:
+- Renamed `OpticalLens` to `ObjectiveLens`
+- Replaced ``FiberInsertion`` with ``StereotacticPosition``
+- Replaced ``LensPositioning`` with ``StereotacticPosition``
+- Replaced ``ViralVectorInjection`` fields related to coordinates and angles with ``StereotacticPosition`` group
+
+Version 0.3.1 (Sept 19, 2025)
+------------------------
+
+New Features
+- Added `ViralVector` and `ViralVectorInjection` classes to hold metadata about viral vectors used for gene delivery
+- Updated `injection_date` in `ViralVectorInjection` to plain text
+
+Changes
+- Added extra optional attributes to `OpticalFiberModel`
+- Switched to core pynwb `DeviceModel` and `Device` classes now that they are available in pynwb 3.1.0 
 
 Version 0.2.0 (Jun 3, 2025)
 ------------------------

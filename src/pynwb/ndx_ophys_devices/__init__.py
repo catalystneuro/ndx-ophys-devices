@@ -19,8 +19,7 @@ if not os.path.exists(__spec_path):
 load_namespaces(str(__spec_path))
 
 # Container classes
-LensPositioning = get_class("LensPositioning", "ndx-ophys-devices")
-FiberInsertion = get_class("FiberInsertion", "ndx-ophys-devices")
+StereotacticPosition = get_class("StereotacticPosition", "ndx-ophys-devices")
 ViralVector = get_class("ViralVector", "ndx-ophys-devices")
 ViralVectorInjection = get_class("ViralVectorInjection", "ndx-ophys-devices")
 Indicator = get_class("Indicator", "ndx-ophys-devices")
@@ -34,7 +33,7 @@ DichroicMirrorModel = get_class("DichroicMirrorModel", "ndx-ophys-devices")
 OpticalFilterModel = get_class("OpticalFilterModel", "ndx-ophys-devices")
 BandOpticalFilterModel = get_class("BandOpticalFilterModel", "ndx-ophys-devices")
 EdgeOpticalFilterModel = get_class("EdgeOpticalFilterModel", "ndx-ophys-devices")
-OpticalLensModel = get_class("OpticalLensModel", "ndx-ophys-devices")
+ObjectiveLensModel = get_class("ObjectiveLensModel", "ndx-ophys-devices")
 
 # Device classes
 OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
@@ -45,10 +44,9 @@ DichroicMirror = get_class("DichroicMirror", "ndx-ophys-devices")
 OpticalFilter = get_class("OpticalFilter", "ndx-ophys-devices")
 BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
 EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
-OpticalLens = get_class("OpticalLens", "ndx-ophys-devices")
+ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
 __all__ = [
-    "LensPositioning",
-    "FiberInsertion",
+    "StereotacticPosition",
     "Indicator",
     "Effector",
     "OpticalFiberModel",
@@ -58,7 +56,7 @@ __all__ = [
     "OpticalFilterModel",
     "BandOpticalFilterModel",
     "EdgeOpticalFilterModel",
-    "OpticalLensModel",
+    "ObjectiveLensModel",
     "OpticalFiber",
     "ExcitationSource",
     "PulsedExcitationSource",
@@ -67,6 +65,6 @@ __all__ = [
     "OpticalFilter",
     "BandOpticalFilter",
     "EdgeOpticalFilter",
-    "OpticalLens",
+    "ObjectiveLens",
 ]
 del load_namespaces, get_class

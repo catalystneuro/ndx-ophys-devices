@@ -2,6 +2,13 @@
 
 ## New Features
 - Added auto-publish.yml GitHub Action to automatically publish new versions to PyPI upon GitHub Release.
+- Added realistic configuration examples notebook.
+
+## Deprecations and Changes
+  - Renamed `OpticalLens` to `ObjectiveLens`
+  - Replace `FiberInsertion` with `StereotacticPosition`
+  - Replace `LensPositioning` with `StereotacticPosition`
+  - Replace `ViralVectorInjection` fields related to coordinates and angles with `StereotacticPosition` group
 
 # v0.3.1 (September 19, 2025)
 
