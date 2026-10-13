@@ -1,9 +1,8 @@
 """Roundtrip (write, read, validate) tests for ndx-ophys-devices."""
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
-from pytz import UTC
 from pynwb import NWBHDF5IO, get_class, load_namespaces, validate
 from pynwb.spec import NWBGroupSpec, NWBNamespaceBuilder
 from pynwb.testing import TestCase
@@ -87,7 +86,7 @@ class TestDevicesRoundtrip(TestCase):
         remove_test_file(self.nwbfile_path)
 
     def test_roundtrip(self):
-        nwbfile = mock_NWBFile(session_start_time=datetime(2000, 1, 1, tzinfo=UTC))
+        nwbfile = mock_NWBFile(session_start_time=datetime(2000, 1, 1, tzinfo=timezone.utc))
         models = {
             "photodetector": mock_PhotodetectorModel(name="PhotodetectorModel"),
             "dichroic_mirror": mock_DichroicMirrorModel(name="DichroicMirrorModel"),
@@ -138,7 +137,7 @@ class TestDevicesRoundtrip(TestCase):
 
 def test_molecular_tools_roundtrip(MolecularToolsMetadata, tmp_path):
     """ViralVector, ViralVectorInjection, Indicator and Effector survive a write and read, with their links."""
-    nwbfile = mock_NWBFile(session_start_time=datetime(2000, 1, 1, tzinfo=UTC))
+    nwbfile = mock_NWBFile(session_start_time=datetime(2000, 1, 1, tzinfo=timezone.utc))
 
     viral_vector = mock_ViralVector(name="ViralVector")
     injection = mock_ViralVectorInjection(name="ViralVectorInjection", viral_vector=viral_vector)
