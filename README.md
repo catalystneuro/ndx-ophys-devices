@@ -6,16 +6,13 @@ This extension consists of neurodata types in the following categories:
 
 **Container Classes:**
 
-
 - **ViralVector** extends NWBContainer to hold metadata on viral vectors used for gene delivery.
 - **ViralVectorInjection** extends NWBContainer to hold metadata on viral vector injection procedures.
 - **Indicator** extends NWBContainer to hold metadata on the fluorescent indicator.
 - **Effector** extends NWBContainer to hold metadata on the effector/opsin.
 - **StereotacticPosition** extends NWBContainer to hold metadata about the stereotactic position of a device relative to the brain.
-- **StereotacticPosition** extends NWBContainer to hold metadata about the stereotactic position of a device relative to the brain.
 
 **Model Classes:**
-
 
 - **OpticalFiberModel** extends DeviceModel to hold metadata on the optical fiber model.
 - **ExcitationSourceModel** extends DeviceModel to hold metadata on the excitation source model.
@@ -25,10 +22,8 @@ This extension consists of neurodata types in the following categories:
 - **BandOpticalFilterModel** extends OpticalFilterModel to hold metadata on any bandpass or bandstop optical filter models.
 - **EdgeOpticalFilterModel** extends OpticalFilterModel to hold metadata on any edge optical filter models.
 - **ObjectiveLensModel** extends DeviceModel to hold metadata on the objective lens model.
-- **ObjectiveLensModel** extends DeviceModel to hold metadata on the objective lens model.
 
 **Device Classes:**
-
 
 - **OpticalFiber** extends Device to hold metadata on optical fibers.
 - **ExcitationSource** extends Device to hold metadata on excitation sources.
@@ -38,7 +33,6 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilter** extends Device to hold metadata on general optical filters.
 - **BandOpticalFilter** extends OpticalFilter to hold metadata on bandpass or bandstop optical filters.
 - **EdgeOpticalFilter** extends OpticalFilter to hold metadata on edge optical filters.
-- **ObjectiveLens** extends Device to hold metadata on objective lenses.
 - **ObjectiveLens** extends Device to hold metadata on objective lenses.
 
 Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
@@ -64,7 +58,6 @@ from ndx_ophys_devices import (
     Indicator,
     Effector,
     StereotacticPosition,
-    StereotacticPosition,
     
     # Model classes
     OpticalFiberModel,
@@ -74,7 +67,6 @@ from ndx_ophys_devices import (
     OpticalFilterModel,
     BandOpticalFilterModel,
     EdgeOpticalFilterModel,
-    ObjectiveLensModel,
     ObjectiveLensModel,
     
     # Device classes
@@ -86,7 +78,6 @@ from ndx_ophys_devices import (
     OpticalFilter,
     BandOpticalFilter,
     EdgeOpticalFilter,
-    ObjectiveLens,
     ObjectiveLens,
 )
 
@@ -118,25 +109,11 @@ viral_injection_coordinates = StereotacticPosition(
     roll_in_deg=0.0,
 )
 
-viral_injection_coordinates = StereotacticPosition(
-    name="viral_injection_coordinates",
-    anatomical_target="Hippocampus",
-    origin="bregma",
-    orientation="RAS",
-    x_in_mm=1.5,
-    y_in_mm=2.0,
-    z_in_mm=-3.0,
-    pitch_in_deg=0.0,
-    yaw_in_deg=0.0,
-    roll_in_deg=0.0,
-)
-
 viral_vector_injection = ViralVectorInjection(
     name="viral_vector_injection",
     description="Viral vector injection for optogenetic stimulation",
     volume_in_uL=0.45,
     injection_date="1970-01-01T00:00:00+00:00",
-    viral_injection_coordinates=viral_injection_coordinates,
     viral_injection_coordinates=viral_injection_coordinates,
     viral_vector=viral_vector,
 )
@@ -156,17 +133,7 @@ effector = Effector(
 )
 
 fiber_insertion = StereotacticPosition(
-fiber_insertion = StereotacticPosition(
     name="fiber_insertion",
-    anatomical_target="Hippocampus",
-    origin="bregma",
-    orientation="RAS",
-    x_in_mm=1.5,
-    y_in_mm=2.0,
-    z_in_mm=0.0,
-    pitch_in_deg=10.0,
-    yaw_in_deg=0.0,
-    roll_in_deg=0.0,
     anatomical_target="Hippocampus",
     origin="bregma",
     orientation="RAS",
@@ -179,17 +146,7 @@ fiber_insertion = StereotacticPosition(
 )
 
 lens_positioning = StereotacticPosition(
-lens_positioning = StereotacticPosition(
     name="lens_positioning",
-    anatomical_target="Visual Cortex",
-    origin="bregma",
-    orientation="RAS",
-    x_in_mm=-2.0,
-    y_in_mm=1.5,
-    z_in_mm=0.0,
-    pitch_in_deg=0.0,
-    yaw_in_deg=0.0,
-    roll_in_deg=0.0,
     anatomical_target="Visual Cortex",
     origin="bregma",
     orientation="RAS",
@@ -218,16 +175,12 @@ nwbfile.add_device_model(optical_fiber_model)
 
 objective_lens_model = ObjectiveLensModel(
     name="objective_lens_model",
-objective_lens_model = ObjectiveLensModel(
-    name="objective_lens_model",
     manufacturer="Lens Manufacturer",
     model_number="OL-123",
-    description="Objective lens model for imaging",
     description="Objective lens model for imaging",
     numerical_aperture=0.39,
     magnification=40.0,
 )
-nwbfile.add_device_model(objective_lens_model)
 nwbfile.add_device_model(objective_lens_model)
 
 excitation_source_model = ExcitationSourceModel(
@@ -302,11 +255,7 @@ optical_fiber = OpticalFiber(
 objective_lens = ObjectiveLens(
     name="objective_lens",
     description="Objective lens for imaging",
-objective_lens = ObjectiveLens(
-    name="objective_lens",
-    description="Objective lens for imaging",
     serial_number="OL-SN-123456",
-    model=objective_lens_model,
     model=objective_lens_model,
     lens_positioning=lens_positioning,
 )
@@ -364,7 +313,6 @@ edge_optical_filter = EdgeOpticalFilter(
 # Add objects to the NWBFile
 nwbfile.add_device(optical_fiber)
 nwbfile.add_device(objective_lens)
-nwbfile.add_device(objective_lens)
 nwbfile.add_device(excitation_source)
 nwbfile.add_device(pulsed_excitation_source)
 nwbfile.add_device(photodetector)
@@ -394,17 +342,10 @@ classDiagram
         description : text, optional
     }
     class StereotacticPosition {
-    class StereotacticPosition {
         <<NWBContainer>>
         --------------------------------------
         attributes
         --------------------------------------
-        **anatomical_target** : text
-        **origin** : text
-        **orientation** : text
-        **x_in_mm** : numeric
-        **y_in_mm** : numeric
-        **z_in_mm** : numeric
         **anatomical_target** : text
         **origin** : text
         **orientation** : text
@@ -539,7 +480,6 @@ classDiagram
 ```
 
 #### Optical Fiber and Objective Lens
-#### Optical Fiber and Objective Lens
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffffff', 'primaryBorderColor': '#144E73', 'lineColor': '#D96F32'}}}%%
 classDiagram
@@ -567,20 +507,10 @@ classDiagram
     }
     
     class StereotacticPosition{
-    class StereotacticPosition{
         <<NWBContainer>>
         --------------------------------------
         attributes
         --------------------------------------
-        **anatomical_target** : text
-        **origin** : text
-        **orientation** : text
-        **x_in_mm** : numeric
-        **y_in_mm** : numeric
-        **z_in_mm** : numeric
-        pitch_in_deg : numeric, optional
-        yaw_in_deg : numeric, optional
-        roll_in_deg : numeric, optional
         **anatomical_target** : text
         **origin** : text
         **orientation** : text
@@ -614,10 +544,6 @@ classDiagram
     }
 
     class ObjectiveLensModel{
-        **fiber_insertion** : StereotacticPosition
-    }
-
-    class ObjectiveLensModel{
         <<DeviceModel>>
         --------------------------------------
         attributes
@@ -626,7 +552,6 @@ classDiagram
         magnification : numeric, optional
     }
     
-    class ObjectiveLens{
     class ObjectiveLens{
         <<Device>>
         --------------------------------------
@@ -638,13 +563,8 @@ classDiagram
     DeviceModel <|-- OpticalFiberModel : extends
     Device <|-- OpticalFiber : extends
     OpticalFiber *-- StereotacticPosition : contains
-    OpticalFiber *-- StereotacticPosition : contains
     OpticalFiber o--> OpticalFiberModel : links
 
-    DeviceModel <|-- ObjectiveLensModel : extends
-    Device <|-- ObjectiveLens : extends
-    ObjectiveLens *-- StereotacticPosition : contains
-    ObjectiveLens o--> ObjectiveLensModel : links
     DeviceModel <|-- ObjectiveLensModel : extends
     Device <|-- ObjectiveLens : extends
     ObjectiveLens *-- StereotacticPosition : contains

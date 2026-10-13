@@ -15,7 +15,6 @@ This extension consists of neurodata types in the following categories:
 - **Indicator** extends ``NWBContainer`` to hold metadata on the fluorescent indicator.
 - **Effector** extends ``NWBContainer`` to hold metadata on the effector/opsin.
 - **StereotacticPosition** extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
-- **StereotacticPosition** extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
 
 **Device Model Classes:**
 
@@ -26,7 +25,6 @@ This extension consists of neurodata types in the following categories:
 - **OpticalFilterModel** extends ``DeviceModel`` to hold metadata on a general optical filter model.
 - **BandOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any bandpass or bandstop optical filter models.
 - **EdgeOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any edge optical filter models.
-- **ObjectiveLensModel** extends ``DeviceModel`` to hold metadata on the objective lens model.
 - **ObjectiveLensModel** extends ``DeviceModel`` to hold metadata on the objective lens model.
 
 **Device Classes:**
@@ -69,7 +67,6 @@ Usage
         Indicator,
         Effector,
         StereotacticPosition,
-        StereotacticPosition,
         
         # Model classes
         OpticalFiberModel,
@@ -79,7 +76,6 @@ Usage
         OpticalFilterModel,
         BandOpticalFilterModel,
         EdgeOpticalFilterModel,
-        ObjectiveLensModel,
         ObjectiveLensModel,
         
         # Device classes
@@ -91,7 +87,6 @@ Usage
         OpticalFilter,
         BandOpticalFilter,
         EdgeOpticalFilter,
-        ObjectiveLens,
         ObjectiveLens,
     )
 
@@ -123,25 +118,10 @@ Usage
         roll_in_deg=0.0,
     )
 
-    viral_injection_coordinates = StereotacticPosition(
-        name="viral_injection_coordinates",
-        anatomical_target="Hippocampus",
-        origin="bregma",
-        orientation="RAS",
-        x_in_mm=1.5,
-        y_in_mm=2.0,
-        z_in_mm=-3.0,
-        pitch_in_deg=0.0,
-        yaw_in_deg=0.0,
-        roll_in_deg=0.0,
-    )
-
     viral_vector_injection = ViralVectorInjection(
         name="viral_vector_injection",
         description="Viral vector injection for optogenetic stimulation",
         volume_in_uL=0.45,
-        injection_date="1970-01-01T00:00:00+00:00",
-        viral_injection_coordinates=viral_injection_coordinates,
         injection_date="1970-01-01T00:00:00+00:00",
         viral_injection_coordinates=viral_injection_coordinates,
         viral_vector=viral_vector,
@@ -162,17 +142,7 @@ Usage
     )
 
     fiber_insertion = StereotacticPosition(
-    fiber_insertion = StereotacticPosition(
         name="fiber_insertion",
-        anatomical_target="Hippocampus",
-        origin="bregma",
-        orientation="RAS",
-        x_in_mm=1.5,
-        y_in_mm=2.0,
-        z_in_mm=0.0,
-        pitch_in_deg=10.0,
-        yaw_in_deg=0.0,
-        roll_in_deg=0.0,
         anatomical_target="Hippocampus",
         origin="bregma",
         orientation="RAS",
@@ -185,17 +155,7 @@ Usage
     )
 
     lens_positioning = StereotacticPosition(
-    lens_positioning = StereotacticPosition(
         name="lens_positioning",
-        anatomical_target="Visual Cortex",
-        origin="bregma",
-        orientation="RAS",
-        x_in_mm=-2.0,
-        y_in_mm=1.5,
-        z_in_mm=0.0,
-        pitch_in_deg=0.0,
-        yaw_in_deg=0.0,
-        roll_in_deg=0.0,
         anatomical_target="Visual Cortex",
         origin="bregma",
         orientation="RAS",
@@ -224,11 +184,8 @@ Usage
 
     objective_lens_model = ObjectiveLensModel(
         name="objective_lens_model",
-    objective_lens_model = ObjectiveLensModel(
-        name="objective_lens_model",
         manufacturer="Lens Manufacturer",
         model_number="OL-123",
-        description="Objective lens model for imaging",
         description="Objective lens model for imaging",
         numerical_aperture=0.39,
         magnification=40.0,
@@ -307,11 +264,7 @@ Usage
     objective_lens = ObjectiveLens(
         name="objective_lens",
         description="Objective lens for imaging",
-    objective_lens = ObjectiveLens(
-        name="objective_lens",
-        description="Objective lens for imaging",
         serial_number="OL-SN-123456",
-        model=objective_lens_model,
         model=objective_lens_model,
         lens_positioning=lens_positioning,
     )
@@ -369,11 +322,9 @@ Usage
     # Add objects to the NWBFile
     nwbfile.add_device(optical_fiber)
     nwbfile.add_device(objective_lens)
-    nwbfile.add_device(objective_lens)
     nwbfile.add_device(excitation_source)
     nwbfile.add_device(pulsed_excitation_source)
     nwbfile.add_device(photodetector)
     nwbfile.add_device(dichroic_mirror)
     nwbfile.add_device(band_optical_filter)
     nwbfile.add_device(edge_optical_filter)
-
