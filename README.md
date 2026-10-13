@@ -700,7 +700,7 @@ Push your feature branch to origin (i.e. GitHub)
 $ git push origin <new_branch>
 ```
 
-Once you have tested and finalized your changes, create a pull request (PR) targeting dev as the base branch:
+Once you have tested and finalized your changes, create a pull request (PR) targeting main as the base branch:
 Ensure the PR description clearly describes the problem and solution.
 Include the relevant issue number if applicable. TIP: Writing e.g. “fix #613” will automatically close issue #613 when this PR is merged.
 Before submitting, please ensure that the code follows the standard coding style of the respective repository.
