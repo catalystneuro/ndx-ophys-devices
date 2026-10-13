@@ -224,6 +224,7 @@ groups:
         required: false
       - name: active_length_in_mm
         dtype: float
+        doc: Active length in mm for a tapered fiber, e.g., Optogenix Lambda fiber. See
         doc:
           Active length in mm for a tapered fiber, e.g., Optogenix Lambda fiber. See
           https://www.optogenix.com/lambda-fibers/ for details of one example.
@@ -246,11 +247,14 @@ groups:
     groups:
       - name: fiber_insertion
         neurodata_type_inc: StereotacticPosition
+        neurodata_type_inc: StereotacticPosition
         doc: Information about the insertion of an optical fiber into the brain.
         quantity: 1 # required
 
   - neurodata_type_def: ObjectiveLensModel
+  - neurodata_type_def: ObjectiveLensModel
     neurodata_type_inc: DeviceModel
+    doc: Extends DeviceModel to hold metadata on the Objective Lens Model.
     doc: Extends DeviceModel to hold metadata on the Objective Lens Model.
     attributes:
       - name: numerical_aperture
@@ -261,12 +265,16 @@ groups:
         doc: The magnification of the lens as specified by the manufacturer, i.e. '60.0' is a 60X lens.
         required: false
   - neurodata_type_def: ObjectiveLens
+  - neurodata_type_def: ObjectiveLens
     neurodata_type_inc: Device
+    doc: Extends Device to hold metadata on the Objective Lens instance.
     doc: Extends Device to hold metadata on the Objective Lens instance.
     groups:
       - name: lens_positioning
         neurodata_type_inc: StereotacticPosition
+        neurodata_type_inc: StereotacticPosition
         doc: |
+          Information about the positioning of the objective lens relative to the brain.
           Information about the positioning of the objective lens relative to the brain.
         quantity: "?" # optional
 
@@ -289,6 +297,7 @@ groups:
         doc: Titer of the virus, in vg/ml, e.g., 1x10^12 vg/ml.
   - neurodata_type_def: ViralVectorInjection
     neurodata_type_inc: NWBContainer
+    doc: Information about the injection of a viral vector that delivers indicators or effectors for ophys experiments.
     doc:
       Information about the injection of a viral vector that delivers indicators or effectors for ophys experiments.
       Use two ViralVectorInjection objects for a bilateral injection, one per hemisphere.
@@ -301,6 +310,7 @@ groups:
         dtype: float
         doc: Volume of injection, in uL., e.g., 0.45 uL (450 nL)
         required: true
+        required: true
       - name: injection_date
         dtype: text # TODO: change to isodatetime when https://github.com/hdmf-dev/hdmf/issues/429 is fixed.
         doc: Date of injection.
@@ -311,9 +321,16 @@ groups:
         doc: |
           Stereotactic coordinates of the viral vector injection site.
         quantity: "?" # optional
+    groups:
+      - name: viral_injection_coordinates
+        neurodata_type_inc: StereotacticPosition
+        doc: |
+          Stereotactic coordinates of the viral vector injection site.
+        quantity: "?" # optional
     links:
       - name: viral_vector
         target_type: ViralVector
+        doc: Link to ViralVector object with metadata about the name, manufacturer,
         doc:
           Link to ViralVector object with metadata about the name, manufacturer,
           and titer.

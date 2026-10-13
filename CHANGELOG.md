@@ -10,6 +10,12 @@
   - Replace `LensPositioning` with `StereotacticPosition`
   - Replace `ViralVectorInjection` fields related to coordinates and angles with `StereotacticPosition` group
 
+## Deprecations and Changes
+  - Renamed `OpticalLens` to `ObjectiveLens`
+  - Replace `FiberInsertion` with `StereotacticPosition`
+  - Replace `LensPositioning` with `StereotacticPosition`
+  - Replace `ViralVectorInjection` fields related to coordinates and angles with `StereotacticPosition` group
+
 # v0.3.1 (September 19, 2025)
 
 ### New Features
