@@ -6,12 +6,16 @@ New Features:
 - Added new neurodata types:
   - ``StereotacticPosition``: Extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
 - Added realistic configuration examples notebook.
+- Added optional ``pulse_width_in_s`` to ``PulsedExcitationSource``.
 
 Changes:
 - Renamed `OpticalLens` to `ObjectiveLens`
 - Replaced ``FiberInsertion`` with ``StereotacticPosition``
 - Replaced ``LensPositioning`` with ``StereotacticPosition``
 - Replaced ``ViralVectorInjection`` fields related to coordinates and angles with ``StereotacticPosition`` group
+- Moved ``gain`` and ``gain_unit`` from ``PhotodetectorModel`` to ``Photodetector``, since gain is set per session
+- Made ``OpticalFiber.fiber_insertion`` optional, so that fibers that are not implanted (e.g., patch cords) can be described
+- Clarified that ``ExcitationSource.power_in_W`` is the power delivered to the sample, and that ``PulsedExcitationSource.pulse_rate_in_Hz`` is the laser repetition rate
 
 Version 0.3.1 (Sept 19, 2025)
 ------------------------

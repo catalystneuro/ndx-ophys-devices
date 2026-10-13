@@ -3,12 +3,16 @@
 ## New Features
 - Added auto-publish.yml GitHub Action to automatically publish new versions to PyPI upon GitHub Release.
 - Added realistic configuration examples notebook.
+- Added optional `pulse_width_in_s` to `PulsedExcitationSource`.
 
 ## Deprecations and Changes
   - Renamed `OpticalLens` to `ObjectiveLens`
   - Replace `FiberInsertion` with `StereotacticPosition`
   - Replace `LensPositioning` with `StereotacticPosition`
   - Replace `ViralVectorInjection` fields related to coordinates and angles with `StereotacticPosition` group
+  - Moved `gain` and `gain_unit` from `PhotodetectorModel` to `Photodetector`, since gain is set per session
+  - Made `OpticalFiber.fiber_insertion` optional, so that fibers that are not implanted (e.g., patch cords) can be described
+  - Clarified that `ExcitationSource.power_in_W` is the power delivered to the sample, and that `PulsedExcitationSource.pulse_rate_in_Hz` is the laser repetition rate
 
 # v0.3.1 (September 19, 2025)
 

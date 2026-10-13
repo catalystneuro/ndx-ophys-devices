@@ -21,30 +21,41 @@ groups:
     attributes:
       - name: power_in_W
         dtype: float
-        doc: Incident power of stimulation device (in Watts).
+        doc:
+          Incident power (in Watts) delivered to the sample, i.e., measured at the sample plane or
+          at the fiber tip. For a pulsed source, this is the average power.
         required: false
       - name: intensity_in_W_per_m2
         dtype: float
-        doc: Intensity of the excitation in W/m^2, if known.
+        doc: Intensity (irradiance) of the excitation at the sample in W/m^2, if known.
         required: false
       - name: exposure_time_in_s
         dtype: float
-        doc: Exposure time of the sample (in sec).
+        doc:
+          Duration (in seconds) for which the sample is illuminated in each acquisition frame,
+          e.g., the camera exposure time in widefield imaging.
         required: false
   - neurodata_type_def: PulsedExcitationSource
     neurodata_type_inc: ExcitationSource
-    doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance.
+    doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance, e.g., a femtosecond laser.
     attributes:
       - name: pulse_rate_in_Hz
         dtype: float
-        doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
+        doc:
+          Pulse repetition rate of the light source (in Hz), e.g., 80 MHz for a Ti:Sapphire laser.
+          This is not the frequency of optogenetic stimulation pulse trains, which is stored with the
+          stimulation epochs (e.g., in ndx-optogenetics).
+      - name: pulse_width_in_s
+        dtype: float
+        doc: Duration of a single light pulse (in seconds), e.g., 1.4e-13 for a 140 fs pulse.
+        required: false
       - name: peak_power_in_W
         dtype: float
-        doc: Incident peak power of stimulation device (in Watts).
+        doc: Peak power of a single pulse (in Watts), delivered to the sample.
         required: false
       - name: peak_pulse_energy_in_J
         dtype: float
-        doc: If device is pulsed light source, pulse energy (in Joules).
+        doc: Energy of a single pulse (in Joules), delivered to the sample.
         required: false
 
   - neurodata_type_def: PhotodetectorModel
@@ -60,17 +71,20 @@ groups:
           - 2
         doc: The range of wavelengths that can be detected.
         required: false
-      - name: gain
-        dtype: float
-        doc: Gain on the photodetector.
-        required: false
-      - name: gain_unit
-        dtype: text
-        doc: Unit of the gain value.
-        required: false
   - neurodata_type_def: Photodetector
     neurodata_type_inc: Device
     doc: Extends Device to hold metadata on the Photodetector instance.
+    attributes:
+      - name: gain
+        dtype: float
+        doc:
+          Gain setting of the photodetector used in this session, e.g., the PMT gain or the
+          transimpedance gain of a photoreceiver.
+        required: false
+      - name: gain_unit
+        dtype: text
+        doc: Unit of the gain value, e.g., 'V/W' for a photoreceiver.
+        required: false
 
   - neurodata_type_def: DichroicMirrorModel
     neurodata_type_inc: DeviceModel
@@ -246,8 +260,10 @@ groups:
     groups:
       - name: fiber_insertion
         neurodata_type_inc: StereotacticPosition
-        doc: Information about the insertion of an optical fiber into the brain.
-        quantity: 1 # required
+        doc:
+          Stereotactic position of an implanted optical fiber. Omit for fibers that are not
+          implanted, e.g., patch cords.
+        quantity: "?" # optional
 
   - neurodata_type_def: ObjectiveLensModel
     neurodata_type_inc: DeviceModel

@@ -156,11 +156,11 @@ def mock_OpticalFiber(
     description: Optional[str] = "This is a mock instance of an OpticalFiber type.",
     serial_number: Optional[str] = "OF-SN-123456",
     model: Optional[ndx_ophys_devices.OpticalFiberModel] = None,
-    fiber_insertion: Optional[ndx_ophys_devices.StereotacticPosition] = None,
+    fiber_insertion: Optional[ndx_ophys_devices.StereotacticPosition] = sentinel,
 ) -> ndx_ophys_devices.OpticalFiber:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_OpticalFiberModel()
-    if fiber_insertion is None:
+    if fiber_insertion is sentinel:
         fiber_insertion = mock_StereotacticPosition(name="fiber_insertion")
     optical_fiber = ndx_ophys_devices.OpticalFiber(
         name=name or name_generator("OpticalFiber"),
@@ -180,8 +180,6 @@ def mock_PhotodetectorModel(
     description: Optional[str] = "This is a mock instance of a PhotodetectorModel type.",
     detector_type: str = "PMT",
     wavelength_range_in_nm: list = [400.0, 800.0],
-    gain: float = 100.0,
-    gain_unit: str = "A/W",
 ) -> ndx_ophys_devices.PhotodetectorModel:
     photodetector_model = ndx_ophys_devices.PhotodetectorModel(
         name=name or name_generator("PhotodetectorModel"),
@@ -190,8 +188,6 @@ def mock_PhotodetectorModel(
         description=description,
         detector_type=detector_type,
         wavelength_range_in_nm=wavelength_range_in_nm,
-        gain=gain,
-        gain_unit=gain_unit,
     )
     return photodetector_model
 
@@ -202,6 +198,8 @@ def mock_Photodetector(
     description: Optional[str] = "This is a mock instance of a Photodetector type.",
     serial_number: Optional[str] = "PD-SN-123456",
     model: Optional[ndx_ophys_devices.PhotodetectorModel] = None,
+    gain: Optional[float] = 1.0e6,
+    gain_unit: Optional[str] = "V/W",
 ) -> ndx_ophys_devices.Photodetector:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_PhotodetectorModel()
@@ -210,6 +208,8 @@ def mock_Photodetector(
         description=description,
         serial_number=serial_number,
         model=model,
+        gain=gain,
+        gain_unit=gain_unit,
     )
     return photodetector
 
@@ -477,6 +477,7 @@ def mock_PulsedExcitationSource(
     intensity_in_W_per_m2: float = 0.005,
     exposure_time_in_s: float = 2.51e-13,
     pulse_rate_in_Hz: float = 2.0e6,
+    pulse_width_in_s: Optional[float] = 1.4e-13,
 ) -> ndx_ophys_devices.PulsedExcitationSource:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_ExcitationSourceModel()
@@ -490,5 +491,6 @@ def mock_PulsedExcitationSource(
         intensity_in_W_per_m2=intensity_in_W_per_m2,
         exposure_time_in_s=exposure_time_in_s,
         pulse_rate_in_Hz=pulse_rate_in_Hz,
+        pulse_width_in_s=pulse_width_in_s,
     )
     return pulsed_excitation_source
