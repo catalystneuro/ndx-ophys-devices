@@ -1,13 +1,28 @@
-# v0.4.0 (Upcoming)
+# v0.4.0 (October 14, 2026)
 
 ## New Features
+- Added `StereotacticPosition`, which extends `NWBContainer` to hold the stereotactic position of a device or injection site relative to the brain.
 - Added auto-publish.yml GitHub Action to automatically publish new versions to PyPI upon GitHub Release.
+- Added realistic configuration examples notebook.
+- Added optional `pulse_width_in_s` to `PulsedExcitationSource`.
 
 ## Deprecations and Changes
   - Renamed `OpticalLens` to `ObjectiveLens`
   - Replace `FiberInsertion` with `StereotacticPosition`
   - Replace `LensPositioning` with `StereotacticPosition`
   - Replace `ViralVectorInjection` fields related to coordinates and angles with `StereotacticPosition` group
+  - Moved `gain` and `gain_unit` from `PhotodetectorModel` to `Photodetector`, since gain is set per session
+  - Made `OpticalFiber.fiber_insertion` optional, so that fibers that are not implanted (e.g., patch cords) can be described
+  - Clarified that `ExcitationSource.power_in_W` is the power delivered to the sample, and that `PulsedExcitationSource.pulse_rate_in_Hz` is the laser repetition rate
+  - `StereotacticPosition` coordinates describe the target (device tip or injection site); angles describe the approach, with all angles equal to 0 meaning a vertical approach
+
+## Reading files written with earlier versions
+Files written with ndx-ophys-devices 0.3.x cannot be read in a Python session that has imported ndx-ophys-devices 0.4.0,
+or an extension that imports it, because the installed namespace takes precedence over the one cached in the file.
+To read such files, open them in a session that does not import these packages; pynwb then loads the cached namespaces.
+
+## Installing with extensions that still use 0.3.x
+ndx-fiber-photometry 0.2.x and ndx-optogenetics 0.4.x use `FiberInsertion`, which this release removes. If an install of those versions fails with `cannot import name 'FiberInsertion'`, run `pip install "ndx-ophys-devices<0.4"`.
 
 # v0.3.1 (September 19, 2025)
 

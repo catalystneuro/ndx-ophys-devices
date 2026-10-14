@@ -47,6 +47,8 @@ EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
 ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
 __all__ = [
     "StereotacticPosition",
+    "ViralVector",
+    "ViralVectorInjection",
     "Indicator",
     "Effector",
     "OpticalFiberModel",

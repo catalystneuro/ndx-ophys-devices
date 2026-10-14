@@ -21,30 +21,41 @@ groups:
     attributes:
       - name: power_in_W
         dtype: float
-        doc: Incident power of stimulation device (in Watts).
+        doc:
+          Incident power (in Watts) delivered to the sample, i.e., measured at the sample plane or
+          at the fiber tip. For a pulsed source, this is the average power.
         required: false
       - name: intensity_in_W_per_m2
         dtype: float
-        doc: Intensity of the excitation in W/m^2, if known.
+        doc: Intensity (irradiance) of the excitation at the sample in W/m^2, if known.
         required: false
       - name: exposure_time_in_s
         dtype: float
-        doc: Exposure time of the sample (in sec).
+        doc:
+          Duration (in seconds) for which the sample is illuminated in each acquisition frame,
+          e.g., the camera exposure time in widefield imaging.
         required: false
   - neurodata_type_def: PulsedExcitationSource
     neurodata_type_inc: ExcitationSource
-    doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance.
+    doc: Extends ExcitationSource to hold metadata on the Pulsed Excitation Source instance, e.g., a femtosecond laser.
     attributes:
       - name: pulse_rate_in_Hz
         dtype: float
-        doc: If device is pulsed light source, pulse rate (in Hz) used for stimulation.
+        doc:
+          Pulse repetition rate of the light source (in Hz), e.g., 80 MHz for a Ti:Sapphire laser.
+          This is not the frequency of optogenetic stimulation pulse trains, which is stored with the
+          stimulation epochs (e.g., in ndx-optogenetics).
+      - name: pulse_width_in_s
+        dtype: float
+        doc: Duration of a single light pulse (in seconds), e.g., 1.4e-13 for a 140 fs pulse.
+        required: false
       - name: peak_power_in_W
         dtype: float
-        doc: Incident peak power of stimulation device (in Watts).
+        doc: Peak power of a single pulse (in Watts), delivered to the sample.
         required: false
       - name: peak_pulse_energy_in_J
         dtype: float
-        doc: If device is pulsed light source, pulse energy (in Joules).
+        doc: Energy of a single pulse (in Joules), delivered to the sample.
         required: false
 
   - neurodata_type_def: PhotodetectorModel
@@ -60,17 +71,20 @@ groups:
           - 2
         doc: The range of wavelengths that can be detected.
         required: false
-      - name: gain
-        dtype: float
-        doc: Gain on the photodetector.
-        required: false
-      - name: gain_unit
-        dtype: text
-        doc: Unit of the gain value.
-        required: false
   - neurodata_type_def: Photodetector
     neurodata_type_inc: Device
     doc: Extends Device to hold metadata on the Photodetector instance.
+    attributes:
+      - name: gain
+        dtype: float
+        doc:
+          Gain setting of the photodetector used in this session, e.g., the PMT gain or the
+          transimpedance gain of a photoreceiver.
+        required: false
+      - name: gain_unit
+        dtype: text
+        doc: Unit of the gain value, e.g., 'V/W' for a photoreceiver.
+        required: false
 
   - neurodata_type_def: DichroicMirrorModel
     neurodata_type_inc: DeviceModel
@@ -89,16 +103,16 @@ groups:
         shape:
           - 2
         doc:
-          The range of wavelengths that are primarily reflected.The start and end wavelengths
-          needs to be specified.
+          The range of wavelengths that are primarily reflected. The start and end wavelengths
+          need to be specified.
         required: false
       - name: transmission_band_in_nm
         dtype: float
         shape:
           - 2
         doc:
-          The range of wavelengths that are primarily transmitted.The start and end
-          wavelengths needs to be specified.
+          The range of wavelengths that are primarily transmitted. The start and end
+          wavelengths need to be specified.
         required: false
       - name: angle_of_incidence_in_degrees
         dtype: float
@@ -114,7 +128,10 @@ groups:
     attributes:
       - name: filter_type
         dtype: text
-        doc: Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass').
+        doc:
+          Type of filter (e.g., 'Bandpass', 'Bandstop', 'Longpass', 'Shortpass', 'Multiband'). Use
+          BandOpticalFilterModel or EdgeOpticalFilterModel when they apply; describe other filters, such as
+          dual-band filters, with this type and its description.
   - neurodata_type_def: OpticalFilter
     neurodata_type_inc: Device
     doc: Extends Device to hold an Optical Filter instance.
@@ -156,57 +173,70 @@ groups:
 
   - neurodata_type_def: StereotacticPosition
     neurodata_type_inc: NWBContainer
-    doc: Metadata about the stereotactic position of a device relative to the brain.
+    doc:
+      Stereotactic position of a device or injection relative to the brain. The x, y and z coordinates give
+      the position of the target, i.e., the tip of an implanted fiber or lens, or the injection site, not the
+      entry point on the brain surface. The angles describe the approach from the entry point to the target;
+      all angles equal to 0 mean a vertical approach along the dorsal-ventral axis.
     attributes:
       - name: anatomical_target
         dtype: text
-        doc: Name of the targeted anatomical location of the device insertion.
+        doc:
+          Name of the targeted anatomical location, e.g., 'Nucleus accumbens core'. Use standard atlas names
+          when possible.
         required: true
       - name: origin
-        doc: "A description of where (0,0,0) is in the space. For example, 'bregma' is a common origin for mice."
+        doc:
+          "A description of where (0,0,0) is in the space. For example, 'bregma' is a common origin for mice.
+          If the dorsal-ventral coordinate uses a different reference than the other two, say so, e.g.,
+          'bregma (AP, ML); dura (DV)'."
         dtype: text
         required: true
       - name: orientation
         doc:
           "A 3-letter string. One of A,P,L,R,S,I for each of x, y, and z. For example, the most common
-          orientation is 'RAS', which means x is right, y is anterior, and z is superior (a.k.a. dorsal).
-          For dorsal/ventral use 'S/I' (superior/inferior). In the AnatomicalCoordinatesTable, an orientation of
-          'RAS' corresponds to coordinates in the order of (ML (x), AP (y), DV (z))."
+          orientation is 'RAS', which means x is right, y is anterior, and z is superior (a.k.a. dorsal),
+          i.e., coordinates in the order (ML, AP, DV). In 'RAS', posterior and ventral positions are negative.
+          For dorsal/ventral use 'S/I' (superior/inferior)."
         dtype: text
         required: true
       - name: x_in_mm
         doc:
-          X coordinate in millimeters of the device insertion point, in the stereotactic
+          X coordinate in millimeters of the target (device tip or injection site), in the stereotactic
           coordinate system defined by `origin` and `orientation`.
         dtype: float
         required: true
       - name: y_in_mm
         doc:
-          Y coordinate in millimeters of the device insertion point, in the stereotactic
+          Y coordinate in millimeters of the target (device tip or injection site), in the stereotactic
           coordinate system defined by `origin` and `orientation`.
         dtype: float
         required: true
       - name: z_in_mm
         doc:
-          Z coordinate in millimeters of the device insertion point, in the stereotactic
+          Z coordinate in millimeters of the target (device tip or injection site), in the stereotactic
           coordinate system defined by `origin` and `orientation`.
         dtype: float
         required: true
       - name: pitch_in_deg
         doc:
-          Pitch angle in degrees of the device insertion (rotation around left-right
-          axis, + is rotating the nose upward).
+          Tilt in degrees of the approach in the plane spanned by the y and z axes (the sagittal plane for
+          'RAS'). Positive values mean the target lies toward +y relative to the entry point.
         dtype: float
+        required: false
       - name: yaw_in_deg
         doc:
-          Yaw angle in degrees of the device insertion (rotation around dorsal-ventral
-          axis, + is rotating the nose rightward).
+          Rotation in degrees of the device around its own long axis, relevant for devices that are not
+          rotationally symmetric (e.g., angled-tip fibers or prisms). Positive values are counterclockwise
+          when viewed from +z.
         dtype: float
+        required: false
       - name: roll_in_deg
         doc:
-          Roll angle in degrees of the device insertion (rotation around anterior-posterior
-          axis, + is rotating the right side downward).
+          Tilt in degrees of the approach in the plane spanned by the x and z axes (the coronal plane for
+          'RAS'). Positive values mean the target lies toward +x relative to the entry point.
         dtype: float
+        required: false
 
   - neurodata_type_def: OpticalFiberModel
     neurodata_type_inc: DeviceModel
@@ -243,8 +273,10 @@ groups:
     groups:
       - name: fiber_insertion
         neurodata_type_inc: StereotacticPosition
-        doc: Information about the insertion of an optical fiber into the brain.
-        quantity: 1 # required
+        doc:
+          Stereotactic position of an implanted optical fiber. Omit for fibers that are not
+          implanted, e.g., patch cords.
+        quantity: "?" # optional
 
   - neurodata_type_def: ObjectiveLensModel
     neurodata_type_inc: DeviceModel
@@ -252,10 +284,10 @@ groups:
     attributes:
       - name: numerical_aperture
         dtype: float
-        doc: Numerical aperture, e.g., 0.39 NA.
+        doc: Numerical aperture, e.g., 1.05 NA.
       - name: magnification
         dtype: float
-        doc: The magnification of the lens as specified by the manufacturer, i.e. '60.0' is a 60X lens.
+        doc: The magnification of the lens as specified by the manufacturer, e.g., '60.0' is a 60X lens.
         required: false
   - neurodata_type_def: ObjectiveLens
     neurodata_type_inc: Device
@@ -264,7 +296,8 @@ groups:
       - name: lens_positioning
         neurodata_type_inc: StereotacticPosition
         doc: |
-          Information about the positioning of the objective lens relative to the brain.
+          Stereotactic position of an implanted lens (e.g., a GRIN lens), with the coordinates of its tip.
+          Omit for objectives that are not implanted.
         quantity: "?" # optional
 
   - neurodata_type_def: ViralVector
@@ -296,7 +329,7 @@ groups:
         required: false
       - name: volume_in_uL
         dtype: float
-        doc: Volume of injection, in uL., e.g., 0.45 uL (450 nL)
+        doc: Volume of injection in uL, e.g., 0.45 uL (450 nL).
         required: true
       - name: injection_date
         dtype: text # TODO: change to isodatetime when https://github.com/hdmf-dev/hdmf/issues/429 is fixed.
@@ -306,7 +339,8 @@ groups:
       - name: viral_injection_coordinates
         neurodata_type_inc: StereotacticPosition
         doc: |
-          Stereotactic coordinates of the viral vector injection site.
+          Stereotactic coordinates of the viral vector injection site. For multiple depths along one
+          track, use one ViralVectorInjection per depth.
         quantity: "?" # optional
     links:
       - name: viral_vector

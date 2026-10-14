@@ -18,7 +18,6 @@ This extension consists of neurodata types in the following categories:
 
 **Device Model Classes:**
 
-- **DeviceModel** extends ``Device`` to hold metadata on device models.
 - **OpticalFiberModel** extends ``DeviceModel`` to hold metadata on the optical fiber model.
 - **ExcitationSourceModel** extends ``DeviceModel`` to hold metadata on the excitation source model.
 - **PhotodetectorModel** extends ``DeviceModel`` to hold metadata on the photodetector model.
@@ -28,22 +27,23 @@ This extension consists of neurodata types in the following categories:
 - **EdgeOpticalFilterModel** extends ``OpticalFilterModel`` to hold metadata on any edge optical filter models.
 - **ObjectiveLensModel** extends ``DeviceModel`` to hold metadata on the objective lens model.
 
-**Device Instance Classes:**
+**Device Classes:**
 
-- **DeviceInstance** extends ``Device`` to hold metadata on device instances.
-- **OpticalFiber** extends ``DeviceInstance`` to hold metadata on optical fiber instances.
-- **ExcitationSource** extends ``DeviceInstance`` to hold metadata on excitation source instances.
-- **PulsedExcitationSource** extends ``ExcitationSource`` to hold metadata on pulsed excitation source instances.
-- **Photodetector** extends ``DeviceInstance`` to hold metadata on photodetector instances.
-- **DichroicMirror** extends ``DeviceInstance`` to hold metadata on dichroic mirror instances.
-- **OpticalFilter** extends ``DeviceInstance`` to hold metadata on general optical filter instances.
-- **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filter instances.
-- **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filter instances.
-- **ObjectiveLens** extends ``DeviceInstance`` to hold metadata on objective lens instances.
+- **OpticalFiber** extends ``Device`` to hold metadata on optical fibers.
+- **ExcitationSource** extends ``Device`` to hold metadata on excitation sources.
+- **PulsedExcitationSource** extends ``ExcitationSource`` to hold metadata on pulsed excitation sources.
+- **Photodetector** extends ``Device`` to hold metadata on photodetectors.
+- **DichroicMirror** extends ``Device`` to hold metadata on dichroic mirrors.
+- **OpticalFilter** extends ``Device`` to hold metadata on general optical filters.
+- **BandOpticalFilter** extends ``OpticalFilter`` to hold metadata on bandpass or bandstop optical filters.
+- **EdgeOpticalFilter** extends ``OpticalFilter`` to hold metadata on edge optical filters.
+- **ObjectiveLens** extends ``Device`` to hold metadata on objective lenses.
 
-Note that the container classes cannot be directly added to the NWB file, but instead require extending `LabMetaData` to
-contain one or more of these container classes in a separate extension. 
-For example, see `ndx-optogenetics <https://github.com/rly/ndx-optogenetics>`_.
+Note that the container classes cannot be added to the NWB file directly. They are stored in a ``LabMetaData``
+provided by the extension for your experiment:
+`ndx-microscopy <https://github.com/catalystneuro/ndx-microscopy>`_ (``MicroscopyExperimentMetadata``),
+`ndx-fiber-photometry <https://github.com/catalystneuro/ndx-fiber-photometry>`_ (``FiberPhotometry``) or
+`ndx-optogenetics <https://github.com/rly/ndx-optogenetics>`_ (``OptogeneticExperimentMetadata``).
 
 Installation
 ------------
@@ -60,8 +60,9 @@ Usage
 .. code-block:: python
 
     import datetime
-    import numpy as np
+
     from pynwb import NWBFile
+
     from ndx_ophys_devices import (
         # Container classes
         ViralVector,
@@ -69,264 +70,273 @@ Usage
         Indicator,
         Effector,
         StereotacticPosition,
-        
         # Model classes
         OpticalFiberModel,
         ExcitationSourceModel,
         PhotodetectorModel,
         DichroicMirrorModel,
-        OpticalFilterModel,
         BandOpticalFilterModel,
         EdgeOpticalFilterModel,
         ObjectiveLensModel,
-        
-        # Device instance classes
+        # Device classes
         OpticalFiber,
         ExcitationSource,
         PulsedExcitationSource,
         Photodetector,
         DichroicMirror,
-        OpticalFilter,
         BandOpticalFilter,
         EdgeOpticalFilter,
         ObjectiveLens,
     )
 
     nwbfile = NWBFile(
-        session_description='session_description',
-        identifier='identifier',
-        session_start_time=datetime.datetime.now(datetime.timezone.utc)
+        session_description="session_description",
+        identifier="identifier",
+        session_start_time=datetime.datetime.now(datetime.timezone.utc),
     )
 
-    # Create container objects
-    viral_vector = ViralVector(
-        name="viral_vector",
-        description="AAV viral vector for optogenetic stimulation",
-        construct_name="AAV-EF1a-DIO-hChR2(H134R)-EYFP",
-        manufacturer="Vector Manufacturer",
-        titer_in_vg_per_ml=1.0e12,
+    # Molecular tools: a dopamine sensor injected in the nucleus accumbens (NAc) core
+    # and an opsin injected in the ventral tegmental area (VTA)
+    indicator_vector = ViralVector(
+        name="indicator_vector",
+        description="AAV for dLight1.3b expression in NAc neurons",
+        construct_name="AAV5-CAG-dLight1.3b",
+        manufacturer="Addgene",
+        titer_in_vg_per_ml=5.0e12,
     )
-
-    viral_injection_coordinates = StereotacticPosition(
-        name="viral_injection_coordinates",
-        anatomical_target="Hippocampus",
-        origin="bregma",
-        orientation="RAS",
-        x_in_mm=1.5,
-        y_in_mm=2.0,
-        z_in_mm=-3.0,
-        pitch_in_deg=0.0,
-        yaw_in_deg=0.0,
-        roll_in_deg=0.0,
+    indicator_injection = ViralVectorInjection(
+        name="indicator_injection",
+        description="Unilateral injection in the right NAc core, 3 weeks before recording",
+        volume_in_uL=0.5,
+        injection_date="2025-01-15",
+        viral_injection_coordinates=StereotacticPosition(
+            name="viral_injection_coordinates",  # this name is required
+            anatomical_target="Nucleus accumbens core",
+            origin="bregma (AP, ML); skull surface (DV)",
+            orientation="RAS",
+            x_in_mm=1.3,  # 1.3 mm right of the midline
+            y_in_mm=1.3,  # 1.3 mm anterior to bregma
+            z_in_mm=-4.5,  # 4.5 mm ventral
+        ),
+        viral_vector=indicator_vector,
     )
-
-    viral_vector_injection = ViralVectorInjection(
-        name="viral_vector_injection",
-        description="Viral vector injection for optogenetic stimulation",
-        volume_in_uL=0.45,
-        injection_date="1970-01-01T00:00:00+00:00",
-        viral_injection_coordinates=viral_injection_coordinates,
-        viral_vector=viral_vector,
-    )
-
     indicator = Indicator(
         name="indicator",
-        description="Green indicator",
-        label="GCamp6f",
-        viral_vector_injection=viral_vector_injection,
+        description="Genetically encoded dopamine sensor",
+        label="dLight1.3b",
+        viral_vector_injection=indicator_injection,
     )
 
+    effector_vector = ViralVector(
+        name="effector_vector",
+        description="AAV for Cre-dependent ChrimsonR expression in dopaminergic neurons",
+        construct_name="AAV5-Syn-FLEX-ChrimsonR-tdTomato",
+        manufacturer="Addgene",
+        titer_in_vg_per_ml=4.0e12,
+    )
+    effector_injection = ViralVectorInjection(
+        name="effector_injection",
+        description="Unilateral injection in the right VTA of a DAT-Cre mouse",
+        volume_in_uL=0.3,
+        injection_date="2025-01-15",
+        viral_injection_coordinates=StereotacticPosition(
+            name="viral_injection_coordinates",
+            anatomical_target="Ventral tegmental area",
+            origin="bregma (AP, ML); skull surface (DV)",
+            orientation="RAS",
+            x_in_mm=0.5,
+            y_in_mm=-3.2,  # posterior targets are negative in RAS
+            z_in_mm=-4.4,
+        ),
+        viral_vector=effector_vector,
+    )
     effector = Effector(
         name="effector",
-        description="Excitatory opsin",
-        label="hChR2",
-        viral_vector_injection=viral_vector_injection,
+        description="Red-shifted excitatory opsin",
+        label="ChrimsonR",
+        viral_vector_injection=effector_injection,
     )
 
-    fiber_insertion = StereotacticPosition(
-        name="fiber_insertion",
-        anatomical_target="Hippocampus",
-        origin="bregma",
-        orientation="RAS",
-        x_in_mm=1.5,
-        y_in_mm=2.0,
-        z_in_mm=0.0,
-        pitch_in_deg=10.0,
-        yaw_in_deg=0.0,
-        roll_in_deg=0.0,
-    )
-
-    lens_positioning = StereotacticPosition(
-        name="lens_positioning",
-        anatomical_target="Visual Cortex",
-        origin="bregma",
-        orientation="RAS",
-        x_in_mm=-2.0,
-        y_in_mm=1.5,
-        z_in_mm=0.0,
-        pitch_in_deg=0.0,
-        yaw_in_deg=0.0,
-        roll_in_deg=0.0,
-    )
-
-    # Create model objects
+    # Device models (catalog specifications)
     optical_fiber_model = OpticalFiberModel(
         name="optical_fiber_model",
-        manufacturer="Fiber Manufacturer",
-        model_number="OF-123",
-        description="Optical fiber model for optogenetics",
-        numerical_aperture=0.2,
+        manufacturer="Doric Lenses",
+        model_number="MFC_400/430-0.48_5mm_MF2.5_FLT",
+        description="Flat-cleaved 400 um fiber optic cannula for photometry",
+        numerical_aperture=0.48,
         core_diameter_in_um=400.0,
-        active_length_in_mm=2.0,
-        ferrule_name="cFCF - ∅2.5mm Ceramic Ferrule",
-        ferrule_model="SM-SC-CF-10-FM",
+        ferrule_name="Metal ferrule 2.5 mm",
         ferrule_diameter_in_mm=2.5,
     )
-    nwbfile.add_device(optical_fiber_model)
-
-    objective_lens_model = ObjectiveLensModel(
-        name="objective_lens_model",
-        manufacturer="Lens Manufacturer",
-        model_number="OL-123",
-        description="Objective lens model for imaging",
-        numerical_aperture=0.39,
-        magnification=40.0,
-    )
-    nwbfile.add_device(objective_lens_model)
-
     excitation_source_model = ExcitationSourceModel(
         name="excitation_source_model",
-        manufacturer="Laser Manufacturer",
-        model_number="ES-123",
-        description="Excitation source model for green indicator",
-        source_type="laser",
+        manufacturer="Doric Lenses",
+        model_number="CLED_465",
+        description="Connectorized 465 nm LED",
+        source_type="LED",
         excitation_mode="one-photon",
-        wavelength_range_in_nm=[400.0, 800.0],
+        wavelength_range_in_nm=[450.0, 480.0],
     )
-    nwbfile.add_device(excitation_source_model)
-
+    laser_model = ExcitationSourceModel(
+        name="laser_model",
+        manufacturer="Coherent",
+        model_number="Chameleon Ultra II",
+        description="Tunable Ti:Sapphire femtosecond laser",
+        source_type="Solid-State Laser",
+        excitation_mode="two-photon",
+        wavelength_range_in_nm=[680.0, 1080.0],
+    )
     photodetector_model = PhotodetectorModel(
         name="photodetector_model",
-        manufacturer="Detector Manufacturer",
-        model_number="PD-123",
-        description="Photodetector model for green emission",
-        detector_type="PMT",
-        wavelength_range_in_nm=[400.0, 800.0],
-        gain=100.0,
-        gain_unit="A/W",
+        manufacturer="Newport",
+        model_number="2151",
+        description="Femtowatt silicon photoreceiver",
+        detector_type="Photodiode",
+        wavelength_range_in_nm=[300.0, 1050.0],
     )
-    nwbfile.add_device(photodetector_model)
-
     dichroic_mirror_model = DichroicMirrorModel(
         name="dichroic_mirror_model",
-        manufacturer="Mirror Manufacturer",
-        model_number="DM-123",
-        description="Dichroic mirror model for green indicator",
-        cut_on_wavelength_in_nm=470.0,
-        cut_off_wavelength_in_nm=500.0,
-        reflection_band_in_nm=[460.0, 480.0],
-        transmission_band_in_nm=[490.0, 520.0],
+        manufacturer="Semrock",
+        model_number="FF495-Di03",
+        description="495 nm longpass dichroic separating blue excitation from green emission",
+        cut_on_wavelength_in_nm=495.0,
+        reflection_band_in_nm=[350.0, 484.0],
+        transmission_band_in_nm=[506.0, 800.0],
         angle_of_incidence_in_degrees=45.0,
     )
-    nwbfile.add_device(dichroic_mirror_model)
-
     band_optical_filter_model = BandOpticalFilterModel(
         name="band_optical_filter_model",
-        manufacturer="Filter Manufacturer",
-        model_number="BOF-123",
-        description="Band optical filter model for green indicator",
+        manufacturer="Semrock",
+        model_number="FF03-525/50",
+        description="525/50 nm bandpass emission filter for green fluorescence",
         filter_type="Bandpass",
-        center_wavelength_in_nm=480.0,
-        bandwidth_in_nm=30.0,  # 480±15nm
+        center_wavelength_in_nm=525.0,
+        bandwidth_in_nm=50.0,  # 525 +/- 25 nm
     )
-    nwbfile.add_device(band_optical_filter_model)
-
     edge_optical_filter_model = EdgeOpticalFilterModel(
         name="edge_optical_filter_model",
-        manufacturer="Filter Manufacturer",
-        model_number="EOF-123",
-        description="Edge optical filter model for green indicator",
-        filter_type="Longpass",
-        cut_wavelength_in_nm=585.0,
-        slope_in_percent_cut_wavelength=1.0,
-        slope_starting_transmission_in_percent=10.0,
-        slope_ending_transmission_in_percent=80.0,
+        manufacturer="Semrock",
+        model_number="FF01-492/SP",
+        description="492 nm shortpass excitation cleanup filter",
+        filter_type="Shortpass",
+        cut_wavelength_in_nm=492.0,
     )
-    nwbfile.add_device(edge_optical_filter_model)
+    objective_lens_model = ObjectiveLensModel(
+        name="objective_lens_model",
+        manufacturer="Olympus",
+        model_number="XLPLN25XWMP2",
+        description="25x water-immersion objective for two-photon imaging",
+        numerical_aperture=1.05,
+        magnification=25.0,
+    )
+    for device_model in (
+        optical_fiber_model,
+        excitation_source_model,
+        laser_model,
+        photodetector_model,
+        dichroic_mirror_model,
+        band_optical_filter_model,
+        edge_optical_filter_model,
+        objective_lens_model,
+    ):
+        nwbfile.add_device_model(device_model)
 
-    # Create device instances
+    # Devices (the physical units used in this session)
     optical_fiber = OpticalFiber(
         name="optical_fiber",
-        description="Optical fiber for optogenetics",
+        description="Fiber implanted 0.2 mm above the injection site",
         serial_number="OF-SN-123456",
         model=optical_fiber_model,
-        fiber_insertion=fiber_insertion,
+        fiber_insertion=StereotacticPosition(
+            name="fiber_insertion",  # this name is required
+            anatomical_target="Nucleus accumbens core",
+            origin="bregma (AP, ML); skull surface (DV)",
+            orientation="RAS",
+            x_in_mm=1.3,
+            y_in_mm=1.3,
+            z_in_mm=-4.3,  # position of the fiber tip
+            pitch_in_deg=0.0,
+            yaw_in_deg=0.0,
+            roll_in_deg=0.0,  # vertical implant
+        ),
     )
-
-    objective_lens = ObjectiveLens(
-        name="objective_lens",
-        description="Objective lens for imaging",
-        serial_number="OL-SN-123456",
-        model=objective_lens_model,
-        lens_positioning=lens_positioning,
-    )
-
     excitation_source = ExcitationSource(
         name="excitation_source",
-        description="Excitation source for green indicator",
+        description="465 nm LED for dLight excitation",
         serial_number="ES-SN-123456",
         model=excitation_source_model,
-        power_in_W=0.7,
-        intensity_in_W_per_m2=0.005,
-        exposure_time_in_s=2.51e-13,
+        power_in_W=30e-6,  # 30 uW at the fiber tip
     )
-
     pulsed_excitation_source = PulsedExcitationSource(
         name="pulsed_excitation_source",
-        description="Pulsed excitation source for red indicator",
+        description="Ti:Sapphire laser tuned to 920 nm",
         serial_number="PES-SN-123456",
-        model=excitation_source_model,
-        peak_power_in_W=0.7,
-        peak_pulse_energy_in_J=0.7,
-        intensity_in_W_per_m2=0.005,
-        exposure_time_in_s=2.51e-13,
-        pulse_rate_in_Hz=2.0e6,
+        model=laser_model,
+        power_in_W=0.05,  # 50 mW average power at the sample
+        pulse_rate_in_Hz=80e6,  # laser repetition rate
+        pulse_width_in_s=140e-15,
+        peak_pulse_energy_in_J=6.25e-10,  # 0.05 W / 80 MHz
+        peak_power_in_W=4.5e3,  # 6.25e-10 J / 140 fs
     )
-
     photodetector = Photodetector(
         name="photodetector",
-        description="Photodetector for green emission",
+        description="Photoreceiver for green emission",
         serial_number="PD-SN-123456",
         model=photodetector_model,
+        gain=1.0e10,  # gain setting used in this session
+        gain_unit="V/W",
     )
-
     dichroic_mirror = DichroicMirror(
         name="dichroic_mirror",
-        description="Dichroic mirror for green indicator",
+        description="Dichroic mirror in the photometry filter cube",
         serial_number="DM-SN-123456",
         model=dichroic_mirror_model,
     )
-
-    band_optical_filter = BandOpticalFilter(
-        name="band_optical_filter",
-        description="Band optical filter for green indicator",
+    emission_filter = BandOpticalFilter(
+        name="emission_filter",
+        description="Emission filter in the photometry filter cube",
         serial_number="BOF-SN-123456",
         model=band_optical_filter_model,
     )
-
-    edge_optical_filter = EdgeOpticalFilter(
-        name="edge_optical_filter",
-        description="Edge optical filter for green indicator",
+    excitation_filter = EdgeOpticalFilter(
+        name="excitation_filter",
+        description="Excitation filter in the photometry filter cube",
         serial_number="EOF-SN-123456",
         model=edge_optical_filter_model,
     )
+    objective_lens = ObjectiveLens(
+        name="objective_lens",
+        description="Objective above a cranial window; not implanted, so no lens_positioning",
+        serial_number="OL-SN-123456",
+        model=objective_lens_model,
+    )
+    for device in (
+        optical_fiber,
+        excitation_source,
+        pulsed_excitation_source,
+        photodetector,
+        dichroic_mirror,
+        emission_filter,
+        excitation_filter,
+        objective_lens,
+    ):
+        nwbfile.add_device(device)
 
-    # Add objects to the NWBFile
-    nwbfile.add_device(optical_fiber)
-    nwbfile.add_device(objective_lens)
-    nwbfile.add_device(excitation_source)
-    nwbfile.add_device(pulsed_excitation_source)
-    nwbfile.add_device(photodetector)
-    nwbfile.add_device(dichroic_mirror)
-    nwbfile.add_device(band_optical_filter)
-    nwbfile.add_device(edge_optical_filter)
+    # ViralVector, ViralVectorInjection, Indicator and Effector are stored in the LabMetaData
+    # of the experiment extension you use, e.g. ndx-microscopy, ndx-fiber-photometry or ndx-optogenetics.
+
+Stereotactic positions
+----------------------
+
+``StereotacticPosition`` is used in three places, each with a fixed name that must be passed as ``name``:
+``OpticalFiber.fiber_insertion``, ``ObjectiveLens.lens_positioning`` (for implanted lenses, e.g. GRIN) and
+``ViralVectorInjection.viral_injection_coordinates``. All three are optional.
+
+- ``x_in_mm``, ``y_in_mm`` and ``z_in_mm`` give the target: the tip of an implanted fiber or lens, or the injection site.
+- ``origin`` says where (0, 0, 0) is. If the dorsal-ventral value is measured from a different reference than the other
+  two, say so, e.g. ``"bregma (AP, ML); skull surface (DV)"``.
+- ``orientation`` gives the direction of each axis. With ``"RAS"``, x is right, y is anterior and z is dorsal, so
+  posterior and ventral targets are negative.
+- All angles equal to 0 mean a vertical approach. ``pitch_in_deg`` tilts the approach in the y-z plane and
+  ``roll_in_deg`` in the x-z plane; a positive value means the target lies toward +y or +x from the entry point.
+  ``yaw_in_deg`` is the rotation of the device around its own axis.

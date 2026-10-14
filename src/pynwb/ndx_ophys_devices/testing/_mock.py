@@ -12,15 +12,15 @@ sentinel = (
 def mock_StereotacticPosition(
     *,
     name: Optional[str] = None,
-    anatomical_target: str = "Hippocampus",
-    origin: str = "bregma",
+    anatomical_target: str = "Dorsal CA1",
+    origin: str = "bregma (AP, ML); skull surface (DV)",
     orientation: str = "RAS",
     x_in_mm: float = 1.5,
-    y_in_mm: float = -3.0,
-    z_in_mm: float = 0.0,
-    pitch_in_deg: float = 180.0,
-    yaw_in_deg: float = 90.0,
-    roll_in_deg: float = 0.0,
+    y_in_mm: float = -2.0,
+    z_in_mm: float = -1.5,
+    pitch_in_deg: Optional[float] = 0.0,
+    yaw_in_deg: Optional[float] = 0.0,
+    roll_in_deg: Optional[float] = 0.0,
 ) -> ndx_ophys_devices.StereotacticPosition:
     stereotactic_position = ndx_ophys_devices.StereotacticPosition(
         name=name or name_generator("StereotacticPosition"),
@@ -156,11 +156,11 @@ def mock_OpticalFiber(
     description: Optional[str] = "This is a mock instance of an OpticalFiber type.",
     serial_number: Optional[str] = "OF-SN-123456",
     model: Optional[ndx_ophys_devices.OpticalFiberModel] = None,
-    fiber_insertion: Optional[ndx_ophys_devices.StereotacticPosition] = None,
+    fiber_insertion: Optional[ndx_ophys_devices.StereotacticPosition] = sentinel,
 ) -> ndx_ophys_devices.OpticalFiber:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_OpticalFiberModel()
-    if fiber_insertion is None:
+    if fiber_insertion is sentinel:
         fiber_insertion = mock_StereotacticPosition(name="fiber_insertion")
     optical_fiber = ndx_ophys_devices.OpticalFiber(
         name=name or name_generator("OpticalFiber"),
@@ -180,8 +180,6 @@ def mock_PhotodetectorModel(
     description: Optional[str] = "This is a mock instance of a PhotodetectorModel type.",
     detector_type: str = "PMT",
     wavelength_range_in_nm: list = [400.0, 800.0],
-    gain: float = 100.0,
-    gain_unit: str = "A/W",
 ) -> ndx_ophys_devices.PhotodetectorModel:
     photodetector_model = ndx_ophys_devices.PhotodetectorModel(
         name=name or name_generator("PhotodetectorModel"),
@@ -190,8 +188,6 @@ def mock_PhotodetectorModel(
         description=description,
         detector_type=detector_type,
         wavelength_range_in_nm=wavelength_range_in_nm,
-        gain=gain,
-        gain_unit=gain_unit,
     )
     return photodetector_model
 
@@ -202,6 +198,8 @@ def mock_Photodetector(
     description: Optional[str] = "This is a mock instance of a Photodetector type.",
     serial_number: Optional[str] = "PD-SN-123456",
     model: Optional[ndx_ophys_devices.PhotodetectorModel] = None,
+    gain: Optional[float] = 1.0e6,
+    gain_unit: Optional[str] = "V/W",
 ) -> ndx_ophys_devices.Photodetector:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_PhotodetectorModel()
@@ -210,6 +208,8 @@ def mock_Photodetector(
         description=description,
         serial_number=serial_number,
         model=model,
+        gain=gain,
+        gain_unit=gain_unit,
     )
     return photodetector
 
@@ -404,11 +404,11 @@ def mock_ObjectiveLens(
     description: Optional[str] = "This is a mock instance of an ObjectiveLens type.",
     serial_number: Optional[str] = "OL-SN-123456",
     model: Optional[ndx_ophys_devices.ObjectiveLensModel] = None,
-    lens_positioning: Optional[ndx_ophys_devices.StereotacticPosition] = None,
+    lens_positioning: Optional[ndx_ophys_devices.StereotacticPosition] = sentinel,
 ) -> ndx_ophys_devices.ObjectiveLens:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_ObjectiveLensModel()
-    if lens_positioning is None:
+    if lens_positioning is sentinel:
         lens_positioning = mock_StereotacticPosition(name="lens_positioning")
     objective_lens = ndx_ophys_devices.ObjectiveLens(
         name=name or name_generator("ObjectiveLens"),
@@ -448,9 +448,9 @@ def mock_ExcitationSource(
     description: Optional[str] = "This is a mock instance of an ExcitationSource type.",
     serial_number: Optional[str] = "ES-SN-123456",
     model: Optional[ndx_ophys_devices.ExcitationSourceModel] = None,
-    power_in_W: float = 0.7,
-    intensity_in_W_per_m2: float = 0.005,
-    exposure_time_in_s: float = 2.51e-13,
+    power_in_W: Optional[float] = 30e-6,
+    intensity_in_W_per_m2: Optional[float] = 240.0,
+    exposure_time_in_s: Optional[float] = None,
 ) -> ndx_ophys_devices.ExcitationSource:  # TODO: Update return type when core types are updated
     if model is None:
         model = mock_ExcitationSourceModel()
@@ -472,23 +472,31 @@ def mock_PulsedExcitationSource(
     description: Optional[str] = "This is a mock instance of a PulsedExcitationSource type.",
     serial_number: Optional[str] = "PES-SN-123456",
     model: Optional[ndx_ophys_devices.ExcitationSourceModel] = None,
-    peak_power_in_W: float = 0.7,
-    peak_pulse_energy_in_J: float = 0.7,
-    intensity_in_W_per_m2: float = 0.005,
-    exposure_time_in_s: float = 2.51e-13,
-    pulse_rate_in_Hz: float = 2.0e6,
+    power_in_W: Optional[float] = 0.05,
+    peak_power_in_W: Optional[float] = 4.5e3,
+    peak_pulse_energy_in_J: Optional[float] = 6.25e-10,
+    intensity_in_W_per_m2: Optional[float] = None,
+    exposure_time_in_s: Optional[float] = None,
+    pulse_rate_in_Hz: float = 80e6,
+    pulse_width_in_s: Optional[float] = 1.4e-13,
 ) -> ndx_ophys_devices.PulsedExcitationSource:  # TODO: Update return type when core types are updated
     if model is None:
-        model = mock_ExcitationSourceModel()
+        model = mock_ExcitationSourceModel(
+            source_type="Solid-State Laser",
+            excitation_mode="two-photon",
+            wavelength_range_in_nm=[680.0, 1080.0],
+        )
     pulsed_excitation_source = ndx_ophys_devices.PulsedExcitationSource(
         name=name or name_generator("PulsedExcitationSource"),
         description=description,
         serial_number=serial_number,
         model=model,
+        power_in_W=power_in_W,
         peak_power_in_W=peak_power_in_W,
         peak_pulse_energy_in_J=peak_pulse_energy_in_J,
         intensity_in_W_per_m2=intensity_in_W_per_m2,
         exposure_time_in_s=exposure_time_in_s,
         pulse_rate_in_Hz=pulse_rate_in_Hz,
+        pulse_width_in_s=pulse_width_in_s,
     )
     return pulsed_excitation_source
