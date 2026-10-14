@@ -1,6 +1,7 @@
-# v0.4.0 (Upcoming)
+# v0.4.0 (October 14, 2026)
 
 ## New Features
+- Added `StereotacticPosition`, which extends `NWBContainer` to hold the stereotactic position of a device or injection site relative to the brain.
 - Added auto-publish.yml GitHub Action to automatically publish new versions to PyPI upon GitHub Release.
 - Added realistic configuration examples notebook.
 - Added optional `pulse_width_in_s` to `PulsedExcitationSource`.
@@ -19,6 +20,9 @@
 Files written with ndx-ophys-devices 0.3.x cannot be read in a Python session that has imported ndx-ophys-devices 0.4.0,
 or an extension that imports it, because the installed namespace takes precedence over the one cached in the file.
 To read such files, open them in a session that does not import these packages; pynwb then loads the cached namespaces.
+
+## Installing with extensions that still use 0.3.x
+ndx-fiber-photometry 0.2.x and ndx-optogenetics 0.4.x use `FiberInsertion`, which this release removes. If an install of those versions fails with `cannot import name 'FiberInsertion'`, run `pip install "ndx-ophys-devices<0.4"`.
 
 # v0.3.1 (September 19, 2025)
 

@@ -1,7 +1,7 @@
 Release Notes
 =============
-Version 0.4.0 (upcoming)
-------------------------
+Version 0.4.0 (October 14, 2026)
+--------------------------------
 New Features:
 - Added new neurodata types:
   - ``StereotacticPosition``: Extends ``NWBContainer`` to hold metadata about the stereotactic position of a device relative to the brain.
@@ -22,6 +22,9 @@ Reading files written with earlier versions:
 Files written with ndx-ophys-devices 0.3.x cannot be read in a Python session that has imported ndx-ophys-devices 0.4.0,
 or an extension that imports it, because the installed namespace takes precedence over the one cached in the file.
 To read such files, open them in a session that does not import these packages; pynwb then loads the cached namespaces.
+
+Installing with extensions that still use 0.3.x:
+ndx-fiber-photometry 0.2.x and ndx-optogenetics 0.4.x use ``FiberInsertion``, which this release removes. If an install of those versions fails with ``cannot import name 'FiberInsertion'``, run ``pip install "ndx-ophys-devices<0.4"``.
 
 Version 0.3.1 (Sept 19, 2025)
 -----------------------------
