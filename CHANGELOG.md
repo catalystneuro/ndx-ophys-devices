@@ -1,3 +1,8 @@
+# v0.4.1 (Upcoming)
+
+## Bug Fixes
+- Files written with ndx-ophys-devices 0.3.x read again with all their data. With 0.4.0, a file with an `OpticalFiber` failed with `No specification for 'FiberInsertion'`, and the coordinates of a `ViralVectorInjection`, the `gain` and `gain_unit` of a `PhotodetectorModel` and every `OpticalLens` were dropped without an error. The removed types (`FiberInsertion`, `LensPositioning`, `OpticalLens`, `OpticalLensModel`) are back in a separate schema file, `ndx-ophys-devices.deprecated.yaml`, and the removed attributes are back in their types, all marked deprecated and read as written. The removed attributes of `ViralVectorInjection` and `PhotodetectorModel` and a `FiberInsertion` in `OpticalFiber.fiber_insertion` are only accepted when reading. Passing them to a new object raises a `TypeError`.
+
 # v0.4.0 (October 14, 2026)
 
 ## New Features
@@ -17,9 +22,10 @@
   - `StereotacticPosition` coordinates describe the target (device tip or injection site); angles describe the approach, with all angles equal to 0 meaning a vertical approach
 
 ## Reading files written with earlier versions
-Files written with ndx-ophys-devices 0.3.x cannot be read in a Python session that has imported ndx-ophys-devices 0.4.0,
-or an extension that imports it, because the installed namespace takes precedence over the one cached in the file.
-To read such files, open them in a session that does not import these packages; pynwb then loads the cached namespaces.
+In a Python session that has imported ndx-ophys-devices 0.4.0, or an extension that imports it, files written with 0.3.x
+fail to open when they contain an `OpticalFiber` and lose the 0.3.x attributes and types without an error otherwise.
+Upgrade to 0.4.1, or open such files in a session that does not import these packages; pynwb then loads the cached
+namespaces.
 
 ## Installing with extensions that still use 0.3.x
 ndx-fiber-photometry 0.2.x and ndx-optogenetics 0.4.x use `FiberInsertion`, which this release removes. If an install of those versions fails with `cannot import name 'FiberInsertion'`, run `pip install "ndx-ophys-devices<0.4"`.

@@ -21,14 +21,16 @@ load_namespaces(str(__spec_path))
 # Container classes
 StereotacticPosition = get_class("StereotacticPosition", "ndx-ophys-devices")
 ViralVector = get_class("ViralVector", "ndx-ophys-devices")
-ViralVectorInjection = get_class("ViralVectorInjection", "ndx-ophys-devices")
+from .deprecated_attributes import ViralVectorInjection  # noqa: E402
+
 Indicator = get_class("Indicator", "ndx-ophys-devices")
 Effector = get_class("Effector", "ndx-ophys-devices")
 
 # Model classes
 OpticalFiberModel = get_class("OpticalFiberModel", "ndx-ophys-devices")
 ExcitationSourceModel = get_class("ExcitationSourceModel", "ndx-ophys-devices")
-PhotodetectorModel = get_class("PhotodetectorModel", "ndx-ophys-devices")
+from .deprecated_attributes import PhotodetectorModel  # noqa: E402
+
 DichroicMirrorModel = get_class("DichroicMirrorModel", "ndx-ophys-devices")
 OpticalFilterModel = get_class("OpticalFilterModel", "ndx-ophys-devices")
 BandOpticalFilterModel = get_class("BandOpticalFilterModel", "ndx-ophys-devices")
@@ -36,7 +38,8 @@ EdgeOpticalFilterModel = get_class("EdgeOpticalFilterModel", "ndx-ophys-devices"
 ObjectiveLensModel = get_class("ObjectiveLensModel", "ndx-ophys-devices")
 
 # Device classes
-OpticalFiber = get_class("OpticalFiber", "ndx-ophys-devices")
+from .optical_fiber import OpticalFiber  # noqa: E402
+
 ExcitationSource = get_class("ExcitationSource", "ndx-ophys-devices")
 PulsedExcitationSource = get_class("PulsedExcitationSource", "ndx-ophys-devices")
 Photodetector = get_class("Photodetector", "ndx-ophys-devices")
@@ -45,6 +48,14 @@ OpticalFilter = get_class("OpticalFilter", "ndx-ophys-devices")
 BandOpticalFilter = get_class("BandOpticalFilter", "ndx-ophys-devices")
 EdgeOpticalFilter = get_class("EdgeOpticalFilter", "ndx-ophys-devices")
 ObjectiveLens = get_class("ObjectiveLens", "ndx-ophys-devices")
+
+# Deprecated classes, kept to read files written with ndx-ophys-devices 0.3.x
+from .optical_fiber import FiberInsertion  # noqa: E402
+
+LensPositioning = get_class("LensPositioning", "ndx-ophys-devices")
+OpticalLensModel = get_class("OpticalLensModel", "ndx-ophys-devices")
+OpticalLens = get_class("OpticalLens", "ndx-ophys-devices")
+
 __all__ = [
     "StereotacticPosition",
     "ViralVector",

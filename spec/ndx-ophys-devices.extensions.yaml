@@ -71,6 +71,14 @@ groups:
           - 2
         doc: The range of wavelengths that can be detected.
         required: false
+      - name: gain
+        dtype: float
+        doc: DEPRECATED. Use `Photodetector.gain` and `Photodetector.gain_unit`. Gain on the photodetector.
+        required: false
+      - name: gain_unit
+        dtype: text
+        doc: DEPRECATED. Use `Photodetector.gain` and `Photodetector.gain_unit`. Unit of the gain value.
+        required: false
   - neurodata_type_def: Photodetector
     neurodata_type_inc: Device
     doc: Extends Device to hold metadata on the Photodetector instance.
@@ -334,6 +342,58 @@ groups:
       - name: injection_date
         dtype: text # TODO: change to isodatetime when https://github.com/hdmf-dev/hdmf/issues/429 is fixed.
         doc: Date of injection.
+        required: false
+      - name: location
+        dtype: text
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Name of the targeted location of the virus injection.
+        required: false
+      - name: hemisphere
+        dtype: text
+        doc: DEPRECATED. Use `viral_injection_coordinates`. The hemisphere ("left" or "right") of the targeted location of the virus
+          injection. Should be consistent with `ml_in_mm` coordinate.
+        required: false
+      - name: reference
+        dtype: text
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Reference point for `ap_in_mm`, `ml_in_mm`, and `dv_in_mm` coordinates, e.g.,
+          "Bregma at the cortical surface".
+        required: false
+      - name: ap_in_mm
+        dtype: float
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Anteroposterior coordinate in mm of the virus injection site
+          (+ is anterior), with reference to `reference`.
+        required: false
+      - name: ml_in_mm
+        dtype: float
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Mediolateral coordinate in mm of the virus injection site (+
+          is right), with reference to `reference`.
+        required: false
+      - name: dv_in_mm
+        dtype: float
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Dorsoventral coordinate in mm of the virus injection site (+
+          is dorsal/above the brain), with reference to `reference`.
+        required: false
+      - name: pitch_in_deg
+        dtype: float
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Pitch angle in degrees of the virus injection (rotation around
+          left-right axis, + is rotating the nose upward).
+        required: false
+      - name: yaw_in_deg
+        dtype: float
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Yaw angle in degrees of the virus injection (rotation around
+          dorsal-ventral axis, + is rotating the nose rightward).
+        required: false
+      - name: roll_in_deg
+        dtype: float
+        doc: DEPRECATED. Use `viral_injection_coordinates`. Roll angle in degrees of the virus injection (rotation around
+          anterior-posterior axis, + is rotating the right side downward).
+        required: false
+      - name: stereotactic_rotation_in_deg
+        dtype: float
+        doc: DEPRECATED. Not documented in ndx-ophys-devices 0.3.x and has no equivalent.
+        required: false
+      - name: stereotactic_tilt_in_deg
+        dtype: float
+        doc: DEPRECATED. Not documented in ndx-ophys-devices 0.3.x and has no equivalent.
         required: false
     groups:
       - name: viral_injection_coordinates
