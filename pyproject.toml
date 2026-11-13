@@ -45,6 +45,7 @@ dependencies = [
 include = [
     "src/pynwb",
     "spec/ndx-ophys-devices.extensions.yaml",
+    "spec/ndx-ophys-devices.deprecated.yaml",
     "spec/ndx-ophys-devices.namespace.yaml",
 ]
 exclude = [
@@ -64,6 +65,7 @@ packages = [
 include = [
     "src/pynwb",
     "spec/ndx-ophys-devices.extensions.yaml",
+    "spec/ndx-ophys-devices.deprecated.yaml",
     "spec/ndx-ophys-devices.namespace.yaml",
     "docs",
 ]

@@ -29,7 +29,7 @@ def test_photodetector_gain_is_set_on_the_instance():
     photodetector = mock_Photodetector(gain=2.0e10, gain_unit="V/W")
     assert photodetector.gain == 2.0e10
     assert photodetector.gain_unit == "V/W"
-    assert not hasattr(photodetector.model, "gain")
+    assert photodetector.model.gain is None
 
 
 def test_optical_fiber_without_fiber_insertion():

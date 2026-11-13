@@ -13,4 +13,5 @@ namespaces:
         - Device
         - DeviceModel
       - source: ndx-ophys-devices.extensions.yaml
+      - source: ndx-ophys-devices.deprecated.yaml
     version: 0.4.0
